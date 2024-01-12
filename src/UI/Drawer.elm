@@ -2,45 +2,87 @@ module UI.Drawer exposing (Config, layout, toggle)
 
 import Element exposing (Element)
 import Element.Background as Background
+import Element.Border as Border
 import Element.Events as Events
 import Html
 import Html.Attributes
+import Maybe.Extra as Maybe
+import Simple.Animation as Animation exposing (Animation)
+import Simple.Animation.Property as P
+import UI.Preset.Size as Size
 import Util exposing (ifElse)
 
 
 type alias Config msg =
-    { isVisible : Bool
+    { isDrawerVisible : Maybe Bool
     , onTap : msg
     }
 
 
 toggle : Config msg -> Config msg
 toggle config =
-    { config | isVisible = not config.isVisible }
+    let
+        update : Maybe Bool
+        update =
+            case config.isDrawerVisible of
+                Nothing ->
+                    Just True
+
+                Just True ->
+                    Just False
+
+                Just False ->
+                    Just True
+    in
+    { config | isDrawerVisible = update }
 
 
-layout : Config msg -> Element msg -> Html.Html msg
-layout { isVisible, onTap } content =
+layout : Config msg -> Element msg -> Element msg -> Html.Html msg
+layout { isDrawerVisible, onTap } drawer content =
     Element.layout
         [ Element.htmlAttribute <| Html.Attributes.style "width" "100vw"
         , Element.height Element.fill
         , Element.clipX
-        , ifElse Element.clipY Util.noAttr isVisible
         , Background.color (Element.rgb255 0 0 0)
+        , Maybe.unwrap Util.noAttr (ifElse Element.clipY Element.scrollbarY) isDrawerVisible
+        , Maybe.unwrap Util.noAttr (renderDrawer { drawer = drawer, width = 400 }) isDrawerVisible
         ]
     <|
         Element.el
             (Element.width Element.fill
                 :: Element.height Element.fill
-                :: ifElse (Element.inFront <| transparentOverlay onTap) Util.noAttr isVisible
+                :: Maybe.unwrap Element.clipX (ifElse Element.clip Element.clipX) isDrawerVisible
+                :: Maybe.unwrap Util.noAttr (ifElse (Border.rounded Size.border_md) (Border.rounded 0)) isDrawerVisible
+                :: Maybe.unwrap Util.noAttr (ifElse (Element.inFront <| recedeOverlay onTap) Util.noAttr) isDrawerVisible
                 :: transition
-                ++ ifElse recedeContent [] isVisible
+                ++ Maybe.unwrap [] (ifElse recede []) isDrawerVisible
             )
             content
 
 
-transparentOverlay : msg -> Element msg
-transparentOverlay onTap =
+renderDrawer : { drawer : Element msg, width : Float } -> Bool -> Element.Attribute msg
+renderDrawer { drawer, width } isVisible =
+    let
+        slideInOut : Animation
+        slideInOut =
+            Animation.fromTo
+                { duration = 500
+                , options = Animation.cubic 0.32 0.72 0 1 :: ifElse [] [ Animation.reverse ] isVisible
+                }
+                [ P.y width ]
+                [ P.y 0 ]
+    in
+    Element.inFront <|
+        Util.animatedEl Element.el
+            slideInOut
+            [ Element.width Element.fill
+            , Element.alignBottom
+            ]
+            drawer
+
+
+recedeOverlay : msg -> Element msg
+recedeOverlay onTap =
     Element.row
         [ Element.width Element.fill
         , Element.height Element.fill
@@ -52,6 +94,7 @@ transparentOverlay onTap =
 
 transition : List (Element.Attribute msg)
 transition =
+    -- todo : refactor to animation library
     [ Html.Attributes.style "transform-origin" "center top 0px"
     , Html.Attributes.style "transition-property" "transform, border-radius"
     , Html.Attributes.style "transition-duration" "0.5s"
@@ -60,8 +103,9 @@ transition =
         |> Util.fromAtrr
 
 
-recedeContent : List (Element.Attribute msg)
-recedeContent =
+recede : List (Element.Attribute msg)
+recede =
+    -- todo : refactor to animation library
     [ Html.Attributes.style "transform" "scale(0.9864583333333333) translateY(calc(env(safe-area-inset-top) + 14px))"
     ]
         |> Util.fromAtrr

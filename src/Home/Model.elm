@@ -16,6 +16,6 @@ init =
 
 initDrawer : Drawer.Config Home.Msg
 initDrawer =
-    { isVisible = False
+    { isDrawerVisible = Nothing
     , onTap = Home.ToggleDrawer
     }
