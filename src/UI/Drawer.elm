@@ -15,6 +15,7 @@ import Util exposing (ifElse)
 
 type alias Config msg =
     { isDrawerVisible : Maybe Bool
+    , drawerHeight : Int
     , onTap : msg
     }
 
@@ -38,14 +39,14 @@ toggle config =
 
 
 layout : Config msg -> Element msg -> Element msg -> Html.Html msg
-layout { isDrawerVisible, onTap } drawer content =
+layout { isDrawerVisible, onTap, drawerHeight } drawer content =
     Element.layout
         [ Element.htmlAttribute <| Html.Attributes.style "width" "100vw"
         , Element.height Element.fill
         , Element.clipX
         , Background.color (Element.rgb255 0 0 0)
         , Maybe.unwrap Util.noAttr (ifElse Element.clipY Element.scrollbarY) isDrawerVisible
-        , Maybe.unwrap Util.noAttr (renderDrawer { drawer = drawer, width = 400 }) isDrawerVisible
+        , Maybe.unwrap Util.noAttr (renderDrawer { drawer = drawer, height = drawerHeight }) isDrawerVisible
         ]
     <|
         Element.el
@@ -60,8 +61,8 @@ layout { isDrawerVisible, onTap } drawer content =
             content
 
 
-renderDrawer : { drawer : Element msg, width : Float } -> Bool -> Element.Attribute msg
-renderDrawer { drawer, width } isVisible =
+renderDrawer : { drawer : Element msg, height : Int } -> Bool -> Element.Attribute msg
+renderDrawer { drawer, height } isVisible =
     let
         slideInOut : Animation
         slideInOut =
@@ -69,7 +70,7 @@ renderDrawer { drawer, width } isVisible =
                 { duration = 500
                 , options = Animation.cubic 0.32 0.72 0 1 :: ifElse [] [ Animation.reverse ] isVisible
                 }
-                [ P.y width ]
+                [ P.y (toFloat height) ]
                 [ P.y 0 ]
     in
     Element.inFront <|

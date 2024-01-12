@@ -17,5 +17,6 @@ init =
 initDrawer : Drawer.Config Home.Msg
 initDrawer =
     { isDrawerVisible = Nothing
+    , drawerHeight = 400
     , onTap = Home.ToggleDrawer
     }
