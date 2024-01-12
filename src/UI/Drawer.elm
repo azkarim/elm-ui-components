@@ -1,4 +1,4 @@
-module Home.Drawer exposing (Config, layout, toggle)
+module UI.Drawer exposing (Config, layout, toggle)
 
 import Element exposing (Element)
 import Element.Background as Background

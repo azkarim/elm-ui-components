@@ -1,7 +1,7 @@
 module Home.Model exposing (Model, init)
 
-import Home.Drawer as Drawer
 import Home.Msg as Home
+import UI.Drawer as Drawer
 
 
 type alias Model =

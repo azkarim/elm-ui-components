@@ -4,10 +4,10 @@ import Browser exposing (Document)
 import Element exposing (Element, centerX, el, fill, height, rgb255, spacing, width, wrappedRow)
 import Element.Background as Background
 import Element.Border as Border
-import Home.Button as Button
-import Home.Drawer as Drawer
 import Home.Model as Home
 import Home.Msg as Home exposing (Msg(..))
+import UI.Button as Button
+import UI.Drawer as Drawer
 import Util exposing (ifElse)
 
 

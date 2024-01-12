@@ -1,4 +1,4 @@
-module Home.Button exposing (outline)
+module UI.Button exposing (outline)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -6,6 +6,8 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html.Attributes
+import UI.Preset.Color as Colors
+import UI.Preset.Size as Size
 import Util
 
 
@@ -13,16 +15,16 @@ outline : { a | onTap : Maybe msg, label : String } -> Element msg
 outline { onTap, label } =
     Input.button
         ([ Element.focused []
-         , Background.color backgroundColor
-         , Border.color borderColor
-         , Border.rounded 6
+         , Background.color Colors.neutral
+         , Border.color Colors.zinc200
+         , Border.rounded Size.border_md
          , Border.width 1
-         , Element.paddingXY 16 12
-         , Font.size fontSize
+         , Element.paddingXY Size.padding_4 Size.padding_3
+         , Font.size Size.text_sm
          , Font.family [ Font.sansSerif ]
          , Font.medium
          , Font.letterSpacing 0.4
-         , Element.mouseOver [ Background.color hoverColor ]
+         , Element.mouseOver [ Background.color Colors.slate50 ]
          ]
             ++ transitions
         )
@@ -38,23 +40,3 @@ transitions =
     , Html.Attributes.style "transition-duration" "0.15s"
     ]
         |> Util.fromAtrr
-
-
-fontSize : Int
-fontSize =
-    14
-
-
-hoverColor : Element.Color
-hoverColor =
-    Element.rgb255 248 250 252
-
-
-backgroundColor : Element.Color
-backgroundColor =
-    Element.rgb255 255 255 255
-
-
-borderColor : Element.Color
-borderColor =
-    Element.rgb255 228 228 231

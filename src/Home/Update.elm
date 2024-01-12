@@ -1,8 +1,8 @@
 module Home.Update exposing (update)
 
-import Home.Drawer as Drawer
 import Home.Model as Home
 import Home.Msg as Home exposing (Msg(..))
+import UI.Drawer as Drawer
 
 
 update : Home.Msg -> Home.Model -> ( Home.Model, Cmd Home.Msg )
