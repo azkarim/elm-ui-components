@@ -1,7 +1,8 @@
 module Home.View exposing (document)
 
 import Browser exposing (Document)
-import Element exposing (Element, centerX, centerY, fill, height, image, inFront, spacing, text, width, wrappedRow)
+import Element exposing (Element, centerX, centerY, fill, height, image, inFront, rgb255, spacing, text, width, wrappedRow)
+import Element.Background as Background
 import Element.Input as Input
 import Home.Drawer as Drawer
 import Home.Model as Home
@@ -13,6 +14,7 @@ view _ =
     wrappedRow
         [ width fill
         , height fill
+        , Background.color (rgb255 255 255 255)
         , spacing 10
         , inFront toggleDrawerBtn
         ]

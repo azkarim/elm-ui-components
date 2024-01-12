@@ -20,15 +20,23 @@ toggle config =
 
 
 layout : Config msg -> Element msg -> Html.Html msg
-layout { isVisible, onTap } =
+layout { isVisible, onTap } content =
     Element.layout
-        (Element.width
-            Element.fill
-            :: Element.height Element.fill
-            :: ifElse (Element.inFront <| transparentOverlay onTap) Util.noAttr isVisible
-            :: defaultTransitions
-            ++ ifElse recedeContent [] isVisible
-        )
+        [ Element.htmlAttribute <| Html.Attributes.style "width" "100vw"
+        , Element.height Element.fill
+        , Element.clipX
+        , ifElse Element.clipY Util.noAttr isVisible
+        , Background.color (Element.rgb255 0 0 0)
+        ]
+    <|
+        Element.wrappedRow
+            (Element.width Element.fill
+                :: Element.height Element.fill
+                :: ifElse (Element.inFront <| transparentOverlay onTap) Util.noAttr isVisible
+                :: transition
+                ++ ifElse recedeContent [] isVisible
+            )
+            [ content ]
 
 
 transparentOverlay : msg -> Element msg
@@ -36,15 +44,14 @@ transparentOverlay onTap =
     Element.row
         [ Element.width Element.fill
         , Element.height Element.fill
-        , Background.color (Element.rgb255 0 0 0)
-        , Element.alpha 0.6
+        , Background.color (Element.rgba255 0 0 0 0.6)
         , Events.onClick onTap
         ]
         []
 
 
-defaultTransitions : List (Element.Attribute msg)
-defaultTransitions =
+transition : List (Element.Attribute msg)
+transition =
     [ Html.Attributes.style "transform-origin" "center top 0px"
     , Html.Attributes.style "transition-property" "transform, border-radius"
     , Html.Attributes.style "transition-duration" "0.5s"
