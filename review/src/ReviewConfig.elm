@@ -42,6 +42,7 @@ config =
         |> Rule.ignoreErrorsForDirectories [ "tests/" ]
     , NoExposingEverything.rule
         |> Rule.ignoreErrorsForDirectories ["src/UI/Preset/"]
+        |> Rule.ignoreErrorsForFiles ["src/Util.elm"]
     , NoImportingEverything.rule []
     , NoMissingTypeAnnotation.rule
     , NoMissingTypeAnnotationInLetIn.rule
