@@ -29,14 +29,14 @@ layout { isVisible, onTap } content =
         , Background.color (Element.rgb255 0 0 0)
         ]
     <|
-        Element.wrappedRow
+        Element.el
             (Element.width Element.fill
                 :: Element.height Element.fill
                 :: ifElse (Element.inFront <| transparentOverlay onTap) Util.noAttr isVisible
                 :: transition
                 ++ ifElse recedeContent [] isVisible
             )
-            [ content ]
+            content
 
 
 transparentOverlay : msg -> Element msg
@@ -63,6 +63,5 @@ transition =
 recedeContent : List (Element.Attribute msg)
 recedeContent =
     [ Html.Attributes.style "transform" "scale(0.9864583333333333) translateY(calc(env(safe-area-inset-top) + 14px))"
-    , Html.Attributes.style "border-radius" "8px"
     ]
         |> Util.fromAtrr

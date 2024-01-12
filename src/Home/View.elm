@@ -1,29 +1,31 @@
 module Home.View exposing (document)
 
 import Browser exposing (Document)
-import Element exposing (Element, centerX, centerY, fill, height, image, inFront, rgb255, spacing, text, width, wrappedRow)
+import Element exposing (Element, centerX, el, fill, height, rgb255, spacing, width, wrappedRow)
 import Element.Background as Background
-import Element.Input as Input
+import Element.Border as Border
+import Home.Button as Button
 import Home.Drawer as Drawer
 import Home.Model as Home
 import Home.Msg as Home exposing (Msg(..))
+import Util exposing (ifElse)
 
 
 view : Home.Model -> Element Home.Msg
-view _ =
+view { drawer } =
     wrappedRow
         [ width fill
         , height fill
-        , Background.color (rgb255 255 255 255)
+        , ifElse (Border.rounded 8) Util.noAttr drawer.isVisible
         , spacing 10
-        , inFront toggleDrawerBtn
+        , Background.color (rgb255 255 255 255)
         ]
-        (List.range 0 50 |> List.map (\_ -> image [] { src = "https://picsum.photos/200/300", description = "" }))
+        [ toggleDrawerBtn ]
 
 
 toggleDrawerBtn : Element Msg
 toggleDrawerBtn =
-    Input.button [ centerX, centerY ] { onPress = Just ToggleDrawer, label = text "Show Drawer" }
+    el [ centerX ] (Button.outline { onTap = Just ToggleDrawer, label = "Toggle" })
 
 
 document : Home.Model -> Document Home.Msg
