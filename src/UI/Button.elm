@@ -1,4 +1,4 @@
-module UI.Button exposing (Button, ButtonType(..), button, buttonType, ghost, icon, iconBtn, label, new, onTap, outline, primary, secondary)
+module UI.Button exposing (Button, ButtonType(..), LoadingStatus(..), button, buttonType, ghost, icon, iconBtn, label, loading, new, onTap, outline, primary, secondary)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -6,6 +6,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html.Attributes
+import Loading
 import Maybe.Extra as Maybe
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
@@ -66,6 +67,7 @@ type alias Button msg =
     , icon : Maybe (Element msg)
     , onTap : Maybe msg
     , label : Maybe String
+    , loading : LoadingStatus
     }
 
 
@@ -75,6 +77,11 @@ type ButtonType
     | Outline
     | Ghost
     | Icon
+
+
+type LoadingStatus
+    = Loading String
+    | Loaded
 
 
 {-| Button Builder
@@ -92,6 +99,7 @@ new =
     , icon = Nothing
     , onTap = Nothing
     , label = Nothing
+    , loading = Loaded
     }
 
 
@@ -115,6 +123,11 @@ label lbl btn =
     { btn | label = Just lbl }
 
 
+loading : LoadingStatus -> Button msg -> Button msg
+loading status btn =
+    { btn | loading = status }
+
+
 button : List (Element.Attribute msg) -> Button msg -> Element msg
 button attrs btn =
     let
@@ -123,10 +136,20 @@ button attrs btn =
             commonAttrs ++ attrs
     in
     Input.button
-        (Maybe.unwrap attrs_ (\btn_ -> btnTypeAttr btn_ ++ attrs_) btn.buttonType)
+        (if btn.loading == Loaded then
+            Maybe.unwrap attrs_ (\btn_ -> btnTypeAttr btn_ ++ attrs_) btn.buttonType
+
+         else
+            loadingStatusAttrs ++ attrs_
+        )
         { onPress = btn.onTap
         , label =
-            renderLabel ( btn.icon, btn.label )
+            case btn.loading of
+                Loading loadingLabel ->
+                    Element.row [ Element.spacing 12 ] [ Element.el [] spinner, Element.el [] (Element.text loadingLabel) ]
+
+                Loaded ->
+                    renderLabel ( btn.icon, btn.label )
         }
 
 
@@ -148,6 +171,15 @@ renderLabel pair =
 
 
 -- Internal
+
+
+loadingStatusAttrs : List (Element.Attribute msg)
+loadingStatusAttrs =
+    [ Background.color Color.loading
+    , Font.color Color.neutral
+    , Element.htmlAttribute <| Html.Attributes.style "pointer-events" "none"
+    , Element.htmlAttribute <| Html.Attributes.style "cursor" "not-allowed"
+    ]
 
 
 btnTypeAttr : ButtonType -> List (Element.Attribute msg)
@@ -200,6 +232,25 @@ commonAttrs =
     , Font.medium
     ]
         ++ transitions
+
+
+spinner : Element msg
+spinner =
+    let
+        color : String
+        color =
+            -- Colors.neutral
+            "#ffffff"
+
+        config : Loading.Config
+        config =
+            Loading.defaultConfig
+    in
+    Loading.render
+        Loading.Spinner
+        { config | size = 16, color = color }
+        Loading.On
+        |> Element.html
 
 
 

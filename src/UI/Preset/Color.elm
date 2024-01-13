@@ -76,6 +76,12 @@ neutral50 =
     Element.rgb255 250 250 250
 
 
+loading : Element.Color
+loading =
+    -- #848891
+    Element.rgb255 132 136 145
+
+
 shadow : Element.Color
 shadow =
     --#000000

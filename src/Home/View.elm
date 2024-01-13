@@ -57,6 +57,7 @@ toggleDrawerBtn =
             |> Button.onTap (Just ToggleDrawer)
             |> Button.icon (Icons.renderIcon Icons.email)
             |> Button.label "Login with Email"
+            |> Button.loading (Button.Loading "Please wait...")
             |> Button.button []
         ]
 
