@@ -1,4 +1,4 @@
-module UI.Button exposing (Button, ButtonType(..), button, buttonType, ghost, icon, label, new, onTap, outline)
+module UI.Button exposing (Button, ButtonType(..), button, buttonType, ghost, icon, label, new, onTap, outline, primary)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -14,6 +14,15 @@ import Util
 
 
 -- todo : add ring state when focued
+
+
+primary : List (Element.Attribute msg) -> { a | onTap : Maybe msg, label : String } -> Element msg
+primary attrs btn =
+    new
+        |> buttonType Primary
+        |> onTap btn.onTap
+        |> label btn.label
+        |> button attrs
 
 
 outline : List (Element.Attribute msg) -> { a | onTap : Maybe msg, label : String } -> Element msg
@@ -43,7 +52,8 @@ type alias Button msg =
 
 
 type ButtonType
-    = Outline
+    = Primary
+    | Outline
     | Ghost
 
 
@@ -86,14 +96,14 @@ label lbl btn =
 
 
 button : List (Element.Attribute msg) -> Button msg -> Element msg
-button attr btn =
+button attrs btn =
     let
-        attrs : List (Element.Attribute msg)
-        attrs =
-            commonAttr ++ attr
+        attrs_ : List (Element.Attribute msg)
+        attrs_ =
+            commonAttrs ++ attrs
     in
     Input.button
-        (Maybe.unwrap attrs (\btn_ -> btnTypeAttr btn_ ++ attrs) btn.buttonType)
+        (Maybe.unwrap attrs_ (\btn_ -> btnTypeAttr btn_ ++ attrs_) btn.buttonType)
         { onPress = btn.onTap
         , label = Maybe.unwrap Element.none Element.text btn.label
         }
@@ -106,6 +116,12 @@ button attr btn =
 btnTypeAttr : ButtonType -> List (Element.Attribute msg)
 btnTypeAttr type_ =
     case type_ of
+        Primary ->
+            [ Background.color Color.preset.primary
+            , Font.color Color.neutral
+            , Element.mouseOver [ Element.alpha 0.9 ]
+            ]
+
         Outline ->
             Background.color Color.neutral
                 :: Element.mouseOver [ Background.color Color.slate50 ]
@@ -116,8 +132,8 @@ btnTypeAttr type_ =
             ]
 
 
-commonAttr : List (Element.Attribute msg)
-commonAttr =
+commonAttrs : List (Element.Attribute msg)
+commonAttrs =
     let
         transitions : List (Element.Attribute msg)
         transitions =
@@ -141,11 +157,6 @@ commonAttr =
 
 
 -- Util
-
-
-hideBorder : Element.Attribute msg
-hideBorder =
-    Border.width 0
 
 
 addBorder : Element.Color -> List (Element.Attribute msg)
