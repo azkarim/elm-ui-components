@@ -49,3 +49,9 @@ neutral50 : Element.Color
 neutral50 =
     --#fafafa
     Element.rgb255 250 250 250
+
+
+shadow : Element.Color
+shadow =
+    --#000000
+    Element.rgba255 0 0 0 0.1

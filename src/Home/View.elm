@@ -10,6 +10,7 @@ import UI.Button as Button
 import UI.Drawer as Drawer
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
+import UI.Preset.Util as Util
 
 
 view : Home.Model -> Element Home.Msg
@@ -46,7 +47,7 @@ toggleDrawerBtn : Element Msg
 toggleDrawerBtn =
     row [ centerX, paddingXY 0 24, spacing 20 ]
         [ Button.ghost { onTap = Nothing, label = "Ghost" }
-        , Button.outline Button.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
+        , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         ]
 
 

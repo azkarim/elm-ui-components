@@ -1,4 +1,4 @@
-module UI.Button exposing (ghost, outline, shadow)
+module UI.Button exposing (ghost, outline)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -43,28 +43,6 @@ ghost { onTap, label } =
         { onPress = onTap
         , label = Element.text label
         }
-
-
-shadow : List (Element.Attribute msg)
-shadow =
-    [ Border.shadow
-        { offset = ( 0, 4 )
-        , size = -1
-        , blur = 6
-        , color = shadowColor
-        }
-    , Border.shadow
-        { offset = ( 0, 2 )
-        , size = -2
-        , blur = 4
-        , color = shadowColor
-        }
-    ]
-
-
-shadowColor : Element.Color
-shadowColor =
-    Element.rgba255 0 0 0 0.1
 
 
 commonAttr : List (Element.Attribute msg)
