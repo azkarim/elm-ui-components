@@ -9,6 +9,7 @@ import Home.Msg as Home exposing (Msg(..))
 import UI.Button as Button
 import UI.Drawer as Drawer
 import UI.Preset.Color as Color
+import UI.Preset.Icons as Icons
 import UI.Preset.Size as Size
 import UI.Preset.Util as Util
 
@@ -23,7 +24,7 @@ view _ =
         , inFront toggleDrawerBtn
         ]
     <|
-        loremLargeContent
+        []
 
 
 loremLargeContent : List (Element msg)
@@ -50,6 +51,7 @@ toggleDrawerBtn =
         , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.primary Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.secondary [] { onTap = Just ToggleDrawer, label = "Toggle" }
+        , Button.iconBtn [] { onTap = Just ToggleDrawer, icon = Icons.renderIcon Icons.rightArrow }
         ]
 
 

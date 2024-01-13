@@ -1,4 +1,4 @@
-module UI.Button exposing (Button, ButtonType(..), button, buttonType, ghost, icon, label, new, onTap, outline, primary, secondary)
+module UI.Button exposing (Button, ButtonType(..), button, buttonType, ghost, icon, iconBtn, label, new, onTap, outline, primary, secondary)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -52,9 +52,18 @@ ghost attrs btn =
         |> button attrs
 
 
+iconBtn : List (Element.Attribute msg) -> { a | onTap : Maybe msg, icon : Element msg } -> Element msg
+iconBtn attrs btn =
+    new
+        |> buttonType Icon
+        |> icon btn.icon
+        |> onTap btn.onTap
+        |> button attrs
+
+
 type alias Button msg =
     { buttonType : Maybe ButtonType
-    , icon : Maybe String
+    , icon : Maybe (Element msg)
     , onTap : Maybe msg
     , label : Maybe String
     }
@@ -65,6 +74,7 @@ type ButtonType
     | Secondary
     | Outline
     | Ghost
+    | Icon
 
 
 {-| Button Builder
@@ -73,7 +83,7 @@ type ButtonType
         |> Button.buttonType Primary
         |> Button.onTap Toggle
         |> Button.label "Toggle"
-        |> Button.view
+        |> Button.button
 
 -}
 new : Button msg
@@ -90,7 +100,7 @@ buttonType btnType btn =
     { btn | buttonType = Just btnType }
 
 
-icon : String -> Button msg -> Button msg
+icon : Element msg -> Button msg -> Button msg
 icon el btn =
     { btn | icon = Just el }
 
@@ -115,8 +125,25 @@ button attrs btn =
     Input.button
         (Maybe.unwrap attrs_ (\btn_ -> btnTypeAttr btn_ ++ attrs_) btn.buttonType)
         { onPress = btn.onTap
-        , label = Maybe.unwrap Element.none Element.text btn.label
+        , label =
+            renderLabel ( btn.icon, btn.label )
         }
+
+
+renderLabel : ( Maybe (Element msg), Maybe String ) -> Element msg
+renderLabel pair =
+    case pair of
+        ( Nothing, Nothing ) ->
+            Element.none
+
+        ( Just icon_, Just label_ ) ->
+            Element.row [ Element.width Element.fill, Element.spacing 4 ] [ icon_, Element.el [] (Element.text label_) ]
+
+        ( Just icon_, Nothing ) ->
+            icon_
+
+        ( Nothing, Just label_ ) ->
+            Element.text label_
 
 
 
@@ -145,6 +172,11 @@ btnTypeAttr type_ =
         Ghost ->
             [ Element.mouseOver [ Background.color Color.slate50 ]
             ]
+
+        Icon ->
+            Background.color Color.neutral
+                :: Element.mouseOver [ Background.color Color.slate50 ]
+                :: addBorder Color.zinc200
 
 
 commonAttrs : List (Element.Attribute msg)
