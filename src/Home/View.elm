@@ -3,11 +3,13 @@ module Home.View exposing (document)
 import Browser exposing (Document)
 import Element exposing (Element, centerX, centerY, el, fill, height, image, inFront, paddingXY, px, rgb255, row, spacing, text, width, wrappedRow)
 import Element.Background as Background
+import Element.Border as Border
 import Home.Model as Home
 import Home.Msg as Home exposing (Msg(..))
 import UI.Button as Button
 import UI.Drawer as Drawer
 import UI.Preset.Color as Color
+import UI.Preset.Size as Size
 
 
 view : Home.Model -> Element Home.Msg
@@ -34,14 +36,18 @@ drawer =
     row
         [ width fill
         , height (px 400)
-        , Background.color Color.zinc200
+        , Border.rounded Size.border_lg
+        , Background.color Color.neutral50
         ]
         [ el [ centerX, centerY ] (text "I'm Drawer") ]
 
 
 toggleDrawerBtn : Element Msg
 toggleDrawerBtn =
-    el [ centerX, paddingXY 0 24 ] (Button.outline { onTap = Just ToggleDrawer, label = "Toggle" })
+    row [ centerX, paddingXY 0 24, spacing 20 ]
+        [ Button.ghost { onTap = Nothing, label = "Ghost" }
+        , Button.outline { onTap = Just ToggleDrawer, label = "Toggle" }
+        ]
 
 
 document : Home.Model -> Document Home.Msg
