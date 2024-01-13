@@ -101,7 +101,7 @@ transition =
     , Html.Attributes.style "transition-duration" "0.5s"
     , Html.Attributes.style "transition-timing-function" "cubic-bezier(0.32, 0.72, 0, 1)"
     ]
-        |> Util.fromAtrr
+        |> Util.fromAtrrs
 
 
 recede : List (Element.Attribute msg)
@@ -109,4 +109,4 @@ recede =
     -- todo : refactor to animation library
     [ Html.Attributes.style "transform" "scale(0.9864583333333333) translateY(calc(env(safe-area-inset-top) + 14px))"
     ]
-        |> Util.fromAtrr
+        |> Util.fromAtrrs

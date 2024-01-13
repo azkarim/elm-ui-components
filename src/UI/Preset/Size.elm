@@ -79,3 +79,43 @@ text_2xl =
 text_3xl : Int
 text_3xl =
     30
+
+
+spacing : number
+spacing =
+    4
+
+
+spacing2 : number
+spacing2 =
+    8
+
+
+spacing3 : number
+spacing3 =
+    12
+
+
+spacing4 : number
+spacing4 =
+    16
+
+
+spacing5 : number
+spacing5 =
+    20
+
+
+spacing6 : number
+spacing6 =
+    24
+
+
+spacing10 : number
+spacing10 =
+    40
+
+
+spacing45 : number
+spacing45 =
+    180

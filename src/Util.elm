@@ -1,4 +1,4 @@
-module Util exposing (animatedEl, fromAtrr, ifElse, noAttr)
+module Util exposing (animatedEl, fromAtrrs, ifElse, noAttr, style)
 
 import Element
 import Html
@@ -21,8 +21,13 @@ noAttr =
     Element.htmlAttribute <| Html.Attributes.style "" ""
 
 
-fromAtrr : List (Html.Attribute msg) -> List (Element.Attribute msg)
-fromAtrr =
+style : String -> String -> Element.Attribute msg
+style prop value =
+    Element.htmlAttribute <| Html.Attributes.style prop value
+
+
+fromAtrrs : List (Html.Attribute msg) -> List (Element.Attribute msg)
+fromAtrrs =
     List.map Element.htmlAttribute
 
 

@@ -12,6 +12,7 @@ import UI.Preset.Color as Color
 import UI.Preset.Icons as Icons
 import UI.Preset.Size as Size
 import UI.Preset.Util as Util
+import UI.Select as Select
 
 
 view : Home.Model -> Element Home.Msg
@@ -59,6 +60,7 @@ toggleDrawerBtn =
             |> Button.label "Login with Email"
             |> Button.loading (Button.Loading "Please wait...")
             |> Button.button []
+        , Select.select
         ]
 
 

@@ -222,7 +222,7 @@ commonAttrs =
             , Html.Attributes.style "transition-timing-function" "cubic-bezier(.4,0,.2,1)"
             , Html.Attributes.style "transition-duration" "0.15s"
             ]
-                |> Util.fromAtrr
+                |> Util.fromAtrrs
     in
     [ Element.paddingXY Size.padding_4 Size.padding_3
     , Border.rounded Size.border_md
