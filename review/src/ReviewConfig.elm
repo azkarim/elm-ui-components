@@ -53,6 +53,9 @@ config =
     , NoUnused.CustomTypeConstructorArgs.rule
     , NoUnused.Dependencies.rule
     , NoUnused.Exports.rule
+        |> Rule.ignoreErrorsForDirectories ["src/UI/Preset/"]
+        |> Rule.ignoreErrorsForFiles ["src/UI/Button.elm"]
+        |> Rule.ignoreErrorsForFiles ["src/Util.elm"]
     , NoUnused.Parameters.rule
     , NoUnused.Patterns.rule
     , NoUnused.Variables.rule
