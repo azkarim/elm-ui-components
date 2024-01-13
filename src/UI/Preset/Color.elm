@@ -3,6 +3,11 @@ module UI.Preset.Color exposing (..)
 import Element
 
 
+preset : { primary : Element.Color }
+preset =
+    { primary = slate900 }
+
+
 slate50 : Element.Color
 slate50 =
     -- #f8fafc
@@ -31,6 +36,12 @@ slate400 : Element.Color
 slate400 =
     -- #94a3b8
     Element.rgb255 148 163 184
+
+
+slate900 : Element.Color
+slate900 =
+    -- #0f172a
+    Element.rgb255 15 23 42
 
 
 zinc200 : Element.Color
