@@ -40,6 +40,12 @@ slate400 =
     Element.rgb255 148 163 184
 
 
+slate700 : Element.Color
+slate700 =
+    -- #334155
+    Element.rgb255 51 65 85
+
+
 slate900 : Element.Color
 slate900 =
     -- #0f172a
