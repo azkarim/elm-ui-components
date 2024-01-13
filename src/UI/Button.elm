@@ -1,4 +1,4 @@
-module UI.Button exposing (Button, ButtonType(..), button, buttonType, ghost, icon, label, new, onTap, outline, primary)
+module UI.Button exposing (Button, ButtonType(..), button, buttonType, ghost, icon, label, new, onTap, outline, primary, secondary)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -20,6 +20,15 @@ primary : List (Element.Attribute msg) -> { a | onTap : Maybe msg, label : Strin
 primary attrs btn =
     new
         |> buttonType Primary
+        |> onTap btn.onTap
+        |> label btn.label
+        |> button attrs
+
+
+secondary : List (Element.Attribute msg) -> { a | onTap : Maybe msg, label : String } -> Element msg
+secondary attrs btn =
+    new
+        |> buttonType Secondary
         |> onTap btn.onTap
         |> label btn.label
         |> button attrs
@@ -53,6 +62,7 @@ type alias Button msg =
 
 type ButtonType
     = Primary
+    | Secondary
     | Outline
     | Ghost
 
@@ -119,7 +129,12 @@ btnTypeAttr type_ =
         Primary ->
             [ Background.color Color.preset.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ Element.alpha 0.9 ]
+            , Element.mouseOver [ Color.preset.primary |> Color.setAlpha 0.9 |> Background.color ]
+            ]
+
+        Secondary ->
+            [ Background.color Color.preset.secondary
+            , Element.mouseOver [ Color.preset.secondary |> Color.setAlpha 0.9 |> Background.color ]
             ]
 
         Outline ->

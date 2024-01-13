@@ -3,9 +3,11 @@ module UI.Preset.Color exposing (..)
 import Element
 
 
-preset : { primary : Element.Color }
+preset : { primary : Element.Color, secondary : Element.Color }
 preset =
-    { primary = slate900 }
+    { primary = slate900
+    , secondary = zinc200
+    }
 
 
 slate50 : Element.Color
@@ -44,6 +46,12 @@ slate900 =
     Element.rgb255 15 23 42
 
 
+zinc100 : Element.Color
+zinc100 =
+    -- #f4f4f5
+    Element.rgb255 244 244 245
+
+
 zinc200 : Element.Color
 zinc200 =
     -- #e4e4e7
@@ -66,3 +74,12 @@ shadow : Element.Color
 shadow =
     --#000000
     Element.rgba255 0 0 0 0.1
+
+
+setAlpha : Float -> Element.Color -> Element.Color
+setAlpha alpha color =
+    Element.toRgb color
+        |> (\c ->
+                { c | alpha = alpha }
+                    |> Element.fromRgb
+           )
