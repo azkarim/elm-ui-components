@@ -133,6 +133,7 @@ button attrs btn =
     let
         attrs_ : List (Element.Attribute msg)
         attrs_ =
+            -- user supplied attrs should come last to take precedence
             commonAttrs ++ attrs
     in
     Input.button
