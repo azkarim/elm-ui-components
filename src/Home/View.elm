@@ -46,7 +46,7 @@ toggleDrawerBtn : Element Msg
 toggleDrawerBtn =
     row [ centerX, paddingXY 0 24, spacing 20 ]
         [ Button.ghost { onTap = Nothing, label = "Ghost" }
-        , Button.outline { onTap = Just ToggleDrawer, label = "Toggle" }
+        , Button.outline Button.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         ]
 
 
