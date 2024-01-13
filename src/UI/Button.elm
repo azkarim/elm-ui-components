@@ -22,7 +22,7 @@ outline { onTap, label } =
          , Border.width 1
          , Element.mouseOver [ Background.color Colors.slate50 ]
          ]
-            ++ presetAttr
+            ++ commonAttr
         )
         { onPress = onTap
         , label = Element.text label
@@ -37,15 +37,15 @@ ghost { onTap, label } =
             [ Background.color Colors.slate50
             ]
          ]
-            ++ presetAttr
+            ++ commonAttr
         )
         { onPress = onTap
         , label = Element.text label
         }
 
 
-presetAttr : List (Element.Attribute msg)
-presetAttr =
+commonAttr : List (Element.Attribute msg)
+commonAttr =
     let
         transitions : List (Element.Attribute msg)
         transitions =
