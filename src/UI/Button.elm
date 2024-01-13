@@ -137,7 +137,7 @@ renderLabel pair =
             Element.none
 
         ( Just icon_, Just label_ ) ->
-            Element.row [ Element.width Element.fill, Element.spacing 4 ] [ icon_, Element.el [] (Element.text label_) ]
+            Element.row [ Element.width Element.fill, Element.spacing 8 ] [ icon_, Element.el [] (Element.text label_) ]
 
         ( Just icon_, Nothing ) ->
             icon_
