@@ -52,6 +52,12 @@ toggleDrawerBtn =
         , Button.primary Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.secondary [] { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.iconBtn [] { onTap = Just ToggleDrawer, icon = Icons.renderIcon Icons.rightArrow }
+        , Button.new
+            |> Button.buttonType Button.Primary
+            |> Button.onTap (Just ToggleDrawer)
+            |> Button.icon (Icons.renderIcon Icons.email)
+            |> Button.label "Login with Email"
+            |> Button.button []
         ]
 
 
