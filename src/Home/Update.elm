@@ -14,3 +14,10 @@ update msg model =
 
         SelectFruit selectMsg ->
             ( { model | selectFruitState = Select.update selectMsg model.selectFruitState }, Cmd.none )
+
+        TappedBody ->
+            ( { model | selectFruitState = Select.hide model.selectFruitState }, Cmd.none )
+
+
+
+-- ( model, Cmd.none )

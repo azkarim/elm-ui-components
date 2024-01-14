@@ -3,7 +3,6 @@ module UI.Select exposing (Config, Msg, State, hide, init, select, selected, upd
 import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
-import Element.Events as Events
 import Element.Font as Font
 import Maybe.Extra as Maybe
 import UI.Preset.Color as Color
@@ -79,7 +78,7 @@ select config state =
             , Element.spaceEvenly
             , Element.paddingXY Size.padding_3 Size.padding_2
             , Element.pointer
-            , Events.onClick (config.embedMsg ToggleSelect)
+            , Util.onClick (config.embedMsg ToggleSelect)
             ]
             [ Element.el [ Element.centerY ] (Element.text <| selectLabel config state.selected)
             , Icons.renderIcon Icons.downArrow
@@ -115,7 +114,7 @@ renderItem config selectedOption option =
         , Border.rounded Size.border_md
         , Element.pointer
         , Element.mouseOver [ Background.color Color.slate50 ]
-        , Events.onClick (config.embedMsg <| Selected option)
+        , Util.onClick (config.embedMsg <| Selected option)
         ]
         [ Element.el
             [ Element.width (Element.px Size.spacing6)

@@ -7,3 +7,4 @@ import UI.Select as Select
 type Msg
     = ToggleDrawer
     | SelectFruit (Select.Msg Option)
+    | TappedBody

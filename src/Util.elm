@@ -1,8 +1,10 @@
-module Util exposing (animatedEl, fromAtrrs, ifElse, noAttr, style)
+module Util exposing (animatedEl, fromAtrrs, ifElse, noAttr, onClick, style)
 
 import Element
 import Html
 import Html.Attributes
+import Html.Events
+import Json.Decode as D
 import Simple.Animation exposing (Animation)
 import Simple.Animation.Animated as Animated
 
@@ -14,6 +16,12 @@ animatedEl =
         , htmlAttribute = Element.htmlAttribute
         , html = Element.html
         }
+
+
+onClick : msg -> Element.Attribute msg
+onClick msg =
+    Html.Events.custom "click" (D.succeed { message = msg, stopPropagation = True, preventDefault = True })
+        |> Element.htmlAttribute
 
 
 noAttr : Element.Attribute msg
