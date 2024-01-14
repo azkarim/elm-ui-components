@@ -1,4 +1,4 @@
-module UI.Select exposing (Config, Msg, State, init, select, update)
+module UI.Select exposing (Config, Msg, State, hide, init, select, selected, update)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -45,6 +45,16 @@ update msg state =
 
         Selected option ->
             { state | selected = Just option, isVisible = False }
+
+
+hide : State option -> State option
+hide state =
+    { state | isVisible = False }
+
+
+selected : State option -> Maybe option
+selected state =
+    state.selected
 
 
 select : Config embedMsg option -> State option -> Element embedMsg
