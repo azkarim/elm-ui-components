@@ -5,6 +5,8 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Maybe.Extra as Maybe
+import Simple.Animation as Animation exposing (Animation)
+import Simple.Animation.Property as P
 import UI.Preset.Color as Color
 import UI.Preset.Icons as Icons
 import UI.Preset.Size as Size
@@ -94,17 +96,24 @@ selectLabel config option =
 
 viewOptions : { options : List option, toString : option -> String, embedMsg : Msg option -> embedMsg } -> Maybe option -> Element embedMsg
 viewOptions config selectedOption =
-    Element.column
-        (Element.moveDown Size.spacing
-            :: Element.width Element.fill
-            :: Element.paddingXY Size.padding_2 Size.padding_2
-            :: Border.width 1
-            :: Border.rounded Size.border_md
-            :: Border.color Color.zinc200
-            :: Util.shadow
-        )
+    Util.animatedEl Element.el
+        slideInAnim
+        [ Element.width Element.fill
+        , Util.style "transform-origin" "top"
+        , Util.style "will-change" "transform"
+        ]
     <|
-        List.map (renderItem { toString = config.toString, embedMsg = config.embedMsg } selectedOption) config.options
+        Element.column
+            (Element.moveDown Size.spacing
+                :: Element.width Element.fill
+                :: Element.paddingXY Size.padding_2 Size.padding_2
+                :: Border.width 1
+                :: Border.rounded Size.border_md
+                :: Border.color Color.zinc200
+                :: Util.shadow
+            )
+        <|
+            List.map (renderItem { toString = config.toString, embedMsg = config.embedMsg } selectedOption) config.options
 
 
 renderItem : { toString : option -> String, embedMsg : Msg option -> embedMsg } -> Maybe option -> option -> Element embedMsg
@@ -129,6 +138,16 @@ renderItem config selectedOption option =
             ]
             (Element.text <| config.toString option)
         ]
+
+
+slideInAnim : Animation
+slideInAnim =
+    Animation.fromTo
+        { duration = 200
+        , options = [ Animation.cubic 0.32 0.72 0 1 ]
+        }
+        [ P.property "transform" "scaleY(0.8) translateZ(0)" ]
+        [ P.property "transform" "scaleY(1) translateZ(0)" ]
 
 
 size : { height : Int, minWidth : Int }
