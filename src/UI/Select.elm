@@ -14,6 +14,10 @@ import UI.Preset.Util as Util
 import Util exposing (ifElse)
 
 
+
+-- todo : focus styling
+
+
 type alias State option =
     { isVisible : Bool
     , selected : Maybe option
