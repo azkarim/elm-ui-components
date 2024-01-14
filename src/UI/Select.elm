@@ -56,22 +56,23 @@ selected state =
     state.selected
 
 
-select : Config embedMsg option -> State option -> Element embedMsg
-select config state =
+select : List (Element.Attribute embedMsg) -> Config embedMsg option -> State option -> Element embedMsg
+select attrs config state =
     Element.row
-        [ Element.width (Element.fill |> Element.minimum size.minWidth)
-        , Element.height (Element.px size.height)
-        , Border.width 1
-        , Border.rounded Size.border_md
-        , Border.color Color.zinc200
-        , Font.size Size.text_sm
-        , Font.letterSpacing 0.4
-        , Font.family [ Font.sansSerif ]
-        , Font.medium
-        , Util.style "user-select" "none"
-        , Util.style "-webkit-user-select" "none"
-        , ifElse (Element.below <| viewOptions { options = config.options, toString = config.toString, embedMsg = config.embedMsg } state.selected) Util.noAttr state.isVisible
-        ]
+        (Element.width (Element.fill |> Element.minimum size.minWidth)
+            :: Element.height (Element.px size.height)
+            :: Border.width 1
+            :: Border.rounded Size.border_md
+            :: Border.color Color.zinc200
+            :: Font.size Size.text_sm
+            :: Font.letterSpacing 0.4
+            :: Font.family [ Font.sansSerif ]
+            :: Font.medium
+            :: Util.style "user-select" "none"
+            :: Util.style "-webkit-user-select" "none"
+            :: ifElse (Element.below <| viewOptions { options = config.options, toString = config.toString, embedMsg = config.embedMsg } state.selected) Util.noAttr state.isVisible
+            :: attrs
+        )
         [ Element.row
             [ Element.width Element.fill
             , Element.height Element.fill

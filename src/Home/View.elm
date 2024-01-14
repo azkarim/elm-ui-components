@@ -61,7 +61,7 @@ toggleDrawerBtn model =
             |> Button.label "Login with Email"
             |> Button.loading (Button.Loading "Please wait...")
             |> Button.button []
-        , Select.select selectConfig model.selectFruitState
+        , Select.select [] selectConfig model.selectFruitState
         ]
 
 
