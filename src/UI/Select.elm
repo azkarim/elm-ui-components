@@ -1,9 +1,11 @@
-module UI.Select exposing (select)
+module UI.Select exposing (Config, Msg, State, init, select, update)
 
 import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
+import Element.Events as Events
 import Element.Font as Font
+import Maybe.Extra as Maybe
 import UI.Preset.Color as Color
 import UI.Preset.Icons as Icons
 import UI.Preset.Size as Size
@@ -11,17 +13,45 @@ import UI.Preset.Util as Util
 import Util exposing (ifElse)
 
 
-type alias Selected =
-    Bool
+type alias State option =
+    { isVisible : Bool
+    , selected : Maybe option
+    }
 
 
-select : Element msg
-select =
+type alias Config embedMsg option =
+    { label : String
+    , options : List option
+    , toString : option -> String
+    , embedMsg : Msg option -> embedMsg
+    }
+
+
+type Msg option
+    = ToggleSelect
+    | Selected option
+
+
+init : State option
+init =
+    { isVisible = False, selected = Nothing }
+
+
+update : Msg option -> State option -> State option
+update msg state =
+    case msg of
+        ToggleSelect ->
+            { state | isVisible = not state.isVisible }
+
+        Selected option ->
+            { state | selected = Just option, isVisible = False }
+
+
+select : Config embedMsg option -> State option -> Element embedMsg
+select config state =
     Element.row
         [ Element.width (Element.fill |> Element.minimum size.minWidth)
         , Element.height (Element.px size.height)
-        , Element.spaceEvenly
-        , Element.paddingXY Size.padding_3 Size.padding_2
         , Border.width 1
         , Border.rounded Size.border_md
         , Border.color Color.zinc200
@@ -30,16 +60,30 @@ select =
         , Font.family [ Font.sansSerif ]
         , Font.medium
         , Util.style "user-select" "none"
-        , Element.pointer
-        , Element.below optionsPanel
+        , Util.style "-webkit-user-select" "none"
+        , ifElse (Element.below <| viewOptions { options = config.options, toString = config.toString, embedMsg = config.embedMsg } state.selected) Util.noAttr state.isVisible
         ]
-        [ Element.el [ Element.centerY ] (Element.text "Select a fruit")
-        , Icons.renderIcon Icons.downArrow
+        [ Element.row
+            [ Element.width Element.fill
+            , Element.height Element.fill
+            , Element.spaceEvenly
+            , Element.paddingXY Size.padding_3 Size.padding_2
+            , Element.pointer
+            , Events.onClick (config.embedMsg ToggleSelect)
+            ]
+            [ Element.el [ Element.centerY ] (Element.text <| selectLabel config state.selected)
+            , Icons.renderIcon Icons.downArrow
+            ]
         ]
 
 
-optionsPanel : Element msg
-optionsPanel =
+selectLabel : { a | label : String, toString : option -> String } -> Maybe option -> String
+selectLabel config option =
+    Maybe.unwrap config.label config.toString option
+
+
+viewOptions : { options : List option, toString : option -> String, embedMsg : Msg option -> embedMsg } -> Maybe option -> Element embedMsg
+viewOptions config selectedOption =
     Element.column
         (Element.moveDown Size.spacing
             :: Element.width Element.fill
@@ -50,20 +94,30 @@ optionsPanel =
             :: Util.shadow
         )
     <|
-        List.map renderItem loremOptions
+        List.map (renderItem { toString = config.toString, embedMsg = config.embedMsg } selectedOption) config.options
 
 
-renderItem : ( String, Selected ) -> Element msg
-renderItem ( option, selected ) =
+renderItem : { toString : option -> String, embedMsg : Msg option -> embedMsg } -> Maybe option -> option -> Element embedMsg
+renderItem config selectedOption option =
     Element.row
         [ Element.width Element.fill
         , Element.paddingXY Size.padding_2 Size.padding_3
         , Border.rounded Size.border_md
         , Element.pointer
         , Element.mouseOver [ Background.color Color.slate50 ]
+        , Events.onClick (config.embedMsg <| Selected option)
         ]
-        [ Element.el [ Element.width (Element.px Size.spacing6), Element.centerY ] <| ifElse (Element.el [ Element.centerX ] (Icons.renderIcon Icons.check)) Element.none selected
-        , Element.el [ Element.centerY, Element.alignLeft ] (Element.text option)
+        [ Element.el
+            [ Element.width (Element.px Size.spacing6)
+            , Element.centerY
+            ]
+          <|
+            ifElse (Element.el [ Element.centerX ] (Icons.renderIcon Icons.check)) Element.none (selectedOption == Just option)
+        , Element.el
+            [ Element.centerY
+            , Element.alignLeft
+            ]
+            (Element.text <| config.toString option)
         ]
 
 
@@ -72,13 +126,3 @@ size =
     { height = Size.spacing10
     , minWidth = Size.spacing45
     }
-
-
-loremOptions : List ( String, Selected )
-loremOptions =
-    [ ( "Apple", False )
-    , ( "Banana", False )
-    , ( "Blueberry", True )
-    , ( "Grapes", False )
-    , ( "Pineapple", False )
-    ]

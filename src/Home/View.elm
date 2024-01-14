@@ -4,6 +4,7 @@ import Browser exposing (Document)
 import Element exposing (Element, centerX, centerY, el, fill, height, image, inFront, paddingXY, px, rgb255, row, spacing, text, width, wrappedRow)
 import Element.Background as Background
 import Element.Border as Border
+import Home.Data exposing (Option(..), optionStr)
 import Home.Model as Home
 import Home.Msg as Home exposing (Msg(..))
 import UI.Button as Button
@@ -16,13 +17,13 @@ import UI.Select as Select
 
 
 view : Home.Model -> Element Home.Msg
-view _ =
+view model =
     wrappedRow
         [ width fill
         , height fill
         , spacing 10
         , Background.color (rgb255 255 255 255)
-        , inFront toggleDrawerBtn
+        , inFront (toggleDrawerBtn model)
         ]
     <|
         []
@@ -45,9 +46,9 @@ drawer =
         [ el [ centerX, centerY ] (text "I'm Drawer") ]
 
 
-toggleDrawerBtn : Element Msg
-toggleDrawerBtn =
-    row [ centerX, paddingXY 0 24, spacing 20 ]
+toggleDrawerBtn : Home.Model -> Element Msg
+toggleDrawerBtn model =
+    wrappedRow [ centerX, paddingXY 0 24, spacing 20 ]
         [ Button.ghost [] { onTap = Nothing, label = "Ghost" }
         , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.primary Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
@@ -60,8 +61,26 @@ toggleDrawerBtn =
             |> Button.label "Login with Email"
             |> Button.loading (Button.Loading "Please wait...")
             |> Button.button []
-        , Select.select
+        , Select.select selectConfig model.selectFruitState
         ]
+
+
+
+-- Select
+
+
+selectConfig : Select.Config Home.Msg Option
+selectConfig =
+    { label = "Select a fruit"
+    , options = options
+    , toString = optionStr
+    , embedMsg = SelectFruit
+    }
+
+
+options : List Option
+options =
+    [ Apple, Banana, Blueberry, Grapes, Pineapple ]
 
 
 document : Home.Model -> Document Home.Msg
