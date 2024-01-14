@@ -55,6 +55,7 @@ config =
     , NoUnused.Exports.rule
         |> Rule.ignoreErrorsForDirectories ["src/UI/Preset/"]
         |> Rule.ignoreErrorsForFiles ["src/UI/Button.elm"]
+        |> Rule.ignoreErrorsForFiles ["src/UI/Select.elm"]
         |> Rule.ignoreErrorsForFiles ["src/Util.elm"]
     , NoUnused.Parameters.rule
     , NoUnused.Patterns.rule
