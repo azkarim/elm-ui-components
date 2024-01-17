@@ -97,7 +97,7 @@ transition : List (Element.Attribute msg)
 transition =
     -- todo : refactor to animation library
     [ Html.Attributes.style "transform-origin" "center top 0px"
-    , Html.Attributes.style "transition-property" "transform, border-radius"
+    , Html.Attributes.style "transition-property" "transform"
     , Html.Attributes.style "transition-duration" "0.5s"
     , Html.Attributes.style "transition-timing-function" "cubic-bezier(0.32, 0.72, 0, 1)"
     ]
