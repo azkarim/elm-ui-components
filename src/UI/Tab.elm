@@ -99,7 +99,15 @@ dynamicAttrs1 status inactiveOnClick =
 
 commonAttrs1 : List (Element.Attribute msg)
 commonAttrs1 =
-    [ Element.width Element.fill
-    , Element.paddingXY Size.padding_3 Size.padding_2
-    , Border.rounded Size.border_md
+    Element.width Element.fill
+        :: Element.paddingXY Size.padding_3 Size.padding_2
+        :: Border.rounded Size.border_md
+        :: transitions
+
+
+transitions : List (Element.Attribute msg)
+transitions =
+    [ Util.style "transition-property" "color,background-color"
+    , Util.style "transition-timing-function" "cubic-bezier(.4,0,.2,1)"
+    , Util.style "transition-duration" "0.15s"
     ]
