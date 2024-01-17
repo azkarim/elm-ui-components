@@ -62,12 +62,13 @@ type ActiveStatus
 renderTabEl : { tab : tab, toString : tab -> String, status : ActiveStatus, embedMsg : Msg tab -> embedMsg } -> Element embedMsg
 renderTabEl config =
     Element.el (commonAttrs1 ++ dynamicAttrs1 config.status (SelectTab config.tab |> config.embedMsg))
-        (Element.text <| config.toString config.tab)
+        (Element.el [ Element.centerX ] (Element.text <| config.toString config.tab))
 
 
 commonAttrs0 : List (Element.Attribute embedMsg)
 commonAttrs0 =
-    Element.paddingXY Size.padding_1 Size.padding_1
+    Element.width Element.fill
+        :: Element.paddingXY Size.padding_1 Size.padding_1
         :: Element.spaceEvenly
         :: Element.spacing Size.spacing1
         :: Background.color Color.zinc100
@@ -98,7 +99,7 @@ dynamicAttrs1 status inactiveOnClick =
 
 commonAttrs1 : List (Element.Attribute msg)
 commonAttrs1 =
-    [ Element.centerX
+    [ Element.width Element.fill
     , Element.paddingXY Size.padding_3 Size.padding_2
     , Border.rounded Size.border_md
     ]
