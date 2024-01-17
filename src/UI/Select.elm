@@ -11,6 +11,7 @@ import UI.Preset.Color as Color
 import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size
 import UI.Preset.Util as Util
+import UI.Theme exposing (theme)
 import Util exposing (ifElse)
 
 
@@ -68,8 +69,8 @@ select attrs config state =
         (Element.width (Element.fill |> Element.minimum size.minWidth)
             :: Element.height (Element.px size.height)
             :: Border.width 1
-            :: Border.rounded Size.border_md
-            :: Border.color Color.zinc200
+            :: Border.rounded theme.borderRounded
+            :: Border.color theme.border
             :: Font.size Size.text_sm
             :: Font.letterSpacing 0.4
             :: Font.family [ Font.sansSerif ]
@@ -111,8 +112,8 @@ viewOptions config selectedOption =
                 :: Element.width Element.fill
                 :: Element.paddingXY Size.padding_2 Size.padding_2
                 :: Border.width 1
-                :: Border.rounded Size.border_md
-                :: Border.color Color.zinc200
+                :: Border.rounded theme.borderRounded
+                :: Border.color theme.border
                 :: Util.shadow
             )
         <|
@@ -124,7 +125,7 @@ renderItem config selectedOption option =
     Element.row
         [ Element.width Element.fill
         , Element.paddingXY Size.padding_2 Size.padding_3
-        , Border.rounded Size.border_md
+        , Border.rounded theme.borderRounded
         , Element.pointer
         , Element.mouseOver [ Background.color Color.slate50 ]
         , Util.onClick (config.embedMsg <| Selected option)

@@ -7,6 +7,7 @@ import Element.Font as Font
 import Html.Attributes
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
+import UI.Theme exposing (theme)
 import Util
 
 
@@ -45,25 +46,25 @@ badgeTypeAttrs : Badge -> List (Element.Attribute msg)
 badgeTypeAttrs type_ =
     case type_ of
         Primary ->
-            [ Background.color Color.palette.primary
+            [ Background.color theme.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ Color.palette.primary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ theme.primary |> Color.setAlpha 0.9 |> Background.color ]
             ]
                 ++ transitions
 
         Secondary ->
-            [ Background.color Color.palette.secondary
+            [ Background.color theme.secondary
             ]
 
         Outline ->
             Background.color Color.neutral
-                :: addBorder Color.zinc200
+                :: addBorder theme.border
 
 
 commonAttrs : List (Element.Attribute msg)
 commonAttrs =
     Element.paddingXY Size.padding_3 Size.padding_1
-        :: Border.rounded Size.border_md
+        :: Border.rounded theme.borderRounded
         :: Element.focused []
         :: Font.size Size.text_xs
         :: Font.letterSpacing 0.6

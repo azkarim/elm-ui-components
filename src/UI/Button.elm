@@ -10,6 +10,7 @@ import Loading
 import Maybe.Extra as Maybe
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
+import UI.Theme exposing (theme)
 import Util
 
 
@@ -187,20 +188,20 @@ btnTypeAttrs : ButtonType -> List (Element.Attribute msg)
 btnTypeAttrs type_ =
     case type_ of
         Primary ->
-            [ Background.color Color.palette.primary
+            [ Background.color theme.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ Color.palette.primary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ theme.primary |> Color.setAlpha 0.9 |> Background.color ]
             ]
 
         Secondary ->
-            [ Background.color Color.palette.secondary
-            , Element.mouseOver [ Color.palette.secondary |> Color.setAlpha 0.9 |> Background.color ]
+            [ Background.color theme.secondary
+            , Element.mouseOver [ theme.secondary |> Color.setAlpha 0.9 |> Background.color ]
             ]
 
         Outline ->
             Background.color Color.neutral
                 :: Element.mouseOver [ Background.color Color.slate50 ]
-                :: addBorder Color.zinc200
+                :: addBorder theme.border
 
         Ghost ->
             [ Element.mouseOver [ Background.color Color.slate50 ]
@@ -209,7 +210,7 @@ btnTypeAttrs type_ =
         Icon ->
             Background.color Color.neutral
                 :: Element.mouseOver [ Background.color Color.slate50 ]
-                :: addBorder Color.zinc200
+                :: addBorder theme.border
 
 
 commonAttrs : List (Element.Attribute msg)
@@ -225,7 +226,7 @@ commonAttrs =
                 |> Util.fromAtrrs
     in
     [ Element.paddingXY Size.padding_4 Size.padding_3
-    , Border.rounded Size.border_md
+    , Border.rounded theme.borderRounded
     , Element.focused []
     , Font.size Size.text_sm
     , Font.letterSpacing 0.4

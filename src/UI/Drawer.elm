@@ -53,7 +53,7 @@ layout { isDrawerVisible, onTap, drawerHeight } drawer content =
             (Element.width Element.fill
                 :: Element.height Element.fill
                 :: Maybe.unwrap Element.clipX (ifElse Element.clip Element.clipX) isDrawerVisible
-                :: Maybe.unwrap Util.noAttr (ifElse (Border.rounded Size.border_md) (Border.rounded 0)) isDrawerVisible
+                :: Maybe.unwrap Util.noAttr (ifElse (Border.rounded Size.border_lg) (Border.rounded 0)) isDrawerVisible
                 :: Maybe.unwrap Util.noAttr (ifElse (Element.inFront <| recedeOverlay onTap) Util.noAttr) isDrawerVisible
                 :: transition
                 ++ Maybe.unwrap [] (ifElse recede []) isDrawerVisible

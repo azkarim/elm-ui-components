@@ -8,6 +8,7 @@ import Element.Font as Font
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
 import UI.Preset.Util as Util
+import UI.Theme exposing (theme)
 import Util exposing (ifElse)
 
 
@@ -72,7 +73,7 @@ commonAttrs0 =
         :: Element.spaceEvenly
         :: Element.spacing Size.spacing1
         :: Background.color Color.zinc100
-        :: Border.rounded Size.border_md
+        :: Border.rounded theme.borderRounded
         :: Element.focused []
         :: Font.size Size.text_xs
         :: Font.letterSpacing 0.8
@@ -101,7 +102,7 @@ commonAttrs1 : List (Element.Attribute msg)
 commonAttrs1 =
     Element.width Element.fill
         :: Element.paddingXY Size.padding_3 Size.padding_2
-        :: Border.rounded Size.border_md
+        :: Border.rounded theme.borderRounded
         :: transitions
 
 
