@@ -26,14 +26,24 @@ border_xl =
     12
 
 
+padding : Int -> Int
+padding lessThanFour =
+    lessThanFour
+
+
+padding_1 : Int
+padding_1 =
+    4
+
+
+padding_1_5 : Int
+padding_1_5 =
+    6
+
+
 padding_2 : Int
 padding_2 =
     8
-
-
-padding : Int
-padding =
-    4
 
 
 padding_3 : Int
@@ -44,6 +54,16 @@ padding_3 =
 padding_4 : Int
 padding_4 =
     16
+
+
+text_0 : Int
+text_0 =
+    4
+
+
+text_2 : Int
+text_2 =
+    8
 
 
 text_xs : Int
