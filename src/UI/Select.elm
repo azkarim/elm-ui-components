@@ -3,6 +3,7 @@ module UI.Select exposing (Config, Msg, State, hide, init, select, selected, upd
 import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
+import Element.Events as Events
 import Element.Font as Font
 import Maybe.Extra as Maybe
 import Simple.Animation as Animation exposing (Animation)
@@ -22,6 +23,7 @@ import Util exposing (ifElse)
 type alias State option =
     { isVisible : Bool
     , selected : Maybe option
+    , highlightSelected : Bool
     }
 
 
@@ -36,11 +38,13 @@ type alias Config embedMsg option =
 type Msg option
     = ToggleSelect
     | Selected option
+      -- we remove the hover bg when mouse starts to move inside viewOptions panel
+    | RemoveSelectedOptionHighlight
 
 
 init : State option
 init =
-    { isVisible = False, selected = Nothing }
+    { isVisible = False, selected = Nothing, highlightSelected = False }
 
 
 update : Msg option -> State option -> State option
@@ -50,7 +54,10 @@ update msg state =
             { state | isVisible = not state.isVisible }
 
         Selected option ->
-            { state | selected = Just option, isVisible = False }
+            { state | selected = Just option, isVisible = False, highlightSelected = True }
+
+        RemoveSelectedOptionHighlight ->
+            { state | highlightSelected = False }
 
 
 hide : State option -> State option
@@ -75,7 +82,7 @@ select attrs config state =
             :: Font.letterSpacing 0.4
             :: Font.family [ Font.sansSerif ]
             :: Font.medium
-            :: ifElse (Element.below <| viewOptions { options = config.options, toString = config.toString, embedMsg = config.embedMsg } state.selected) Util.noAttr state.isVisible
+            :: ifElse (Element.below <| viewOptions { options = config.options, toString = config.toString, embedMsg = config.embedMsg, highlightSelected = state.highlightSelected } state.selected) Util.noAttr state.isVisible
             :: Util.userSelectNone
             ++ attrs
         )
@@ -98,13 +105,14 @@ selectLabel config option =
     Maybe.unwrap config.label config.toString option
 
 
-viewOptions : { options : List option, toString : option -> String, embedMsg : Msg option -> embedMsg } -> Maybe option -> Element embedMsg
+viewOptions : { options : List option, toString : option -> String, embedMsg : Msg option -> embedMsg, highlightSelected : Bool } -> Maybe option -> Element embedMsg
 viewOptions config selectedOption =
     Util.animatedEl Element.el
         slideInAnim
         [ Element.width Element.fill
         , Util.style "transform-origin" "top"
         , Util.style "will-change" "transform"
+        , Events.onMouseMove (config.embedMsg RemoveSelectedOptionHighlight)
         ]
     <|
         Element.column
@@ -118,17 +126,18 @@ viewOptions config selectedOption =
                 :: Util.shadow
             )
         <|
-            List.map (renderItem { toString = config.toString, embedMsg = config.embedMsg } selectedOption) config.options
+            List.map (renderItem { toString = config.toString, embedMsg = config.embedMsg, highlightSelected = config.highlightSelected } selectedOption) config.options
 
 
-renderItem : { toString : option -> String, embedMsg : Msg option -> embedMsg } -> Maybe option -> option -> Element embedMsg
+renderItem : { toString : option -> String, embedMsg : Msg option -> embedMsg, highlightSelected : Bool } -> Maybe option -> option -> Element embedMsg
 renderItem config selectedOption option =
     Element.row
         [ Element.width Element.fill
         , Element.paddingXY Size.padding_2 Size.padding_3
         , Border.rounded theme.borderRounded
         , Element.pointer
-        , Element.mouseOver [ Background.color Color.slate50 ]
+        , ifElse (Background.color theme.hover) Util.noAttr (Just option == selectedOption && config.highlightSelected)
+        , Element.mouseOver [ Background.color theme.hover ]
         , Util.onClick (config.embedMsg <| Selected option)
         ]
         [ Element.el

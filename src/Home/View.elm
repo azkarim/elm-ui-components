@@ -17,7 +17,6 @@ import UI.Preset.Size as Size
 import UI.Preset.Util as Util
 import UI.Select as Select
 import UI.Tab as Tab
-import Util
 
 
 view : Home.Model -> Element Home.Msg
