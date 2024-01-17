@@ -45,14 +45,14 @@ badgeTypeAttrs : Badge -> List (Element.Attribute msg)
 badgeTypeAttrs type_ =
     case type_ of
         Primary ->
-            [ Background.color Color.preset.primary
+            [ Background.color Color.palette.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ Color.preset.primary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ Color.palette.primary |> Color.setAlpha 0.9 |> Background.color ]
             ]
                 ++ transitions
 
         Secondary ->
-            [ Background.color Color.preset.secondary
+            [ Background.color Color.palette.secondary
             ]
 
         Outline ->

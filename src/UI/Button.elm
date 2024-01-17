@@ -187,14 +187,14 @@ btnTypeAttrs : ButtonType -> List (Element.Attribute msg)
 btnTypeAttrs type_ =
     case type_ of
         Primary ->
-            [ Background.color Color.preset.primary
+            [ Background.color Color.palette.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ Color.preset.primary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ Color.palette.primary |> Color.setAlpha 0.9 |> Background.color ]
             ]
 
         Secondary ->
-            [ Background.color Color.preset.secondary
-            , Element.mouseOver [ Color.preset.secondary |> Color.setAlpha 0.9 |> Background.color ]
+            [ Background.color Color.palette.secondary
+            , Element.mouseOver [ Color.palette.secondary |> Color.setAlpha 0.9 |> Background.color ]
             ]
 
         Outline ->

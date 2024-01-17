@@ -3,10 +3,11 @@ module UI.Preset.Color exposing (..)
 import Element
 
 
-preset : { primary : Element.Color, secondary : Element.Color }
-preset =
+palette : { primary : Element.Color, secondary : Element.Color, hover : Element.Color }
+palette =
     { primary = slate900
     , secondary = zinc200
+    , hover = zinc100
     }
 
 
