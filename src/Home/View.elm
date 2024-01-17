@@ -4,13 +4,15 @@ import Browser exposing (Document)
 import Element exposing (Element, centerX, centerY, el, fill, height, image, inFront, paddingXY, px, rgb255, row, spacing, text, width, wrappedRow)
 import Element.Background as Background
 import Element.Border as Border
+import Element.Events as Events
 import Home.Data exposing (Option(..), optionStr)
 import Home.Model as Home
 import Home.Msg as Home exposing (Msg(..))
+import UI.Badge as Badge
 import UI.Button as Button
 import UI.Drawer as Drawer
 import UI.Preset.Color as Color
-import UI.Preset.Icons as Icons
+import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size
 import UI.Preset.Util as Util
 import UI.Select as Select
@@ -23,7 +25,7 @@ view model =
         , height fill
         , spacing 10
         , Background.color (rgb255 255 255 255)
-        , inFront (toggleDrawerBtn model)
+        , inFront (uiSet model)
         ]
     <|
         []
@@ -46,22 +48,26 @@ drawer =
         [ el [ centerX, centerY ] (text "I'm Drawer") ]
 
 
-toggleDrawerBtn : Home.Model -> Element Msg
-toggleDrawerBtn model =
+uiSet : Home.Model -> Element Msg
+uiSet model =
     wrappedRow [ centerX, paddingXY 0 24, spacing 20 ]
         [ Button.ghost [] { onTap = Nothing, label = "Ghost" }
         , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.primary Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.secondary [] { onTap = Just ToggleDrawer, label = "Toggle" }
-        , Button.iconBtn [] { onTap = Just ToggleDrawer, icon = Icons.renderIcon Icons.rightArrow }
+        , Button.iconBtn [] { onTap = Just ToggleDrawer, icon = Icon.renderIcon Icon.rightArrow }
         , Button.new
             |> Button.buttonType Button.Primary
             |> Button.onTap (Just ToggleDrawer)
-            |> Button.icon (Icons.renderIcon Icons.email)
+            |> Button.icon (Icon.renderIcon Icon.email)
             |> Button.label "Login with Email"
             |> Button.loading (Button.Loading "Please wait...")
             |> Button.button []
         , Select.select [] selectConfig model.selectFruitState
+        , Badge.primary "work"
+        , Badge.secondary "budget"
+        , Badge.outline "outline"
+        , Badge.badge [ Border.rounded 12, Events.onClick ToggleDrawer, Element.paddingXY Size.padding_3 Size.padding_2, Element.pointer ] "Dashboard" Badge.Secondary
         ]
 
 
