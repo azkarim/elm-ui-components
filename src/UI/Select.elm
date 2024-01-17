@@ -51,7 +51,7 @@ update : Msg option -> State option -> State option
 update msg state =
     case msg of
         ToggleSelect ->
-            { state | isVisible = not state.isVisible }
+            { state | isVisible = not state.isVisible, highlightSelected = ifElse True False (Maybe.isJust state.selected) }
 
         Selected option ->
             { state | selected = Just option, isVisible = False, highlightSelected = True }
@@ -112,7 +112,7 @@ viewOptions config selectedOption =
         [ Element.width Element.fill
         , Util.style "transform-origin" "top"
         , Util.style "will-change" "transform"
-        , Events.onMouseMove (config.embedMsg RemoveSelectedOptionHighlight)
+        , ifElse (Events.onMouseMove (config.embedMsg RemoveSelectedOptionHighlight)) Util.noAttr config.highlightSelected
         ]
     <|
         Element.column
