@@ -64,6 +64,18 @@ zinc200 =
     Element.rgb255 228 228 231
 
 
+zinc500 : Element.Color
+zinc500 =
+    -- #71717a
+    Element.rgb255 113 113 122
+
+
+zinc900 : Element.Color
+zinc900 =
+    -- #09090B
+    Element.rgb255 9 9 11
+
+
 neutral : Element.Color
 neutral =
     --#ffffff
