@@ -1,4 +1,4 @@
-module UI.Preset.Icons exposing (..)
+module UI.Preset.Icon exposing (..)
 
 import Element exposing (Element)
 import Svg exposing (path, svg)
