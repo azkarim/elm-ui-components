@@ -138,7 +138,7 @@ button attrs btn =
     in
     Input.button
         (if btn.loading == Loaded then
-            Maybe.unwrap attrs_ (\btn_ -> btnTypeAttr btn_ ++ attrs_) btn.buttonType
+            Maybe.unwrap attrs_ (\btn_ -> btnTypeAttrs btn_ ++ attrs_) btn.buttonType
 
          else
             loadingStatusAttrs ++ attrs_
@@ -178,13 +178,13 @@ loadingStatusAttrs : List (Element.Attribute msg)
 loadingStatusAttrs =
     [ Background.color Color.loading
     , Font.color Color.neutral
-    , Element.htmlAttribute <| Html.Attributes.style "pointer-events" "none"
-    , Element.htmlAttribute <| Html.Attributes.style "cursor" "not-allowed"
+    , Util.style "pointer-events" "none"
+    , Util.style "cursor" "not-allowed"
     ]
 
 
-btnTypeAttr : ButtonType -> List (Element.Attribute msg)
-btnTypeAttr type_ =
+btnTypeAttrs : ButtonType -> List (Element.Attribute msg)
+btnTypeAttrs type_ =
     case type_ of
         Primary ->
             [ Background.color Color.preset.primary
