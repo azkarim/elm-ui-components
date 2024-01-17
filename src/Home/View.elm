@@ -69,7 +69,7 @@ uiSet model =
         , Badge.secondary "budget"
         , Badge.outline "outline"
         , Badge.badge [ Border.rounded 12, Events.onClick ToggleDrawer, Element.paddingXY Size.padding_3 Size.padding_2, Element.pointer ] "Dashboard" Badge.Secondary
-        , Tab.tab [] tabConfig model.userSettingsTab
+        , Tab.tab [ Element.width (Element.px 600) ] tabConfig model.userSettingsTab
         ]
 
 
