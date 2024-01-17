@@ -101,8 +101,8 @@ text_3xl =
     30
 
 
-spacing : number
-spacing =
+spacing1 : number
+spacing1 =
     4
 
 

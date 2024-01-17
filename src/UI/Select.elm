@@ -107,7 +107,7 @@ viewOptions config selectedOption =
         ]
     <|
         Element.column
-            (Element.moveDown Size.spacing
+            (Element.moveDown Size.spacing1
                 :: Element.width Element.fill
                 :: Element.paddingXY Size.padding_2 Size.padding_2
                 :: Border.width 1
