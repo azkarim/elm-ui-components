@@ -17,6 +17,7 @@ import UI.Preset.Size as Size
 import UI.Preset.Util as Util
 import UI.Select as Select
 import UI.Tab as Tab
+import Util
 
 
 view : Home.Model -> Element Home.Msg
@@ -43,7 +44,7 @@ drawer =
     row
         [ width fill
         , height (px 400)
-        , Border.rounded Size.border_lg
+        , Border.roundEach { topLeft = Size.border_lg, topRight = Size.border_lg, bottomRight = 0, bottomLeft = 0 }
         , Background.color Color.neutral50
         ]
         [ el [ centerX, centerY ] (text "I'm Drawer") ]
