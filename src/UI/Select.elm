@@ -114,6 +114,7 @@ viewOptions config selectedOption =
                 :: Border.width 1
                 :: Border.rounded theme.borderRounded
                 :: Border.color theme.border
+                :: Background.color Color.neutral
                 :: Util.shadow
             )
         <|
