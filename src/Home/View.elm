@@ -51,7 +51,7 @@ drawer =
 
 uiSet : Home.Model -> Element Msg
 uiSet model =
-    wrappedRow [ centerX, paddingXY 0 24, spacing 20 ]
+    wrappedRow [ centerX, paddingXY 24 24, spacing 20 ]
         [ Button.ghost [] { onTap = Nothing, label = "Ghost" }
         , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.primary Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
@@ -69,7 +69,7 @@ uiSet model =
         , Badge.secondary "budget"
         , Badge.outline "outline"
         , Badge.badge [ Border.rounded 12, Events.onClick ToggleDrawer, Element.paddingXY Size.padding_3 Size.padding_2, Element.pointer ] "Dashboard" Badge.Secondary
-        , Tab.tab [ Element.width (Element.px 600) ] tabConfig model.userSettingsTab
+        , Tab.tab [ Element.width (Element.fill |> Element.minimum 200) ] tabConfig model.userSettingsTab
         ]
 
 
