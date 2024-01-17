@@ -1,4 +1,4 @@
-module Util exposing (animatedEl, fromAtrrs, ifElse, noAttr, onClick, style)
+module Util exposing (animatedEl, fromAtrrs, ifElse, noAttr, onClick, style, userSelectNone)
 
 import Element
 import Html
@@ -32,6 +32,13 @@ noAttr =
 style : String -> String -> Element.Attribute msg
 style prop value =
     Element.htmlAttribute <| Html.Attributes.style prop value
+
+
+userSelectNone : List (Element.Attribute msg)
+userSelectNone =
+    [ style "user-select" "none"
+    , style "-webkit-user-select" "none"
+    ]
 
 
 fromAtrrs : List (Html.Attribute msg) -> List (Element.Attribute msg)
