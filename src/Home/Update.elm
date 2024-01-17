@@ -4,6 +4,7 @@ import Home.Model as Home
 import Home.Msg as Home exposing (Msg(..))
 import UI.Drawer as Drawer
 import UI.Select as Select
+import UI.Tab as Tab
 
 
 update : Home.Msg -> Home.Model -> ( Home.Model, Cmd Home.Msg )
@@ -18,6 +19,5 @@ update msg model =
         TappedBody ->
             ( { model | selectFruitState = Select.hide model.selectFruitState }, Cmd.none )
 
-
-
--- ( model, Cmd.none )
+        UserSettingsTabSelected tabMsg ->
+            ( { model | userSettingsTab = Tab.update tabMsg model.userSettingsTab }, Cmd.none )

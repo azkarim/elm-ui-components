@@ -5,7 +5,7 @@ import Element exposing (Element, centerX, centerY, el, fill, height, image, inF
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
-import Home.Data exposing (Option(..), optionStr)
+import Home.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
 import Home.Model as Home
 import Home.Msg as Home exposing (Msg(..))
 import UI.Badge as Badge
@@ -16,6 +16,7 @@ import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size
 import UI.Preset.Util as Util
 import UI.Select as Select
+import UI.Tab as Tab
 
 
 view : Home.Model -> Element Home.Msg
@@ -68,7 +69,16 @@ uiSet model =
         , Badge.secondary "budget"
         , Badge.outline "outline"
         , Badge.badge [ Border.rounded 12, Events.onClick ToggleDrawer, Element.paddingXY Size.padding_3 Size.padding_2, Element.pointer ] "Dashboard" Badge.Secondary
+        , Tab.tab [] tabConfig model.userSettingsTab
         ]
+
+
+tabConfig : Tab.Config Data.UserSettingsTab Msg
+tabConfig =
+    { tabs = [ Account, Password ]
+    , toString = Data.tabStr
+    , embedMsg = UserSettingsTabSelected
+    }
 
 
 

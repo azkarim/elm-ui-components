@@ -1,4 +1,19 @@
-module Home.Data exposing (Option(..), optionStr)
+module Home.Data exposing (Option(..), UserSettingsTab(..), optionStr, tabStr)
+
+
+type UserSettingsTab
+    = Account
+    | Password
+
+
+tabStr : UserSettingsTab -> String
+tabStr tab =
+    case tab of
+        Account ->
+            "Account"
+
+        Password ->
+            "Password"
 
 
 type Option
