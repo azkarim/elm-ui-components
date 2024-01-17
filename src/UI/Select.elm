@@ -8,7 +8,7 @@ import Maybe.Extra as Maybe
 import Simple.Animation as Animation exposing (Animation)
 import Simple.Animation.Property as P
 import UI.Preset.Color as Color
-import UI.Preset.Icons as Icons
+import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size
 import UI.Preset.Util as Util
 import Util exposing (ifElse)
@@ -74,10 +74,9 @@ select attrs config state =
             :: Font.letterSpacing 0.4
             :: Font.family [ Font.sansSerif ]
             :: Font.medium
-            :: Util.style "user-select" "none"
-            :: Util.style "-webkit-user-select" "none"
             :: ifElse (Element.below <| viewOptions { options = config.options, toString = config.toString, embedMsg = config.embedMsg } state.selected) Util.noAttr state.isVisible
-            :: attrs
+            :: Util.userSelectNone
+            ++ attrs
         )
         [ Element.row
             [ Element.width Element.fill
@@ -88,7 +87,7 @@ select attrs config state =
             , Util.onClick (config.embedMsg ToggleSelect)
             ]
             [ Element.el [ Element.centerY ] (Element.text <| selectLabel config state.selected)
-            , Icons.renderIcon Icons.downArrow
+            , Icon.renderIcon Icon.downArrow
             ]
         ]
 
@@ -135,7 +134,7 @@ renderItem config selectedOption option =
             , Element.centerY
             ]
           <|
-            ifElse (Element.el [ Element.centerX ] (Icons.renderIcon Icons.check)) Element.none (selectedOption == Just option)
+            ifElse (Element.el [ Element.centerX ] (Icon.renderIcon Icon.check)) Element.none (selectedOption == Just option)
         , Element.el
             [ Element.centerY
             , Element.alignLeft
