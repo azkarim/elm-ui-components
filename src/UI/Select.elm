@@ -5,6 +5,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
+import Element.Lazy as Lazy
 import Maybe.Extra as Maybe
 import Simple.Animation as Animation exposing (Animation)
 import Simple.Animation.Property as P
@@ -38,7 +39,7 @@ type alias Config embedMsg option =
 type Msg option
     = ToggleSelect
     | Selected option
-      -- we remove the hover bg when mouse starts to move inside viewOptions panel
+      -- we remove the highlighted bg on selected item when mouse starts to move inside viewOptions panel; ready to select new option
     | RemoveSelectedOptionHighlight
 
 
@@ -126,17 +127,17 @@ viewOptions config selectedOption =
                 :: Util.shadow
             )
         <|
-            List.map (renderItem { toString = config.toString, embedMsg = config.embedMsg, highlightSelected = config.highlightSelected } selectedOption) config.options
+            List.map (Lazy.lazy2 renderItem { toString = config.toString, embedMsg = config.embedMsg, highlightSelected = config.highlightSelected, selectedOption = selectedOption }) config.options
 
 
-renderItem : { toString : option -> String, embedMsg : Msg option -> embedMsg, highlightSelected : Bool } -> Maybe option -> option -> Element embedMsg
-renderItem config selectedOption option =
+renderItem : { toString : option -> String, embedMsg : Msg option -> embedMsg, highlightSelected : Bool, selectedOption : Maybe option } -> option -> Element embedMsg
+renderItem config option =
     Element.row
         [ Element.width Element.fill
         , Element.paddingXY Size.padding_2 Size.padding_3
         , Border.rounded theme.borderRounded
         , Element.pointer
-        , ifElse (Background.color theme.hover) Util.noAttr (Just option == selectedOption && config.highlightSelected)
+        , ifElse (Background.color theme.hover) Util.noAttr (Just option == config.selectedOption && config.highlightSelected)
         , Element.mouseOver [ Background.color theme.hover ]
         , Util.onClick (config.embedMsg <| Selected option)
         ]
@@ -145,7 +146,7 @@ renderItem config selectedOption option =
             , Element.centerY
             ]
           <|
-            ifElse (Element.el [ Element.centerX ] (Icon.renderIcon Icon.check)) Element.none (selectedOption == Just option)
+            ifElse (Element.el [ Element.centerX ] (Icon.renderIcon Icon.check)) Element.none (config.selectedOption == Just option)
         , Element.el
             [ Element.centerY
             , Element.alignLeft
