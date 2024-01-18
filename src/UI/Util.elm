@@ -1,4 +1,4 @@
-module UI.Util exposing (..)
+module UI.Util exposing (addBorder, renderIcon, shadow)
 
 import Element exposing (Element)
 import Element.Border as Border
