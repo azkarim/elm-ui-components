@@ -91,12 +91,3 @@ shadow : Element.Color
 shadow =
     --#000000
     Element.rgba255 0 0 0 0.1
-
-
-setAlpha : Float -> Element.Color -> Element.Color
-setAlpha alpha color =
-    Element.toRgb color
-        |> (\c ->
-                { c | alpha = alpha }
-                    |> Element.fromRgb
-           )
