@@ -50,20 +50,45 @@ uiSet model =
         , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.primary Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.secondary [] { onTap = Just ToggleDrawer, label = "Toggle" }
+        , exampleLoadingBtn
+        , emailBtn
         , Button.iconBtn [] { onTap = Just ToggleDrawer, icon = Util.renderIcon Icon.rightArrow }
-        , Button.new
-            |> Button.buttonType Button.Primary
-            |> Button.onTap (Just ToggleDrawer)
-            |> Button.icon (Util.renderIcon Icon.email)
-            |> Button.label "Login with Email"
-            |> Button.loading (Button.Loading "Please wait...")
-            |> Button.button []
         , Select.select [] selectConfig model.selectFruitState
         , Badge.primary "work"
         , Badge.secondary "budget"
         , Badge.outline "outline"
         , Badge.badge [ Border.rounded 12, Events.onClick ToggleDrawer, Element.paddingXY Size.padding_3 Size.padding_2, Element.pointer ] "Dashboard" Badge.Secondary
         , Tab.tab [ Element.width (Element.fill |> Element.minimum 200) ] tabConfig model.userSettingsTab
+        ]
+
+
+exampleLoadingBtn : Element Msg
+exampleLoadingBtn =
+    Button.new
+        |> Button.buttonType Button.Primary
+        |> Button.onTap (Just ToggleDrawer)
+        |> Button.icon (Util.renderIcon Icon.email)
+        |> Button.label "Login with Email"
+        |> Button.loading (Button.Loading "Please wait...")
+        |> Button.button []
+
+
+emailBtn : Element Msg
+emailBtn =
+    Button.button [ Element.width (px 200) ]
+        { buttonType = Just Button.Ghost
+        , icon = Just <| Util.renderIcon (Util.renderIcon Icon.email)
+        , onTap = Just <| ToggleDrawer
+        , label = Just <| emailLabel 0
+        , loading = Button.Loaded
+        }
+
+
+emailLabel : Int -> Element msg
+emailLabel counter =
+    Element.row [ Element.width fill, Element.spaceEvenly ]
+        [ Element.el [ Element.moveRight 10 ] (Element.text "Email")
+        , Element.el [ Element.alignRight ] (Element.text <| String.fromInt counter)
         ]
 
 
