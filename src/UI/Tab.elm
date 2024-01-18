@@ -73,7 +73,7 @@ commonAttrs0 =
         :: Element.spaceEvenly
         :: Element.spacing Size.spacing1
         :: Background.color Color.zinc100
-        :: Border.rounded theme.borderRounded
+        :: Border.rounded theme.size.rounded
         :: Element.focused []
         :: Font.size Size.text_xs
         :: Font.letterSpacing 0.8
@@ -102,7 +102,7 @@ commonAttrs1 : List (Element.Attribute msg)
 commonAttrs1 =
     Element.width Element.fill
         :: Element.paddingXY Size.padding_3 Size.padding_2
-        :: Border.rounded theme.borderRounded
+        :: Border.rounded theme.size.rounded
         :: transitions
 
 

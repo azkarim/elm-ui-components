@@ -1,7 +1,7 @@
 module Home.View exposing (document)
 
 import Browser exposing (Document)
-import Element exposing (Element, centerX, centerY, el, fill, height, image, inFront, paddingXY, px, rgb255, row, spacing, text, width, wrappedRow)
+import Element exposing (Element, centerX, centerY, el, fill, height, inFront, paddingXY, px, rgb255, row, spacing, text, width, wrappedRow)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
@@ -50,11 +50,11 @@ uiSet model =
         , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.primary Util.shadow { onTap = Just ToggleDrawer, label = "Toggle" }
         , Button.secondary [] { onTap = Just ToggleDrawer, label = "Toggle" }
-        , Button.iconBtn [] { onTap = Just ToggleDrawer, icon = Icon.renderIcon Icon.rightArrow }
+        , Button.iconBtn [] { onTap = Just ToggleDrawer, icon = Util.renderIcon Icon.rightArrow }
         , Button.new
             |> Button.buttonType Button.Primary
             |> Button.onTap (Just ToggleDrawer)
-            |> Button.icon (Icon.renderIcon Icon.email)
+            |> Button.icon (Util.renderIcon Icon.email)
             |> Button.label "Login with Email"
             |> Button.loading (Button.Loading "Please wait...")
             |> Button.button []

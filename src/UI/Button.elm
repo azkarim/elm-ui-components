@@ -188,20 +188,20 @@ btnTypeAttrs : ButtonType -> List (Element.Attribute msg)
 btnTypeAttrs type_ =
     case type_ of
         Primary ->
-            [ Background.color theme.primary
+            [ Background.color theme.color.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ theme.primary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ theme.color.primary |> Color.setAlpha 0.9 |> Background.color ]
             ]
 
         Secondary ->
-            [ Background.color theme.secondary
-            , Element.mouseOver [ theme.secondary |> Color.setAlpha 0.9 |> Background.color ]
+            [ Background.color theme.color.secondary
+            , Element.mouseOver [ theme.color.secondary |> Color.setAlpha 0.9 |> Background.color ]
             ]
 
         Outline ->
             Background.color Color.neutral
                 :: Element.mouseOver [ Background.color Color.slate50 ]
-                :: addBorder theme.border
+                :: addBorder theme.color.border
 
         Ghost ->
             [ Element.mouseOver [ Background.color Color.slate50 ]
@@ -210,7 +210,7 @@ btnTypeAttrs type_ =
         Icon ->
             Background.color Color.neutral
                 :: Element.mouseOver [ Background.color Color.slate50 ]
-                :: addBorder theme.border
+                :: addBorder theme.color.border
 
 
 commonAttrs : List (Element.Attribute msg)
@@ -226,7 +226,7 @@ commonAttrs =
                 |> Util.fromAtrrs
     in
     [ Element.paddingXY Size.padding_4 Size.padding_3
-    , Border.rounded theme.borderRounded
+    , Border.rounded theme.size.rounded
     , Element.focused []
     , Font.size Size.text_sm
     , Font.letterSpacing 0.4

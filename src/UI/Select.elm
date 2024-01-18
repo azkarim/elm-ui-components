@@ -77,8 +77,8 @@ select attrs config state =
         (Element.width (Element.fill |> Element.minimum size.minWidth)
             :: Element.height (Element.px size.height)
             :: Border.width 1
-            :: Border.rounded theme.borderRounded
-            :: Border.color theme.border
+            :: Border.rounded theme.size.rounded
+            :: Border.color theme.color.border
             :: Font.size Size.text_sm
             :: Font.letterSpacing 0.4
             :: Font.family [ Font.sansSerif ]
@@ -96,7 +96,7 @@ select attrs config state =
             , Util.onClick (config.embedMsg ToggleSelect)
             ]
             [ Element.el [ Element.centerY ] (Element.text <| selectLabel config state.selected)
-            , Icon.renderIcon Icon.downArrow
+            , Util.renderIcon Icon.downArrow
             ]
         ]
 
@@ -121,8 +121,8 @@ viewOptions config selectedOption =
                 :: Element.width Element.fill
                 :: Element.paddingXY Size.padding_2 Size.padding_2
                 :: Border.width 1
-                :: Border.rounded theme.borderRounded
-                :: Border.color theme.border
+                :: Border.rounded theme.size.rounded
+                :: Border.color theme.color.border
                 :: Background.color Color.neutral
                 :: Util.shadow
             )
@@ -135,10 +135,10 @@ renderItem config option =
     Element.row
         [ Element.width Element.fill
         , Element.paddingXY Size.padding_2 Size.padding_3
-        , Border.rounded theme.borderRounded
+        , Border.rounded theme.size.rounded
         , Element.pointer
-        , ifElse (Background.color theme.hover) Util.noAttr (Just option == config.selectedOption && config.highlightSelected)
-        , Element.mouseOver [ Background.color theme.hover ]
+        , ifElse (Background.color theme.color.hover) Util.noAttr (Just option == config.selectedOption && config.highlightSelected)
+        , Element.mouseOver [ Background.color theme.color.hover ]
         , Util.onClick (config.embedMsg <| Selected option)
         ]
         [ Element.el
@@ -146,7 +146,7 @@ renderItem config option =
             , Element.centerY
             ]
           <|
-            ifElse (Element.el [ Element.centerX ] (Icon.renderIcon Icon.check)) Element.none (config.selectedOption == Just option)
+            ifElse (Element.el [ Element.centerX ] (Util.renderIcon Icon.check)) Element.none (config.selectedOption == Just option)
         , Element.el
             [ Element.centerY
             , Element.alignLeft

@@ -1,8 +1,9 @@
 module UI.Preset.Util exposing (..)
 
-import Element
+import Element exposing (Element)
 import Element.Border as Border
 import UI.Preset.Color as Color
+import UI.Theme exposing (theme)
 
 
 shadow : List (Element.Attribute msg)
@@ -20,3 +21,8 @@ shadow =
         , color = Color.shadow
         }
     ]
+
+
+renderIcon : Element msg -> Element msg
+renderIcon icon =
+    Element.el [ Element.width (Element.px theme.size.icon), Element.height (Element.px theme.size.icon) ] icon

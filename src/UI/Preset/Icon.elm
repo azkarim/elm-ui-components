@@ -30,11 +30,6 @@ check =
         |> Element.html
 
 
-renderIcon : Element msg -> Element msg
-renderIcon icon =
-    Element.el [ Element.width (Element.px size), Element.height (Element.px size) ] icon
-
-
 size : number
 size =
     Size.spacing3

@@ -46,25 +46,25 @@ badgeTypeAttrs : Badge -> List (Element.Attribute msg)
 badgeTypeAttrs type_ =
     case type_ of
         Primary ->
-            [ Background.color theme.primary
+            [ Background.color theme.color.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ theme.primary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ theme.color.primary |> Color.setAlpha 0.9 |> Background.color ]
             ]
                 ++ transitions
 
         Secondary ->
-            [ Background.color theme.secondary
+            [ Background.color theme.color.secondary
             ]
 
         Outline ->
             Background.color Color.neutral
-                :: addBorder theme.border
+                :: addBorder theme.color.border
 
 
 commonAttrs : List (Element.Attribute msg)
 commonAttrs =
     Element.paddingXY Size.padding_3 Size.padding_1
-        :: Border.rounded theme.borderRounded
+        :: Border.rounded theme.size.rounded
         :: Element.focused []
         :: Font.size Size.text_xs
         :: Font.letterSpacing 0.6

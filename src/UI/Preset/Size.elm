@@ -1,6 +1,11 @@
 module UI.Preset.Size exposing (..)
 
 
+border_1 : Int
+border_1 =
+    1
+
+
 border_sm : Int
 border_sm =
     2
