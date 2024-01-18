@@ -42,7 +42,7 @@ renderIcon icon =
 
 addBorder : List (Element.Attribute msg)
 addBorder =
-    [ Border.width 1
+    [ Border.width theme.size.border
     , Border.color theme.color.border
     ]
 

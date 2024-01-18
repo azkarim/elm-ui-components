@@ -76,7 +76,7 @@ select attrs config state =
     Element.row
         (Element.width (Element.fill |> Element.minimum size.minWidth)
             :: Element.height (Element.px size.height)
-            :: Border.width 1
+            :: Border.width theme.size.border
             :: Border.rounded theme.size.rounded
             :: Border.color theme.color.border
             :: Font.size Size.text_sm
@@ -120,7 +120,7 @@ viewOptions config selectedOption =
             (Element.moveDown Size.spacing1
                 :: Element.width Element.fill
                 :: Element.paddingXY Size.padding_2 Size.padding_2
-                :: Border.width 1
+                :: Border.width theme.size.border
                 :: Border.rounded theme.size.rounded
                 :: Border.color theme.color.border
                 :: Background.color Color.neutral
