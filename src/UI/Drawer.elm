@@ -55,7 +55,7 @@ layout { isDrawerVisible, onTap, drawerHeight } drawer content =
                 :: Maybe.unwrap Element.clipX (ifElse Element.clip Element.clipX) isDrawerVisible
                 :: Maybe.unwrap Util.noAttr (ifElse (Border.rounded Size.border_lg) (Border.rounded 0)) isDrawerVisible
                 :: Maybe.unwrap Util.noAttr (ifElse (Element.inFront <| recedeOverlay onTap) Util.noAttr) isDrawerVisible
-                :: transition
+                :: transitions
                 ++ Maybe.unwrap [] (ifElse recede []) isDrawerVisible
             )
             content
@@ -93,8 +93,8 @@ recedeOverlay onTap =
         []
 
 
-transition : List (Element.Attribute msg)
-transition =
+transitions : List (Element.Attribute msg)
+transitions =
     -- todo : refactor to animation library
     [ Html.Attributes.style "transform-origin" "center top 0px"
     , Html.Attributes.style "transition-property" "transform"

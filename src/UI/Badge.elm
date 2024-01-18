@@ -4,10 +4,10 @@ import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Html.Attributes
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
 import UI.Theme exposing (theme)
+import UI.Util as Util
 import Util
 
 
@@ -48,9 +48,9 @@ badgeTypeAttrs type_ =
         Primary ->
             [ Background.color theme.color.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ theme.color.primary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ theme.color.primary |> Util.setAlpha 0.9 |> Background.color ]
             ]
-                ++ transitions
+                ++ Util.transitions
 
         Secondary ->
             [ Background.color theme.color.secondary
@@ -58,7 +58,7 @@ badgeTypeAttrs type_ =
 
         Outline ->
             Background.color Color.neutral
-                :: addBorder theme.color.border
+                :: Util.addBorder
 
 
 commonAttrs : List (Element.Attribute msg)
@@ -71,24 +71,3 @@ commonAttrs =
         :: Font.family [ Font.sansSerif ]
         :: Font.medium
         :: Util.userSelectNone
-
-
-transitions : List (Element.Attribute msg)
-transitions =
-    -- todo : replace with anim library
-    [ Html.Attributes.style "transition-property" "color,background-color,border-color,text-decoration-color,fill,stroke"
-    , Html.Attributes.style "transition-timing-function" "cubic-bezier(.4,0,.2,1)"
-    , Html.Attributes.style "transition-duration" "0.15s"
-    ]
-        |> Util.fromAtrrs
-
-
-
--- Util
-
-
-addBorder : Element.Color -> List (Element.Attribute msg)
-addBorder color =
-    [ Border.width 1
-    , Border.color color
-    ]

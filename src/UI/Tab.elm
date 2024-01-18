@@ -103,12 +103,4 @@ commonAttrs1 =
     Element.width Element.fill
         :: Element.paddingXY Size.padding_3 Size.padding_2
         :: Border.rounded theme.size.rounded
-        :: transitions
-
-
-transitions : List (Element.Attribute msg)
-transitions =
-    [ Util.style "transition-property" "color,background-color"
-    , Util.style "transition-timing-function" "cubic-bezier(.4,0,.2,1)"
-    , Util.style "transition-duration" "0.15s"
-    ]
+        :: Util.transitions

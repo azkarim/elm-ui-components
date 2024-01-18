@@ -3,7 +3,6 @@ module UI.Preset.Icon exposing (..)
 import Element exposing (Element)
 import Svg exposing (path, svg)
 import Svg.Attributes exposing (d, fill, stroke, strokeLinecap, strokeLinejoin, strokeWidth, viewBox)
-import UI.Preset.Size as Size
 
 
 rightArrow : Element msg
@@ -28,8 +27,3 @@ check : Element msg
 check =
     svg [ fill "none", viewBox "0 0 24 24", strokeWidth "2.5", stroke "currentColor" ] [ path [ strokeLinecap "round", strokeLinejoin "round", d "m4.5 12.75 6 6 9-13.5" ] [] ]
         |> Element.html
-
-
-size : number
-size =
-    Size.spacing3

@@ -5,7 +5,6 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Html.Attributes
 import Loading
 import Maybe.Extra as Maybe
 import UI.Preset.Color as Color
@@ -191,12 +190,12 @@ btnTypeAttrs type_ =
         Primary ->
             [ Background.color theme.color.primary
             , Font.color Color.neutral
-            , Element.mouseOver [ theme.color.primary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ theme.color.primary |> Util.setAlpha 0.9 |> Background.color ]
             ]
 
         Secondary ->
             [ Background.color theme.color.secondary
-            , Element.mouseOver [ theme.color.secondary |> Color.setAlpha 0.9 |> Background.color ]
+            , Element.mouseOver [ theme.color.secondary |> Util.setAlpha 0.9 |> Background.color ]
             ]
 
         Outline ->
@@ -216,16 +215,6 @@ btnTypeAttrs type_ =
 
 commonAttrs : List (Element.Attribute msg)
 commonAttrs =
-    let
-        transitions : List (Element.Attribute msg)
-        transitions =
-            -- todo : replace with anim library
-            [ Html.Attributes.style "transition-property" "color,background-color,border-color,text-decoration-color,fill,stroke"
-            , Html.Attributes.style "transition-timing-function" "cubic-bezier(.4,0,.2,1)"
-            , Html.Attributes.style "transition-duration" "0.15s"
-            ]
-                |> Util.fromAtrrs
-    in
     [ Element.paddingXY Size.padding_4 Size.padding_3
     , Border.rounded theme.size.rounded
     , Element.focused []
@@ -234,7 +223,7 @@ commonAttrs =
     , Font.family [ Font.sansSerif ]
     , Font.medium
     ]
-        ++ transitions
+        ++ Util.transitions
 
 
 spinner : Element msg

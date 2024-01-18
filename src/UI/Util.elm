@@ -1,9 +1,11 @@
-module UI.Util exposing (addBorder, renderIcon, shadow)
+module UI.Util exposing (addBorder, renderIcon, setAlpha, shadow, transitions)
 
 import Element exposing (Element)
 import Element.Border as Border
+import Html.Attributes
 import UI.Preset.Color as Color
 import UI.Theme exposing (theme)
+import Util
 
 
 shadow : List (Element.Attribute msg)
@@ -23,6 +25,16 @@ shadow =
     ]
 
 
+transitions : List (Element.Attribute msg)
+transitions =
+    -- todo : replace with anim library
+    [ Html.Attributes.style "transition-property" "color,background-color,border-color,text-decoration-color,fill,stroke"
+    , Html.Attributes.style "transition-timing-function" "cubic-bezier(.4,0,.2,1)"
+    , Html.Attributes.style "transition-duration" "0.15s"
+    ]
+        |> Util.fromAtrrs
+
+
 renderIcon : Element msg -> Element msg
 renderIcon icon =
     Element.el [ Element.width (Element.px theme.size.icon), Element.height (Element.px theme.size.icon) ] icon
@@ -33,3 +45,12 @@ addBorder =
     [ Border.width 1
     , Border.color theme.color.border
     ]
+
+
+setAlpha : Float -> Element.Color -> Element.Color
+setAlpha alpha color =
+    Element.toRgb color
+        |> (\c ->
+                { c | alpha = alpha }
+                    |> Element.fromRgb
+           )
