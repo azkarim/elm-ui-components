@@ -11,6 +11,7 @@ import Maybe.Extra as Maybe
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
 import UI.Theme exposing (theme)
+import UI.Util as Util
 import Util
 
 
@@ -201,7 +202,7 @@ btnTypeAttrs type_ =
         Outline ->
             Background.color Color.neutral
                 :: Element.mouseOver [ Background.color Color.slate50 ]
-                :: addBorder theme.color.border
+                :: Util.addBorder
 
         Ghost ->
             [ Element.mouseOver [ Background.color Color.slate50 ]
@@ -210,7 +211,7 @@ btnTypeAttrs type_ =
         Icon ->
             Background.color Color.neutral
                 :: Element.mouseOver [ Background.color Color.slate50 ]
-                :: addBorder theme.color.border
+                :: Util.addBorder
 
 
 commonAttrs : List (Element.Attribute msg)
@@ -257,10 +258,3 @@ spinner =
 
 
 -- Util
-
-
-addBorder : Element.Color -> List (Element.Attribute msg)
-addBorder color =
-    [ Border.width 1
-    , Border.color color
-    ]

@@ -7,8 +7,8 @@ import Element.Events as Events
 import Element.Font as Font
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
-import UI.Preset.Util as Util
 import UI.Theme exposing (theme)
+import UI.Util as Util
 import Util exposing (ifElse)
 
 

@@ -12,8 +12,8 @@ import Simple.Animation.Property as P
 import UI.Preset.Color as Color
 import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size
-import UI.Preset.Util as Util
 import UI.Theme exposing (theme)
+import UI.Util as Util
 import Util exposing (ifElse)
 
 

@@ -1,4 +1,4 @@
-module UI.Preset.Util exposing (..)
+module UI.Util exposing (..)
 
 import Element exposing (Element)
 import Element.Border as Border
@@ -26,3 +26,10 @@ shadow =
 renderIcon : Element msg -> Element msg
 renderIcon icon =
     Element.el [ Element.width (Element.px theme.size.icon), Element.height (Element.px theme.size.icon) ] icon
+
+
+addBorder : List (Element.Attribute msg)
+addBorder =
+    [ Border.width 1
+    , Border.color theme.color.border
+    ]

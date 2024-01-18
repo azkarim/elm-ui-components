@@ -14,9 +14,9 @@ import UI.Drawer as Drawer
 import UI.Preset.Color as Color
 import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size
-import UI.Preset.Util as Util
 import UI.Select as Select
 import UI.Tab as Tab
+import UI.Util as Util
 
 
 view : Home.Model -> Element Home.Msg
