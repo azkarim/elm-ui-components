@@ -32,12 +32,6 @@ view model =
         []
 
 
-loremLargeContent : List (Element msg)
-loremLargeContent =
-    List.range 0 100
-        |> List.map (\_ -> image [] { src = "https://picsum.photos/200", description = "lorem image" })
-
-
 drawer : Element msg
 drawer =
     row
