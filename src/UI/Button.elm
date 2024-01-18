@@ -67,7 +67,7 @@ type alias Button msg =
     { buttonType : Maybe ButtonType
     , icon : Maybe (Element msg)
     , onTap : Maybe msg
-    , label : Maybe String
+    , label : Maybe (Element msg)
     , loading : LoadingStatus
     }
 
@@ -121,7 +121,12 @@ onTap onTapMsg btn =
 
 label : String -> Button msg -> Button msg
 label lbl btn =
-    { btn | label = Just lbl }
+    btn |> elemLabel (Element.text lbl)
+
+
+elemLabel : Element msg -> Button msg -> Button msg
+elemLabel elem btn =
+    { btn | label = Just elem }
 
 
 loading : LoadingStatus -> Button msg -> Button msg
@@ -129,6 +134,17 @@ loading status btn =
     { btn | loading = status }
 
 
+{-| A button
+
+    type alias Button msg =
+        { buttonType : Maybe ButtonType
+        , icon : Maybe (Element msg)
+        , onTap : Maybe msg
+        , label : Maybe (Element msg)
+        , loading : LoadingStatus
+        }
+
+-}
 button : List (Element.Attribute msg) -> Button msg -> Element msg
 button attrs btn =
     let
@@ -148,31 +164,31 @@ button attrs btn =
         , label =
             case btn.loading of
                 Loading loadingLabel ->
-                    Element.row [ Element.spacing 12 ] [ Element.el [] spinner, Element.el [] (Element.text loadingLabel) ]
+                    Element.row [ Element.spacing Size.spacing3 ] [ Element.el [] spinner, Element.el [] (Element.text loadingLabel) ]
 
                 Loaded ->
-                    renderLabel ( btn.icon, btn.label )
+                    renderElemLabel ( btn.icon, btn.label )
         }
 
 
-renderLabel : ( Maybe (Element msg), Maybe String ) -> Element msg
-renderLabel pair =
+
+-- Internal
+
+
+renderElemLabel : ( Maybe (Element msg), Maybe (Element msg) ) -> Element msg
+renderElemLabel pair =
     case pair of
         ( Nothing, Nothing ) ->
             Element.none
 
         ( Just icon_, Just label_ ) ->
-            Element.row [ Element.width Element.fill, Element.spacing 8 ] [ icon_, Element.el [] (Element.text label_) ]
+            Element.row [ Element.width Element.fill, Element.spacing Size.spacing2 ] [ icon_, label_ ]
 
         ( Just icon_, Nothing ) ->
             icon_
 
         ( Nothing, Just label_ ) ->
-            Element.text label_
-
-
-
--- Internal
+            label_
 
 
 loadingStatusAttrs : List (Element.Attribute msg)
@@ -240,10 +256,6 @@ spinner =
     in
     Loading.render
         Loading.Spinner
-        { config | size = 16, color = color }
+        { config | size = Size.spacing4, color = color }
         Loading.On
         |> Element.html
-
-
-
--- Util
