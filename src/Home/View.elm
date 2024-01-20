@@ -104,7 +104,7 @@ tabConfig =
 -- Select
 
 
-selectConfig : Select.Config Home.Msg Option
+selectConfig : Select.Config Option Home.Msg
 selectConfig =
     { label = "Select a fruit"
     , options = options

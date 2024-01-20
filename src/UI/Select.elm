@@ -1,4 +1,4 @@
-module UI.Select exposing (Config, Msg, State, hide, init, select, selected, update)
+module UI.Select exposing (Config, CustomConfig, Msg, State, el, hide, init, select, selected, update)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -18,7 +18,7 @@ import Util exposing (ifElse)
 
 
 
--- todo : focus styling
+-- todo : focus styling, use hero-icons package
 
 
 type alias State option =
@@ -28,10 +28,20 @@ type alias State option =
     }
 
 
-type alias Config embedMsg option =
+type alias Config option embedMsg =
     { label : String
     , options : List option
     , toString : option -> String
+    , embedMsg : Msg option -> embedMsg
+    }
+
+
+type alias CustomConfig option embedMsg =
+    { label : Element embedMsg
+    , options : List option
+    , item : option -> Element embedMsg
+    , itemAsSelected : option -> Element embedMsg
+    , itemAsLabel : option -> Element embedMsg
     , embedMsg : Msg option -> embedMsg
     }
 
@@ -71,9 +81,25 @@ selected state =
     state.selected
 
 
-select : List (Element.Attribute embedMsg) -> Config embedMsg option -> State option -> Element embedMsg
+select : List (Element.Attribute embedMsg) -> Config option embedMsg -> State option -> Element embedMsg
 select attrs config state =
-    Element.row
+    let
+        elemConfig : CustomConfig option embedMsg
+        elemConfig =
+            { label = elemLabel config.label
+            , options = config.options
+            , item = config.toString >> elemItem
+            , itemAsSelected = config.toString >> elemItemAsSelected
+            , itemAsLabel = config.toString >> elemItemAsLabel
+            , embedMsg = config.embedMsg
+            }
+    in
+    el attrs elemConfig state
+
+
+el : List (Element.Attribute embedMsg) -> CustomConfig option embedMsg -> State option -> Element embedMsg
+el attrs config state =
+    Element.el
         (Element.width (Element.fill |> Element.minimum size.minWidth)
             :: Element.height (Element.px size.height)
             :: Border.width theme.size.border
@@ -83,30 +109,31 @@ select attrs config state =
             :: Font.letterSpacing 0.4
             :: Font.family [ Font.sansSerif ]
             :: Font.medium
-            :: ifElse (Element.below <| viewOptions { options = config.options, toString = config.toString, embedMsg = config.embedMsg, highlightSelected = state.highlightSelected } state.selected) Util.noAttr state.isVisible
+            :: ifElse (Element.below <| viewOptions { options = config.options, item = config.item, itemAsSelected = config.itemAsSelected, embedMsg = config.embedMsg, highlightSelected = state.highlightSelected } state.selected) Util.noAttr state.isVisible
             :: Util.userSelectNone
             ++ attrs
         )
-        [ Element.row
+        (Element.el
             [ Element.width Element.fill
             , Element.height Element.fill
-            , Element.spaceEvenly
             , Element.paddingXY Size.padding_3 Size.padding_2
             , Element.pointer
             , Util.onClick (config.embedMsg ToggleSelect)
             ]
-            [ Element.el [ Element.centerY ] (Element.text <| selectLabel config state.selected)
-            , Util.renderIcon Icon.downArrow
-            ]
-        ]
+            (renderLabel config state.selected)
+        )
 
 
-selectLabel : { a | label : String, toString : option -> String } -> Maybe option -> String
-selectLabel config option =
-    Maybe.unwrap config.label config.toString option
+
+-- Internal
 
 
-viewOptions : { options : List option, toString : option -> String, embedMsg : Msg option -> embedMsg, highlightSelected : Bool } -> Maybe option -> Element embedMsg
+renderLabel : { a | label : Element embedMsg, itemAsLabel : option -> Element embedMsg } -> Maybe option -> Element embedMsg
+renderLabel config selectedOption =
+    Maybe.unwrap config.label config.itemAsLabel selectedOption
+
+
+viewOptions : { options : List option, item : option -> Element embedMsg, itemAsSelected : option -> Element embedMsg, embedMsg : Msg option -> embedMsg, highlightSelected : Bool } -> Maybe option -> Element embedMsg
 viewOptions config selectedOption =
     Util.animatedEl Element.el
         slideInAnim
@@ -127,12 +154,12 @@ viewOptions config selectedOption =
                 :: Util.shadow
             )
         <|
-            List.map (Lazy.lazy2 renderItem { toString = config.toString, embedMsg = config.embedMsg, highlightSelected = config.highlightSelected, selectedOption = selectedOption }) config.options
+            List.map (Lazy.lazy2 renderItem { item = config.item, itemAsSelected = config.itemAsSelected, embedMsg = config.embedMsg, highlightSelected = config.highlightSelected, selectedOption = selectedOption }) config.options
 
 
-renderItem : { toString : option -> String, embedMsg : Msg option -> embedMsg, highlightSelected : Bool, selectedOption : Maybe option } -> option -> Element embedMsg
+renderItem : { item : option -> Element embedMsg, itemAsSelected : option -> Element embedMsg, embedMsg : Msg option -> embedMsg, highlightSelected : Bool, selectedOption : Maybe option } -> option -> Element embedMsg
 renderItem config option =
-    Element.row
+    Element.el
         [ Element.width Element.fill
         , Element.paddingXY Size.padding_2 Size.padding_3
         , Border.rounded theme.size.rounded
@@ -141,18 +168,8 @@ renderItem config option =
         , Element.mouseOver [ Background.color theme.color.hover ]
         , Util.onClick (config.embedMsg <| Selected option)
         ]
-        [ Element.el
-            [ Element.width (Element.px Size.spacing6)
-            , Element.centerY
-            ]
-          <|
-            ifElse (Element.el [ Element.centerX ] (Util.renderIcon Icon.check)) Element.none (config.selectedOption == Just option)
-        , Element.el
-            [ Element.centerY
-            , Element.alignLeft
-            ]
-            (Element.text <| config.toString option)
-        ]
+    <|
+        ifElse (config.itemAsSelected option) (config.item option) (config.selectedOption == Just option)
 
 
 slideInAnim : Animation
@@ -163,6 +180,45 @@ slideInAnim =
         }
         [ P.property "transform" "scaleY(0.8) translateZ(0)" ]
         [ P.property "transform" "scaleY(1) translateZ(0)" ]
+
+
+elemLabel : String -> Element msg
+elemLabel label =
+    Element.row [ Element.width Element.fill, Element.spaceEvenly, Element.centerY ]
+        [ Element.el [] (Element.text label)
+        , downArrow
+        ]
+
+
+elemItemAsLabel : String -> Element msg
+elemItemAsLabel =
+    elemLabel
+
+
+elemItem : String -> Element msg
+elemItem option =
+    Element.row [ Element.centerY ]
+        [ Element.el [ Element.width (Element.px Size.spacing6) ] Element.none
+        , Element.text option
+        ]
+
+
+elemItemAsSelected : String -> Element msg
+elemItemAsSelected option =
+    Element.row [ Element.centerY ]
+        [ Element.el [ Element.width (Element.px Size.spacing6), Element.centerX ] check
+        , Element.text option
+        ]
+
+
+downArrow : Element msg
+downArrow =
+    Util.renderIcon Icon.downArrow
+
+
+check : Element msg
+check =
+    Util.renderIcon Icon.check
 
 
 size : { height : Int, minWidth : Int }
