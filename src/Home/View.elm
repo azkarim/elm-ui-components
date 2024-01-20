@@ -80,7 +80,7 @@ emailBtn =
         , icon = Just <| Util.renderIcon (Util.renderIcon Icon.email)
         , onTap = Just <| ToggleDrawer
         , label = Just <| emailLabel 0
-        , loading = Button.Loaded
+        , loading = Just <| Button.Loaded
         }
 
 

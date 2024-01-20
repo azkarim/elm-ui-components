@@ -68,7 +68,7 @@ type alias Button msg =
     , icon : Maybe (Element msg)
     , onTap : Maybe msg
     , label : Maybe (Element msg)
-    , loading : LoadingStatus
+    , loading : Maybe LoadingStatus
     }
 
 
@@ -100,7 +100,7 @@ new =
     , icon = Nothing
     , onTap = Nothing
     , label = Nothing
-    , loading = Loaded
+    , loading = Nothing
     }
 
 
@@ -131,7 +131,7 @@ elemLabel elem btn =
 
 loading : LoadingStatus -> Button msg -> Button msg
 loading status btn =
-    { btn | loading = status }
+    { btn | loading = Just status }
 
 
 {-| A button
@@ -152,9 +152,13 @@ button attrs btn =
         attrs_ =
             -- user supplied attrs should come last to take precedence
             commonAttrs ++ attrs
+
+        btnLoaded : Bool
+        btnLoaded =
+            (btn.loading == Just Loaded) || (btn.loading == Nothing)
     in
     Input.button
-        (if btn.loading == Loaded then
+        (if btnLoaded then
             Maybe.unwrap attrs_ (\btn_ -> btnTypeAttrs btn_ ++ attrs_) btn.buttonType
 
          else
@@ -163,10 +167,13 @@ button attrs btn =
         { onPress = btn.onTap
         , label =
             case btn.loading of
-                Loading loadingLabel ->
+                Just (Loading loadingLabel) ->
                     Element.row [ Element.spacing Size.spacing3 ] [ Element.el [] spinner, Element.el [] (Element.text loadingLabel) ]
 
-                Loaded ->
+                Just Loaded ->
+                    renderElemLabel ( btn.icon, btn.label )
+
+                Nothing ->
                     renderElemLabel ( btn.icon, btn.label )
         }
 
