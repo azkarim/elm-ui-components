@@ -136,9 +136,189 @@ spacing6 =
     24
 
 
+spacing7 : number
+spacing7 =
+    28
+
+
+spacing8 : number
+spacing8 =
+    32
+
+
+spacing9 : number
+spacing9 =
+    36
+
+
 spacing10 : number
 spacing10 =
     40
+
+
+spacing11 : number
+spacing11 =
+    44
+
+
+spacing12 : number
+spacing12 =
+    48
+
+
+spacing13 : number
+spacing13 =
+    52
+
+
+spacing14 : number
+spacing14 =
+    56
+
+
+spacing15 : number
+spacing15 =
+    60
+
+
+spacing16 : number
+spacing16 =
+    64
+
+
+spacing17 : number
+spacing17 =
+    68
+
+
+spacing18 : number
+spacing18 =
+    72
+
+
+spacing19 : number
+spacing19 =
+    76
+
+
+spacing20 : number
+spacing20 =
+    80
+
+
+spacing21 : number
+spacing21 =
+    84
+
+
+spacing22 : number
+spacing22 =
+    88
+
+
+spacing23 : number
+spacing23 =
+    92
+
+
+spacing24 : number
+spacing24 =
+    96
+
+
+spacing25 : number
+spacing25 =
+    100
+
+
+spacing26 : number
+spacing26 =
+    104
+
+
+spacing27 : number
+spacing27 =
+    108
+
+
+spacing28 : number
+spacing28 =
+    112
+
+
+spacing29 : number
+spacing29 =
+    116
+
+
+spacing30 : number
+spacing30 =
+    120
+
+
+spacing31 : number
+spacing31 =
+    124
+
+
+spacing32 : number
+spacing32 =
+    128
+
+
+spacing33 : number
+spacing33 =
+    132
+
+
+spacing34 : number
+spacing34 =
+    136
+
+
+spacing35 : number
+spacing35 =
+    140
+
+
+spacing36 : number
+spacing36 =
+    144
+
+
+spacing37 : number
+spacing37 =
+    148
+
+
+spacing38 : number
+spacing38 =
+    152
+
+
+spacing39 : number
+spacing39 =
+    156
+
+
+spacing40 : number
+spacing40 =
+    160
+
+
+spacing41 : number
+spacing41 =
+    164
+
+
+spacing42 : number
+spacing42 =
+    168
+
+
+spacing43 : number
+spacing43 =
+    172
 
 
 spacing45 : number
