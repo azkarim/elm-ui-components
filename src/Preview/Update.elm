@@ -10,3 +10,6 @@ update msg model =
     case msg of
         SelectAccount selectMsg ->
             ( { model | account = Select.update selectMsg model.account }, Cmd.none )
+
+        OnTapEmailSection emailSection ->
+            ( { model | currentEmailSection = emailSection }, Cmd.none )
