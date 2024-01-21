@@ -16,7 +16,7 @@ type alias Model =
 
 init : Model
 init =
-    Model initDrawer Select.init (Tab.init Data.Account)
+    Model initDrawer (Select.init Nothing) (Tab.init Data.Account)
 
 
 initDrawer : Drawer.Config Components.Msg
