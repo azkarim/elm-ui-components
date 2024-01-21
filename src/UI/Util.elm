@@ -42,9 +42,9 @@ shadow_xl =
     ]
 
 
-divider : Element msg
+divider : List (Element.Attribute msg)
 divider =
-    Element.el [ Element.width Element.fill, Border.width 1, Border.color (theme.color.border |> setAlpha 0.4) ] Element.none
+    [ Element.width Element.fill, Border.width 1, Border.color (theme.color.border |> setAlpha 0.4) ]
 
 
 transitions : List (Element.Attribute msg)
