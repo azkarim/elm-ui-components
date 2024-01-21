@@ -53,9 +53,9 @@ type Msg option
     | RemoveSelectedOptionHighlight
 
 
-init : State option
-init =
-    { isVisible = False, selected = Nothing, highlightSelected = False }
+init : Maybe option -> State option
+init option =
+    { isVisible = False, selected = option, highlightSelected = False }
 
 
 update : Msg option -> State option -> State option
@@ -97,6 +97,18 @@ select attrs config state =
     el attrs elemConfig state
 
 
+{-| A Select element
+
+    type alias CustomConfig option embedMsg =
+        { label : Element embedMsg
+        , options : List option
+        , item : option -> Element embedMsg
+        , itemAsSelected : option -> Element embedMsg
+        , itemAsLabel : option -> Element embedMsg
+        , embedMsg : Msg option -> embedMsg
+        }
+
+-}
 el : List (Element.Attribute embedMsg) -> CustomConfig option embedMsg -> State option -> Element embedMsg
 el attrs config state =
     Element.el
