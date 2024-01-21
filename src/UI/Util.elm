@@ -1,4 +1,4 @@
-module UI.Util exposing (addBorder, renderIcon, setAlpha, shadow, shadow_xl, transitions)
+module UI.Util exposing (addBorder, divider, renderIcon, setAlpha, shadow, shadow_xl, transitions)
 
 import Element exposing (Element)
 import Element.Border as Border
@@ -40,6 +40,11 @@ shadow_xl =
         , color = Color.shadow
         }
     ]
+
+
+divider : Element msg
+divider =
+    Element.el [ Element.width Element.fill, Border.width 1, Border.color (theme.color.border |> setAlpha 0.4) ] Element.none
 
 
 transitions : List (Element.Attribute msg)
