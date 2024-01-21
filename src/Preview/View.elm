@@ -33,22 +33,28 @@ view model =
             ++ Util.shadow_xl
         )
     <|
-        column
-            [ width (px 230)
-            , height fill
-            , Border.widthEach { right = theme.size.border, bottom = 0, left = 0, top = 0 }
-            , Border.color theme.color.border
-            ]
-            [ el [ width fill, padding, height (px Size.spacing14) ] (selectAccount model)
-            , el Util.divider Element.none
-            , renderEmailSections emailManagementSections model
-            , el Util.divider Element.none
-            , renderEmailSections labelledEmails model
-            ]
+        row []
+            [ menu model ]
 
 
 
 -- Menu : Email Section
+
+
+menu : Preview.Model -> Element Msg
+menu model =
+    column
+        [ width (px 230)
+        , height fill
+        , Border.widthEach { right = theme.size.border, bottom = 0, left = 0, top = 0 }
+        , Border.color theme.color.border
+        ]
+        [ el [ width fill, padding, height (px Size.spacing14) ] (selectAccount model)
+        , el Util.divider Element.none
+        , renderEmailSections emailManagementSections model
+        , el Util.divider Element.none
+        , renderEmailSections labelledEmails model
+        ]
 
 
 renderEmailSections : List EmailSection -> Preview.Model -> Element Msg
