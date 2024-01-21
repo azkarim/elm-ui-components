@@ -13,3 +13,6 @@ update msg model =
 
         OnTapEmailSection emailSection ->
             ( { model | currentEmailSection = emailSection }, Cmd.none )
+
+        OnTapBody ->
+            ( { model | account = Select.hide model.account }, Cmd.none )

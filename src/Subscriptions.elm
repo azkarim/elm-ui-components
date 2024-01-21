@@ -1,16 +1,18 @@
 module Subscriptions exposing (subscriptions)
 
-import Browser.Events as Events
-import Components.Msg as Components
-import Json.Decode as D
+import Components.Subscriptions as Components
 import Msg exposing (Msg(..))
+import Preview.Subscriptions as Preview
 import State exposing (State)
 
 
 subscriptions : State -> Sub Msg
-subscriptions { components } =
-    if components.selectFruitState.isVisible then
-        Events.onClick (D.succeed <| ComponentsMsg Components.TappedBody)
+subscriptions state =
+    mapMsg ComponentsMsg (Components.subscriptions state.components)
+        ++ mapMsg PreviewMsg (Preview.subscriptions state.preview)
+        |> Sub.batch
 
-    else
-        Sub.none
+
+mapMsg : (a -> msg) -> List (Sub a) -> List (Sub msg)
+mapMsg toMsg =
+    List.map (Sub.map toMsg)

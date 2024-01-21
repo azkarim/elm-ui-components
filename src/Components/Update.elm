@@ -16,7 +16,7 @@ update msg model =
         SelectFruit selectMsg ->
             ( { model | selectFruitState = Select.update selectMsg model.selectFruitState }, Cmd.none )
 
-        TappedBody ->
+        OnTapBody ->
             ( { model | selectFruitState = Select.hide model.selectFruitState }, Cmd.none )
 
         UserSettingsTabSelected tabMsg ->

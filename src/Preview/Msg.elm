@@ -7,3 +7,4 @@ import UI.Select as Select
 type Msg
     = SelectAccount (Select.Msg Model.Email)
     | OnTapEmailSection EmailSection
+    | OnTapBody

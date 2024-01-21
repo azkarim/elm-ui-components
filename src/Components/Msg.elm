@@ -8,5 +8,5 @@ import UI.Tab as Tab
 type Msg
     = ToggleDrawer
     | SelectFruit (Select.Msg Option)
-    | TappedBody
+    | OnTapBody
     | UserSettingsTabSelected (Tab.Msg Data.UserSettingsTab)
