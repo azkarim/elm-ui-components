@@ -141,7 +141,7 @@ loading status btn =
         , icon : Maybe (Element msg)
         , onTap : Maybe msg
         , label : Maybe (Element msg)
-        , loading : LoadingStatus
+        , loading : Maybe LoadingStatus
         }
 
 -}
