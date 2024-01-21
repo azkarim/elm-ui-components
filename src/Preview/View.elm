@@ -1,7 +1,7 @@
 module Preview.View exposing (document)
 
 import Browser exposing (Document)
-import Element exposing (Element, alignTop, centerX, centerY, el, fill, height, paddingXY, px, row, spaceEvenly, text, width)
+import Element exposing (Element, centerX, centerY, column, el, fill, height, paddingXY, px, row, spaceEvenly, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -17,7 +17,7 @@ import UI.Util as Util
 
 view : Preview.Model -> Element Preview.Msg
 view model =
-    row
+    el
         (centerX
             :: centerY
             :: width (fill |> Element.maximum 1340)
@@ -28,10 +28,19 @@ view model =
             ++ Util.shadow_xl
         )
     <|
-        [ row [ width (px 230), alignTop, paddingXY Size.spacing3 Size.spacing2 ]
-            [ selectAccount model ]
-        , row [] []
-        ]
+        el
+            [ width (px 230)
+            , height fill
+            , Border.widthEach { right = theme.size.border, bottom = 0, left = 0, top = 0 }
+            , Border.color theme.color.border
+            ]
+            (column [ width fill ]
+                [ el [ paddingXY Size.spacing3 Size.spacing2, width fill ]
+                    (selectAccount model)
+                , Util.divider
+                , row [] []
+                ]
+            )
 
 
 selectAccount : Preview.Model -> Element Msg
