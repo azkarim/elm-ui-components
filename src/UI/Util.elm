@@ -1,4 +1,4 @@
-module UI.Util exposing (addBorder, renderIcon, setAlpha, shadow, transitions)
+module UI.Util exposing (addBorder, renderIcon, setAlpha, shadow, shadow_xl, transitions)
 
 import Element exposing (Element)
 import Element.Border as Border
@@ -20,6 +20,23 @@ shadow =
         { offset = ( 0, 2 )
         , size = -2
         , blur = 4
+        , color = Color.shadow
+        }
+    ]
+
+
+shadow_xl : List (Element.Attribute msg)
+shadow_xl =
+    [ Border.shadow
+        { offset = ( 0, 20 )
+        , size = -5
+        , blur = 25
+        , color = Color.shadow
+        }
+    , Border.shadow
+        { offset = ( 0, 8 )
+        , size = -6
+        , blur = 10
         , color = Color.shadow
         }
     ]
