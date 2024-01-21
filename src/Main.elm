@@ -24,5 +24,5 @@ main =
 
 
 init : flags -> Url -> Navigation.Key -> ( State, Cmd Msg )
-init _ _ _ =
-    ( State.init, Cmd.none )
+init _ url _ =
+    ( State.init |> (\m -> { m | route = Route.toRoute url }), Cmd.none )

@@ -1,4 +1,4 @@
-module Home.Data exposing (Option(..), UserSettingsTab(..), optionStr, tabStr)
+module Components.Data exposing (Option(..), UserSettingsTab(..), optionStr, tabStr)
 
 
 type UserSettingsTab

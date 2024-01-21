@@ -1,13 +1,13 @@
-module Home.Update exposing (update)
+module Components.Update exposing (update)
 
-import Home.Model as Home
-import Home.Msg as Home exposing (Msg(..))
+import Components.Model as Components
+import Components.Msg as Components exposing (Msg(..))
 import UI.Drawer as Drawer
 import UI.Select as Select
 import UI.Tab as Tab
 
 
-update : Home.Msg -> Home.Model -> ( Home.Model, Cmd Home.Msg )
+update : Components.Msg -> Components.Model -> ( Components.Model, Cmd Components.Msg )
 update msg model =
     case msg of
         ToggleDrawer ->

@@ -1,13 +1,13 @@
-module Home.View exposing (document)
+module Components.View exposing (document)
 
 import Browser exposing (Document)
+import Components.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
+import Components.Model as Components
+import Components.Msg as Components exposing (Msg(..))
 import Element exposing (Element, centerX, centerY, el, fill, height, inFront, paddingXY, px, rgb255, row, spacing, text, width, wrappedRow)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
-import Home.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
-import Home.Model as Home
-import Home.Msg as Home exposing (Msg(..))
 import UI.Badge as Badge
 import UI.Button as Button
 import UI.Drawer as Drawer
@@ -19,7 +19,7 @@ import UI.Tab as Tab
 import UI.Util as Util
 
 
-view : Home.Model -> Element Home.Msg
+view : Components.Model -> Element Components.Msg
 view model =
     wrappedRow
         [ width fill
@@ -43,7 +43,7 @@ drawer =
         [ el [ centerX, centerY ] (text "I'm Drawer") ]
 
 
-uiSet : Home.Model -> Element Msg
+uiSet : Components.Model -> Element Msg
 uiSet model =
     wrappedRow [ centerX, paddingXY 24 24, spacing 20 ]
         [ Button.ghost [] { onTap = Nothing, label = "Ghost" }
@@ -104,7 +104,7 @@ tabConfig =
 -- Select
 
 
-selectConfig : Select.Config Option Home.Msg
+selectConfig : Select.Config Option Components.Msg
 selectConfig =
     { label = "Select a fruit"
     , options = options
@@ -118,8 +118,8 @@ options =
     [ Apple, Banana, Blueberry, Grapes, Pineapple ]
 
 
-document : Home.Model -> Document Home.Msg
+document : Components.Model -> Document Components.Msg
 document model =
-    { title = "Home"
+    { title = "Components"
     , body = [ view model |> Drawer.layout model.drawer drawer ]
     }

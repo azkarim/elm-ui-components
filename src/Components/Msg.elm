@@ -1,6 +1,6 @@
-module Home.Msg exposing (Msg(..))
+module Components.Msg exposing (Msg(..))
 
-import Home.Data as Data exposing (Option)
+import Components.Data as Data exposing (Option)
 import UI.Select as Select
 import UI.Tab as Tab
 

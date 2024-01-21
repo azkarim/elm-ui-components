@@ -1,9 +1,11 @@
 module Document exposing (document)
 
 import Browser exposing (Document)
-import Home.View as Home
+import Components.View as Components
 import Html
 import Msg exposing (Msg(..))
+import NotFound
+import Preview.View as Preview
 import Route
 import State exposing (State)
 
@@ -11,10 +13,18 @@ import State exposing (State)
 document : State -> Browser.Document Msg
 document ({ route } as state) =
     case route of
-        Route.Home ->
-            state.home
-                |> Home.document
-                |> mapMsg HomeMsg
+        Route.Components ->
+            state.components
+                |> Components.document
+                |> mapMsg ComponentsMsg
+
+        Route.Preview ->
+            state.preview
+                |> Preview.document
+                |> mapMsg PreviewMsg
+
+        Route.NotFound ->
+            NotFound.document
 
 
 mapMsg : (docMsg -> msg) -> Browser.Document docMsg -> Browser.Document msg

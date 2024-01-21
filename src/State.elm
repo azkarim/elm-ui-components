@@ -1,17 +1,20 @@
 module State exposing (State, init)
 
-import Home.Model as Home
+import Components.Model as Components
+import Preview.Model as Preview
 import Route exposing (Route)
 
 
 type alias State =
     { route : Route
-    , home : Home.Model
+    , components : Components.Model
+    , preview : Preview.Model
     }
 
 
 init : State
 init =
-    { route = Route.Home
-    , home = Home.init
+    { route = Route.NotFound
+    , components = Components.init
+    , preview = Preview.init
     }

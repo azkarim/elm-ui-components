@@ -1,16 +1,21 @@
 module Update exposing (update)
 
-import Home.Update as Home
+import Components.Update as Components
 import Msg exposing (Msg(..))
+import Preview.Update as Preview
 import State exposing (State)
 
 
 update : Msg -> State -> ( State, Cmd Msg )
 update msg state =
     case msg of
-        HomeMsg homeMsg ->
-            Home.update homeMsg state.home
-                |> (\( m, _ ) -> ( { state | home = m }, Cmd.none ))
+        ComponentsMsg componentsMsg ->
+            Components.update componentsMsg state.components
+                |> (\( m, _ ) -> ( { state | components = m }, Cmd.none ))
+
+        PreviewMsg previewMsg ->
+            Preview.update previewMsg state.preview
+                |> (\( m, _ ) -> ( { state | preview = m }, Cmd.none ))
 
         OnUrlRequest ->
             ( state, Cmd.none )
