@@ -1,23 +1,40 @@
-module Preview.Model exposing (Email, EmailSection(..), Model, Unread, accounts, dataEmailSections, iconsForAccount, init, isEmailSectionEqual, user)
+module Preview.Model exposing (Email, EmailSection(..), FilterEmail(..), Model, Unread, accounts, dataEmailSections, filterTabLabel, iconsForAccount, init, isEmailSectionEqual, user)
 
 import Element exposing (Element)
 import UI.Preset.Icon as Icon
 import UI.Select as Select
+import UI.Tab as Tab
 
 
 type alias Model =
     { account : Select.State Email
     , currentEmailSection : EmailSection
+    , filterEmails : Tab.State FilterEmail
     }
 
 
 init : Model
 init =
-    { account = Select.init (Just "alonzo@lambda.com"), currentEmailSection = Inbox (Just 98) }
+    { account = Select.init (Just "alonzo@lambda.com"), currentEmailSection = Inbox (Just 98), filterEmails = Tab.init AllMail }
 
 
 
 -- Menu : Email Section
+
+
+type FilterEmail
+    = AllMail
+    | Unread
+
+
+filterTabLabel : FilterEmail -> String
+filterTabLabel filter =
+    case filter of
+        AllMail ->
+            "All mail"
+
+        Unread ->
+            "Unread"
 
 
 type EmailSection

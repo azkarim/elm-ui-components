@@ -1,28 +1,29 @@
 module Preview.View exposing (document)
 
 import Browser exposing (Document)
-import Element exposing (Element, alignRight, centerX, centerY, column, el, fill, height, paddingXY, px, row, spaceEvenly, text, width)
+import Element exposing (Element, alignRight, alignTop, centerX, centerY, column, el, fill, height, paddingXY, px, row, spaceEvenly, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Heroicons.Outline as Heroicons
 import Html exposing (Html)
 import Maybe.Extra as Maybe
-import Preview.Model as Preview exposing (Email, EmailSection(..), Unread, accounts, dataEmailSections, iconsForAccount, isEmailSectionEqual, user)
+import Preview.Model as Preview exposing (Email, EmailSection(..), FilterEmail(..), Unread, accounts, dataEmailSections, filterTabLabel, iconsForAccount, isEmailSectionEqual, user)
 import Preview.Msg as Preview exposing (Msg(..))
 import UI.Button as Button
 import UI.Preset.Color as Color
 import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size
 import UI.Select as Select
+import UI.Tab as Tab
 import UI.Theme exposing (theme)
 import UI.Util as Util
-import Util exposing (ifElse)
+import Util exposing (ifElse, userSelectNone)
 
 
 view : Preview.Model -> Element Preview.Msg
 view model =
-    el
+    row
         (centerX
             :: centerY
             :: width (fill |> Element.maximum 1340)
@@ -33,8 +34,30 @@ view model =
             ++ Util.shadow_xl
         )
     <|
-        row []
-            [ menu model ]
+        [ menu model
+        , emailListTab model
+        ]
+
+
+emailListTab : Preview.Model -> Element Msg
+emailListTab model =
+    column [ width (px 700), height fill, Border.widthEach { right = 1, bottom = 0, left = 0, top = 0 }, Border.color theme.color.border, alignTop ]
+        [ emailListTabBar model
+        , el (Element.moveDown Size.spacing1 :: Util.divider) Element.none
+        ]
+
+
+emailListTabBar : Preview.Model -> Element Msg
+emailListTabBar model =
+    row
+        [ width fill
+        , height (px Size.spacing13)
+        , spaceEvenly
+        , padding
+        ]
+        [ el (Font.bold :: centerY :: userSelectNone) (text "Inbox")
+        , Tab.tab [ centerY, width (px Size.spacing42) ] { tabs = [ AllMail, Unread ], toString = filterTabLabel, embedMsg = FilterTab } model.filterEmails
+        ]
 
 
 
@@ -51,14 +74,14 @@ menu model =
         ]
         [ el [ width fill, padding, height (px Size.spacing14) ] (selectAccount model)
         , el Util.divider Element.none
-        , renderEmailSections emailManagementSections model
+        , renderMenu emailManagementSections model
         , el Util.divider Element.none
-        , renderEmailSections labelledEmails model
+        , renderMenu labelledEmails model
         ]
 
 
-renderEmailSections : List EmailSection -> Preview.Model -> Element Msg
-renderEmailSections sections model =
+renderMenu : List EmailSection -> Preview.Model -> Element Msg
+renderMenu sections model =
     column [ width fill, padding, Element.spacing Size.spacing1 ] <| renderEmailSectionBtns sections model.currentEmailSection
 
 
