@@ -1,12 +1,16 @@
 module Preview.View exposing (document)
 
 import Browser exposing (Document)
-import Element exposing (Element, centerX, centerY, fill, height, px, row, text, width)
+import Element exposing (Element, alignTop, centerX, centerY, el, fill, height, paddingXY, px, row, spaceEvenly, text, width)
 import Element.Background as Background
 import Element.Border as Border
-import Preview.Model as Preview
-import Preview.Msg as Preview
+import Element.Font as Font
+import Preview.Model as Preview exposing (Email, accounts, iconsForAccount, user)
+import Preview.Msg as Preview exposing (Msg(..))
 import UI.Preset.Color as Color
+import UI.Preset.Icon as Icon
+import UI.Preset.Size as Size
+import UI.Select as Select
 import UI.Theme exposing (theme)
 import UI.Util as Util
 
@@ -24,7 +28,65 @@ view model =
             ++ Util.shadow_xl
         )
     <|
-        []
+        [ row [ width (px 230), alignTop, paddingXY Size.spacing3 Size.spacing2 ]
+            [ selectAccount model ]
+        , row [] []
+        ]
+
+
+selectAccount : Preview.Model -> Element Msg
+selectAccount model =
+    Select.el Util.shadow selectAccountConfig model.account
+
+
+selectAccountConfig : Select.CustomConfig Email Preview.Msg
+selectAccountConfig =
+    let
+        label : Element msg
+        label =
+            row [ centerY, spaceEvenly ]
+                [ row [ spacing ]
+                    [ Util.renderIcon Icon.user
+                    , el [] (text <| user)
+                    ]
+                , el [] (Util.renderIcon Icon.upDown)
+                ]
+
+        item : Email -> Element msg
+        item email =
+            row [ spacing, centerY, Font.size Size.spacing3 ]
+                [ Util.renderIcon <| iconsForAccount email
+                , el [] (text email)
+                ]
+
+        itemAsSelected : Email -> Element msg
+        itemAsSelected email =
+            row [ spacing ]
+                [ item email
+                , Util.renderIcon Icon.check
+                ]
+
+        itemAsLabel : String -> Element msg
+        itemAsLabel email =
+            row [ centerY, spaceEvenly, width fill ]
+                [ row [ spacing ]
+                    [ Util.renderIcon <| iconsForAccount email
+                    , el [] (text user)
+                    ]
+                , Util.renderIcon <| Icon.upDown
+                ]
+
+        spacing : Element.Attribute msg
+        spacing =
+            Element.spacing Size.spacing3
+    in
+    { label = label
+    , options = accounts
+    , item = item
+    , itemAsSelected = itemAsSelected
+    , itemAsLabel = itemAsLabel
+    , embedMsg = SelectAccount
+    }
 
 
 document : Preview.Model -> Document Preview.Msg
