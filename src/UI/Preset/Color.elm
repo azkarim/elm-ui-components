@@ -81,6 +81,12 @@ neutral50 =
     Element.rgb255 250 250 250
 
 
+sky400 : Element.Color
+sky400 =
+    --#38bdf8
+    Element.rgb255 56 189 248
+
+
 loading : Element.Color
 loading =
     -- #848891
