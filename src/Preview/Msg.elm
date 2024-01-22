@@ -6,7 +6,7 @@ import UI.Tab as Tab
 
 
 type Msg
-    = SelectAccount (Select.Msg Model.Email)
+    = SelectAccount (Select.Msg Model.EmailAddress)
     | FilterTab (Tab.Msg FilterEmail)
     | OnTapEmailLabel EmailLabel
     | OnTapBody

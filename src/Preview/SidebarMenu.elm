@@ -7,7 +7,7 @@ import Heroicons.Outline as Heroicons
 import Html exposing (Html)
 import Maybe.Extra as Maybe
 import Preview.Data as Data
-import Preview.Model as Preview exposing (Email, EmailLabel(..), Unread)
+import Preview.Model as Preview exposing (EmailAddress, EmailLabel(..), Unread)
 import Preview.Msg as Preview exposing (Msg(..))
 import Preview.Util as Util
 import UI.Button as Button
@@ -195,7 +195,7 @@ selectAccount model =
         (Select.el Util.shadow selectAccountConfig model.account)
 
 
-selectAccountConfig : Select.CustomConfig Email Preview.Msg
+selectAccountConfig : Select.CustomConfig EmailAddress Preview.Msg
 selectAccountConfig =
     let
         label : Element msg
@@ -208,14 +208,14 @@ selectAccountConfig =
                 , el [] (Util.renderIcon Icon.upDown)
                 ]
 
-        item : Email -> Element msg
+        item : EmailAddress -> Element msg
         item email =
             row [ spacing, centerY, Font.size Size.spacing3 ]
                 [ Util.renderIcon <| Data.iconForAccount email
                 , el [] (text email)
                 ]
 
-        itemAsSelected : Email -> Element msg
+        itemAsSelected : EmailAddress -> Element msg
         itemAsSelected email =
             row [ spacing ]
                 [ item email

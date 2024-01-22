@@ -1,11 +1,11 @@
-module Preview.Model exposing (Email, EmailLabel(..), FilterEmail(..), Model, Unread, init)
+module Preview.Model exposing (Email, EmailAddress, EmailLabel(..), EmailTag(..), FilterEmail(..), Model, Unread, init)
 
 import UI.Select as Select
 import UI.Tab as Tab
 
 
 type alias Model =
-    { account : Select.State Email
+    { account : Select.State EmailAddress
     , viewEmailLabel : EmailLabel
     , filterEmails : Tab.State FilterEmail
     }
@@ -39,5 +39,20 @@ type alias Unread =
     Int
 
 
-type alias Email =
+type alias EmailAddress =
     String
+
+
+type alias Email =
+    { from : String
+    , subject : String
+    , body : String
+    , tags : List EmailTag
+    }
+
+
+type EmailTag
+    = Meeting
+    | Work
+    | Important
+    | Budget
