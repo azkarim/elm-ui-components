@@ -3,10 +3,11 @@ module Preview.Emails exposing (view)
 import Element exposing (Element, alignTop, centerY, column, el, fill, height, paddingXY, paragraph, px, row, scrollbarY, spaceEvenly, text, width)
 import Element.Background as Background
 import Element.Border as Border
+import Element.Events as Events
 import Element.Font as Font
 import List
 import Preview.Data as Data
-import Preview.Model as Preview exposing (Email, EmailTag(..), FilterEmail(..))
+import Preview.Model as Preview exposing (Email, EmailId, EmailTag(..), FilterEmail(..))
 import Preview.Msg exposing (Msg(..))
 import Preview.Util as Util
 import UI.Badge as Badge
@@ -23,7 +24,8 @@ view model =
     column [ width (px 700), height fill, Border.widthEach { right = 1, bottom = 0, left = 0, top = 0 }, Border.color theme.color.border, alignTop ]
         [ header model
         , el (Element.moveDown Size.spacing1 :: Util.divider) Element.none
-        , emails model.filterEmails.activeTab
+        , el [ width fill, height (px Size.spacing1) ] Element.none -- spacer
+        , emails model
         ]
 
 
@@ -45,12 +47,12 @@ filterEmailsTabs model =
     Tab.tab [ centerY, width (px Size.spacing42) ] { tabs = [ AllMail, Unread ], toString = filterEmailStr, embedMsg = FilterTab } model.filterEmails
 
 
-emails : FilterEmail -> Element msg
-emails filterBy =
+emails : Preview.Model -> Element Msg
+emails model =
     let
         predicate : Email -> Maybe Email
         predicate email_ =
-            case filterBy of
+            case model.filterEmails.activeTab of
                 AllMail ->
                     Just email_
 
@@ -58,27 +60,29 @@ emails filterBy =
                     ifElse (Just email_) Nothing (not email_.read)
     in
     Data.emails
-        |> List.filterMap (predicate >> Maybe.map email)
+        |> List.filterMap (predicate >> Maybe.map (email model.viewEmail))
         |> column [ width fill, height fill, scrollbarY, Util.padding_md, Element.spacing Size.spacing3 ]
 
 
-email : Email -> Element msg
-email email_ =
+email : EmailId -> Email -> Element Msg
+email selectedEmail email_ =
     column
         (width fill
             :: paddingXY Size.spacing3 Size.spacing4
             :: Element.spacing Size.spacing2
             :: Border.rounded theme.size.rounded
+            :: ifElse (Background.color theme.color.secondary) (Background.color Color.neutral) (selectedEmail == email_.id)
             :: Font.medium
             :: Font.size Size.spacing3
             :: Element.pointer
+            :: Events.onClick (OnTapViewEmail email_.id)
             :: Element.mouseOver [ Background.color theme.color.hover ]
             :: Util.shadow
             ++ highlightBorder email_
         )
         [ paragraph [ Font.semiBold, Font.letterSpacing 1.0 ] [ text <| email_.from ]
         , paragraph [ Font.letterSpacing 0.6 ] [ text <| email_.subject ]
-        , paragraph [ width fill, Font.letterSpacing 0.6, Font.color Color.zinc500, paddingXY 0 Size.spacing2 ] [ text <| email_.body ]
+        , paragraph [ width fill, Font.letterSpacing 0.6, Font.color Color.zinc500, paddingXY 0 Size.spacing2, Element.spacing Size.spacing2 ] [ text <| email_.body ]
         , row [ Element.spacing Size.spacing3 ] <|
             List.map (\tag -> Badge.badge [ Util.lowercase ] (emailTagStr tag) (ifElse Badge.Primary Badge.Secondary (highlightImportant tag))) email_.tags
         ]

@@ -1,4 +1,4 @@
-module Preview.Model exposing (Email, EmailAddress, EmailLabel(..), EmailTag(..), FilterEmail(..), Model, Unread, init)
+module Preview.Model exposing (Email, EmailAddress, EmailId, EmailLabel(..), EmailTag(..), FilterEmail(..), Model, Unread, init)
 
 import UI.Select as Select
 import UI.Tab as Tab
@@ -7,13 +7,14 @@ import UI.Tab as Tab
 type alias Model =
     { account : Select.State EmailAddress
     , viewEmailLabel : EmailLabel
+    , viewEmail : EmailId
     , filterEmails : Tab.State FilterEmail
     }
 
 
 init : Model
 init =
-    { account = Select.init (Just "alonzo@lambda.com"), viewEmailLabel = Inbox (Just 98), filterEmails = Tab.init AllMail }
+    { account = Select.init (Just "alonzo@lambda.com"), viewEmailLabel = Inbox (Just 98), filterEmails = Tab.init AllMail, viewEmail = 0 }
 
 
 type FilterEmail
@@ -44,7 +45,8 @@ type alias EmailAddress =
 
 
 type alias Email =
-    { from : String
+    { id : EmailId
+    , from : String
     , subject : String
     , body : String
     , tags : List EmailTag
@@ -57,3 +59,7 @@ type EmailTag
     | Work
     | Important
     | Budget
+
+
+type alias EmailId =
+    Int

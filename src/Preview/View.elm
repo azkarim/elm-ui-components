@@ -8,6 +8,7 @@ import Preview.Emails as Emails
 import Preview.Model as Preview
 import Preview.Msg as Preview
 import Preview.SidebarMenu as SidebarMenu
+import Preview.ViewEmail as ViewEmail
 import UI.Preset.Color as Color
 import UI.Theme exposing (theme)
 import UI.Util as Util
@@ -28,6 +29,7 @@ view model =
     <|
         [ SidebarMenu.view model
         , Emails.view model
+        , ViewEmail.view model
         ]
 
 
