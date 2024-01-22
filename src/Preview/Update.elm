@@ -15,8 +15,8 @@ update msg model =
         FilterTab tabMsg ->
             ( { model | filterEmails = Tab.update tabMsg model.filterEmails }, Cmd.none )
 
-        OnTapEmailSection emailSection ->
-            ( { model | currentEmailSection = emailSection }, Cmd.none )
+        OnTapEmailLabel emailLabel ->
+            ( { model | viewEmailLabel = emailLabel }, Cmd.none )
 
         OnTapBody ->
             ( { model | account = Select.hide model.account }, Cmd.none )
