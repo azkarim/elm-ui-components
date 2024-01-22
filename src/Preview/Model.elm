@@ -48,6 +48,7 @@ type alias Email =
     , subject : String
     , body : String
     , tags : List EmailTag
+    , read : Bool
     }
 
 

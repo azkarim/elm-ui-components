@@ -23,7 +23,7 @@ view model =
     column [ width (px 700), height fill, Border.widthEach { right = 1, bottom = 0, left = 0, top = 0 }, Border.color theme.color.border, alignTop ]
         [ header model
         , el (Element.moveDown Size.spacing1 :: Util.divider) Element.none
-        , emails
+        , emails model.filterEmails.activeTab
         ]
 
 
@@ -45,9 +45,20 @@ filterEmailsTabs model =
     Tab.tab [ centerY, width (px Size.spacing42) ] { tabs = [ AllMail, Unread ], toString = filterEmailStr, embedMsg = FilterTab } model.filterEmails
 
 
-emails : Element msg
-emails =
-    List.map email Data.emails
+emails : FilterEmail -> Element msg
+emails filterBy =
+    let
+        predicate : Email -> Maybe Email
+        predicate email_ =
+            case filterBy of
+                AllMail ->
+                    Just email_
+
+                Unread ->
+                    ifElse (Just email_) Nothing (not email_.read)
+    in
+    Data.emails
+        |> List.filterMap (predicate >> Maybe.map email)
         |> column [ width fill, height fill, scrollbarY, Util.padding_md, Element.spacing Size.spacing3 ]
 
 
@@ -63,7 +74,7 @@ email email_ =
             :: Element.pointer
             :: Element.mouseOver [ Background.color theme.color.hover ]
             :: Util.shadow
-            ++ Util.addBorder
+            ++ highlightBorder email_
         )
         [ paragraph [ Font.semiBold, Font.letterSpacing 1.0 ] [ text <| email_.from ]
         , paragraph [ Font.letterSpacing 0.6 ] [ text <| email_.subject ]
@@ -107,3 +118,8 @@ filterEmailStr filter =
 
         Unread ->
             "Unread"
+
+
+highlightBorder : { a | read : Bool } -> List (Element.Attribute msg)
+highlightBorder { read } =
+    ifElse Util.glowBorder Util.addBorder (not read)
