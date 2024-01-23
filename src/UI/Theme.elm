@@ -9,7 +9,7 @@ theme : { color : { primary : Element.Color, secondary : Element.Color, hover : 
 theme =
     { color =
         { primary = Color.slate900
-        , secondary = Color.zinc100
+        , secondary = Color.zinc200
         , hover = Color.zinc100
         , border = Color.zinc200
         }
