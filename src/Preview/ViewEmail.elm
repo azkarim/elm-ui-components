@@ -1,6 +1,6 @@
 module Preview.ViewEmail exposing (view)
 
-import Element exposing (Element, alignTop, centerX, column, el, fill, height, paddingXY, paragraph, px, row, text, width)
+import Element exposing (Element, alignTop, column, el, fill, height, paddingXY, paragraph, px, row, text, width)
 import Element.Font as Font
 import Heroicons.Outline as Heroicons
 import Html exposing (Html)
