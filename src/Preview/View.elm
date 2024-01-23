@@ -19,8 +19,8 @@ view model =
     row
         (centerX
             :: centerY
-            :: width (fill |> Element.maximum 1340)
-            :: height (fill |> Element.maximum 800)
+            :: width fill
+            :: height fill
             :: Background.color Color.neutral
             :: Border.rounded theme.size.rounded
             :: Util.addBorder
