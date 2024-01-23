@@ -71,7 +71,7 @@ header =
         , height (px Size.spacing13)
         , Util.padding
         ]
-        [ row [ Element.spacing Size.spacing1, centerX ] <| List.map iconBtn (emailOpsBtnSet0 ++ emailOpsBtnSet1)
+        [ row [ Element.alignRight, Element.spacing Size.spacing1 ] <| List.map menuBtn (emailOpsBtnSet0 ++ emailOpsBtnSet1)
         ]
 
 
@@ -91,8 +91,8 @@ emailOpsBtnSet1 =
     ]
 
 
-iconBtn : Html msg -> Element msg
-iconBtn icon_ =
+menuBtn : Html msg -> Element msg
+menuBtn icon_ =
     Button.new
         |> Button.icon (renderIcon <| icon_)
         |> Button.buttonType Button.Ghost
