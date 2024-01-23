@@ -4,7 +4,7 @@ import Browser exposing (Document)
 import Components.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
 import Components.Model as Components
 import Components.Msg as Components exposing (Msg(..))
-import Element exposing (Element, centerX, centerY, el, fill, height, inFront, paddingXY, px, rgb255, row, spacing, text, width, wrappedRow)
+import Element exposing (Element, centerX, centerY, el, fill, height, inFront, paddingXY, px, row, spacing, text, width, wrappedRow)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
