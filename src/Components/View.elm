@@ -25,7 +25,7 @@ view model =
         [ width fill
         , height fill
         , spacing 10
-        , Background.color (rgb255 255 255 255)
+        , Background.color Color.neutral
         , inFront (uiSet model)
         ]
     <|
@@ -79,7 +79,7 @@ emailBtn =
         { buttonType = Just Button.Ghost
         , icon = Just <| Util.renderIcon (Util.renderIcon Icon.email)
         , onTap = Just <| ToggleDrawer
-        , label = Just <| emailLabel 0
+        , label = Just <| emailLabel 10
         , loading = Just <| Button.Loaded
         }
 

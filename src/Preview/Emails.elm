@@ -71,7 +71,7 @@ email selectedEmail email_ =
             :: paddingXY Size.spacing3 Size.spacing4
             :: Element.spacing Size.spacing2
             :: Border.rounded theme.size.rounded
-            :: ifElse (Background.color theme.color.secondary) (Background.color Color.neutral) (selectedEmail == email_.id)
+            :: ifElse (Background.color theme.color.hover) (Background.color Color.neutral) (selectedEmail == email_.id)
             :: Font.medium
             :: Font.size Size.spacing3
             :: Element.pointer
@@ -79,6 +79,7 @@ email selectedEmail email_ =
             :: Element.mouseOver [ Background.color theme.color.hover ]
             :: Util.shadow
             ++ highlightBorder email_
+            ++ Util.transitions
         )
         [ paragraph [ Font.semiBold, Font.letterSpacing 1.0 ] [ text <| email_.from ]
         , paragraph [ Font.letterSpacing 0.6 ] [ text <| email_.subject ]
