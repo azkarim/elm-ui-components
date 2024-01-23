@@ -1,5 +1,5 @@
 
-# A UI library built on top of elm-ui
+# [WIP] A UI library built on top of elm-ui
 
 This library is heavily inspired by TailwindCSS, Radix UI and shadcn.
 
