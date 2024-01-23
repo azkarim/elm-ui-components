@@ -6,6 +6,7 @@ import Element.Border as Border
 import Element.Font as Font
 import UI.Preset.Size as Size
 import UI.Theme exposing (theme)
+import Util
 
 
 avatar : List (Element.Attribute msg) -> Element msg -> Element msg
@@ -16,7 +17,8 @@ avatar attrs elem =
             :: Border.rounded 50
             :: Background.color theme.color.secondary
             :: Font.size Size.spacing3
-            :: attrs
+            :: Util.userSelectNone
+            ++ attrs
         )
     <|
         Element.el
