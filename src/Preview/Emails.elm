@@ -83,7 +83,7 @@ email selectedEmail email_ =
         )
         [ paragraph [ Font.semiBold, Font.letterSpacing 1.0 ] [ text <| email_.from ]
         , paragraph [ Font.letterSpacing 0.6 ] [ text <| email_.subject ]
-        , paragraph [ width fill, Font.letterSpacing 0.6, Font.color Color.zinc500, paddingXY 0 Size.spacing_2, Element.spacing Size.spacing_2 ] [ text <| email_.body ]
+        , paragraph [ width fill, Font.letterSpacing 0.6, Font.color Color.zinc_500, paddingXY 0 Size.spacing_2, Element.spacing Size.spacing_2 ] [ text <| email_.body ]
         , row [ Element.spacing Size.spacing_3 ] <|
             List.map (\tag -> Badge.badge [ Util.lowercase ] (emailTagStr tag) (ifElse Badge.Primary Badge.Secondary (highlightImportant tag))) email_.tags
         ]

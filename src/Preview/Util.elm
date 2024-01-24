@@ -19,4 +19,4 @@ padding_md =
 
 glowBorder : List (Element.Attribute msg)
 glowBorder =
-    [ Border.width 1, Border.color (Color.sky400 |> Util.setAlpha 0.4) ]
+    [ Border.width 1, Border.color (Color.sky_400 |> Util.setAlpha 0.4) ]

@@ -72,7 +72,7 @@ commonAttrs0 =
         :: Element.paddingXY Size.padding_1 Size.padding_1
         :: Element.spaceEvenly
         :: Element.spacing Size.spacing_1
-        :: Background.color Color.zinc100
+        :: Background.color Color.zinc_100
         :: Border.rounded theme.size.rounded
         :: Element.focused []
         :: Font.size Size.text_xs
@@ -87,12 +87,12 @@ dynamicAttrs1 status inactiveOnClick =
     case status of
         Active ->
             [ Background.color Color.neutral
-            , Font.color Color.zinc900
+            , Font.color Color.zinc_900
             ]
                 ++ Util.shadow
 
         InActive ->
-            [ Font.color Color.zinc500
+            [ Font.color Color.zinc_500
             , Element.pointer
             , Events.onClick inactiveOnClick
             ]

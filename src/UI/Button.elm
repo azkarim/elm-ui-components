@@ -223,16 +223,16 @@ btnTypeAttrs type_ =
 
         Outline ->
             Background.color Color.neutral
-                :: Element.mouseOver [ Background.color Color.slate50 ]
+                :: Element.mouseOver [ Background.color Color.slate_50 ]
                 :: Util.addBorder
 
         Ghost ->
-            [ Element.mouseOver [ Background.color Color.slate50 ]
+            [ Element.mouseOver [ Background.color Color.slate_50 ]
             ]
 
         Icon ->
             Background.color Color.neutral
-                :: Element.mouseOver [ Background.color Color.slate50 ]
+                :: Element.mouseOver [ Background.color Color.slate_50 ]
                 :: Util.addBorder
 
 

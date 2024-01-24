@@ -40,7 +40,7 @@ drawer =
         [ width fill
         , height (px 400)
         , Border.roundEach { topLeft = Size.border_lg, topRight = Size.border_lg, bottomRight = 0, bottomLeft = 0 }
-        , Background.color Color.neutral50
+        , Background.color Color.neutral_50
         ]
         [ el [ centerX, centerY, Font.medium ] (text "Drawer") ]
 
