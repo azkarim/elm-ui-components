@@ -9,12 +9,12 @@ import UI.Util as Util
 
 padding : Element.Attribute msg
 padding =
-    paddingXY Size.spacing3 Size.spacing2
+    paddingXY Size.spacing_3 Size.spacing_2
 
 
 padding_md : Element.Attribute msg
 padding_md =
-    paddingXY Size.spacing4 Size.spacing3
+    paddingXY Size.spacing_4 Size.spacing_3
 
 
 glowBorder : List (Element.Attribute msg)

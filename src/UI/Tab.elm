@@ -71,7 +71,7 @@ commonAttrs0 =
     Element.width Element.fill
         :: Element.paddingXY Size.padding_1 Size.padding_1
         :: Element.spaceEvenly
-        :: Element.spacing Size.spacing1
+        :: Element.spacing Size.spacing_1
         :: Background.color Color.zinc100
         :: Border.rounded theme.size.rounded
         :: Element.focused []

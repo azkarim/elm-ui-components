@@ -156,7 +156,7 @@ viewOptions config selectedOption =
         ]
     <|
         Element.column
-            (Element.moveDown Size.spacing1
+            (Element.moveDown Size.spacing_1
                 :: Element.width Element.fill
                 :: Element.paddingXY Size.padding_2 Size.padding_2
                 :: Border.width theme.size.border
@@ -210,7 +210,7 @@ elemItemAsLabel =
 elemItem : String -> Element msg
 elemItem option =
     Element.row [ Element.centerY ]
-        [ Element.el [ Element.width (Element.px Size.spacing6) ] Element.none
+        [ Element.el [ Element.width (Element.px Size.spacing_6) ] Element.none
         , Element.text option
         ]
 
@@ -218,7 +218,7 @@ elemItem option =
 elemItemAsSelected : String -> Element msg
 elemItemAsSelected option =
     Element.row [ Element.centerY ]
-        [ Element.el [ Element.width (Element.px Size.spacing6), Element.centerX ] check
+        [ Element.el [ Element.width (Element.px Size.spacing_6), Element.centerX ] check
         , Element.text option
         ]
 
@@ -235,6 +235,6 @@ check =
 
 size : { height : Int, minWidth : Int }
 size =
-    { height = Size.spacing10
-    , minWidth = Size.spacing45
+    { height = Size.spacing_10
+    , minWidth = Size.spacing_45
     }

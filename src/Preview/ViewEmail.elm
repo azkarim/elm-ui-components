@@ -27,9 +27,9 @@ view model =
         , alignTop
         ]
         [ header
-        , el (Element.moveDown Size.spacing1 :: Util.divider) Element.none
+        , el (Element.moveDown Size.spacing_1 :: Util.divider) Element.none
         , Maybe.unwrap Element.none emailHeader emailSelected
-        , el (Element.moveDown Size.spacing1 :: Util.divider) Element.none
+        , el (Element.moveDown Size.spacing_1 :: Util.divider) Element.none
         , Maybe.unwrap Element.none emailBody emailSelected
         ]
 
@@ -37,14 +37,14 @@ view model =
 emailBody : Email -> Element msg
 emailBody email_ =
     el [ padding_lg ]
-        (paragraph [ Font.medium, Font.size Size.spacing3_5, Element.spacing Size.spacing3 ] [ text email_.body ])
+        (paragraph [ Font.medium, Font.size Size.spacing_3_5, Element.spacing Size.spacing_3 ] [ text email_.body ])
 
 
 emailHeader : Email -> Element msg
 emailHeader email_ =
-    row [ width fill, Element.spacing Size.spacing4, padding_lg ]
+    row [ width fill, Element.spacing Size.spacing_4, padding_lg ]
         [ el [ alignTop ] (avatar email_)
-        , column [ width fill, Element.spacing Size.spacing1, Font.medium, Font.size Size.spacing3 ]
+        , column [ width fill, Element.spacing Size.spacing_1, Font.medium, Font.size Size.spacing_3 ]
             [ paragraph [ Font.semiBold ] [ text <| email_.from ]
             , paragraph [] [ text <| email_.subject ]
             ]
@@ -68,10 +68,10 @@ header : Element msg
 header =
     row
         [ width fill
-        , height (px Size.spacing13)
+        , height (px Size.spacing_13)
         , Util.padding
         ]
-        [ row [ Element.alignRight, Element.spacing Size.spacing1 ] <| List.map menuBtn (emailOpsBtnSet0 ++ emailOpsBtnSet1)
+        [ row [ Element.alignRight, Element.spacing Size.spacing_1 ] <| List.map menuBtn (emailOpsBtnSet0 ++ emailOpsBtnSet1)
         ]
 
 
@@ -108,9 +108,9 @@ renderIcon icon =
 
 iconSize : Int
 iconSize =
-    Size.spacing5
+    Size.spacing_5
 
 
 padding_lg : Element.Attribute msg
 padding_lg =
-    paddingXY Size.spacing4 Size.spacing6
+    paddingXY Size.spacing_4 Size.spacing_6

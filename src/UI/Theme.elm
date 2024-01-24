@@ -16,6 +16,6 @@ theme =
     , size =
         { border = Size.border_1
         , rounded = Size.border_md
-        , icon = Size.spacing3
+        , icon = Size.spacing_3
         }
     }

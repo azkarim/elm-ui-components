@@ -37,7 +37,7 @@ view model =
 
 emailMenu : List EmailLabel -> Preview.Model -> Element Msg
 emailMenu emailLabels model =
-    column [ width fill, Util.padding, Element.spacing Size.spacing1 ] <| emailLabelBtns emailLabels model.viewEmailLabel
+    column [ width fill, Util.padding, Element.spacing Size.spacing_1 ] <| emailLabelBtns emailLabels model.viewEmailLabel
 
 
 emailLabelBtns : List EmailLabel -> EmailLabel -> List (Element Msg)
@@ -45,7 +45,7 @@ emailLabelBtns emailLabels viewEmailLabel =
     emailLabels
         |> List.map
             (\emailLabel ->
-                Button.button [ width fill, Font.size Size.spacing3 ]
+                Button.button [ width fill, Font.size Size.spacing_3 ]
                     { buttonType = Just <| ifElse Button.Primary Button.Ghost (isEmailLabelEqual emailLabel viewEmailLabel)
                     , icon = Just <| (emailLabel |> emailLabelIcon |> Element.html |> Util.renderIcon)
                     , onTap = Just <| OnTapEmailLabel emailLabel
@@ -191,7 +191,7 @@ isEmailLabelEqual a b =
 
 selectAccount : Preview.Model -> Element Msg
 selectAccount model =
-    el [ width fill, Util.padding, height (px Size.spacing14) ]
+    el [ width fill, Util.padding, height (px Size.spacing_14) ]
         (Select.el Util.shadow selectAccountConfig model.account)
 
 
@@ -210,7 +210,7 @@ selectAccountConfig =
 
         item : EmailAddress -> Element msg
         item email =
-            row [ spacing, centerY, Font.size Size.spacing3 ]
+            row [ spacing, centerY, Font.size Size.spacing_3 ]
                 [ Util.renderIcon <| Data.iconForAccount email
                 , el [] (text email)
                 ]
@@ -234,7 +234,7 @@ selectAccountConfig =
 
         spacing : Element.Attribute msg
         spacing =
-            Element.spacing Size.spacing3
+            Element.spacing Size.spacing_3
     in
     { label = label
     , options = Data.accounts

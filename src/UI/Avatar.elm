@@ -16,7 +16,7 @@ avatar attrs elem =
             :: Element.height (Element.px square)
             :: Border.rounded 50
             :: Background.color theme.color.secondary
-            :: Font.size Size.spacing3
+            :: Font.size Size.spacing_3
             :: Util.userSelectNone
             ++ attrs
         )
@@ -30,4 +30,4 @@ avatar attrs elem =
 
 square : Int
 square =
-    Size.spacing10
+    Size.spacing_10

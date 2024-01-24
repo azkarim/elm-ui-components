@@ -168,7 +168,7 @@ button attrs btn =
         , label =
             case btn.loading of
                 Just (Loading loadingLabel) ->
-                    Element.row [ Element.spacing Size.spacing3 ] [ Element.el [] spinner, Element.el [] (Element.text loadingLabel) ]
+                    Element.row [ Element.spacing Size.spacing_3 ] [ Element.el [] spinner, Element.el [] (Element.text loadingLabel) ]
 
                 Just Loaded ->
                     renderElemLabel ( btn.icon, btn.label )
@@ -189,7 +189,7 @@ renderElemLabel pair =
             Element.none
 
         ( Just icon_, Just label_ ) ->
-            Element.row [ Element.width Element.fill, Element.spacing Size.spacing2 ] [ icon_, label_ ]
+            Element.row [ Element.width Element.fill, Element.spacing Size.spacing_2 ] [ icon_, label_ ]
 
         ( Just icon_, Nothing ) ->
             icon_
@@ -263,6 +263,6 @@ spinner =
     in
     Loading.render
         Loading.Spinner
-        { config | size = Size.spacing4, color = color }
+        { config | size = Size.spacing_4, color = color }
         Loading.On
         |> Element.html

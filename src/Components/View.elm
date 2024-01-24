@@ -47,7 +47,7 @@ drawer =
 
 uiSet : Components.Model -> Element Msg
 uiSet model =
-    wrappedRow [ width (fill |> Element.maximum 1280), centerX, alignTop, paddingXY Size.spacing10 Size.spacing10, spacing 20 ]
+    wrappedRow [ width (fill |> Element.maximum 1280), centerX, alignTop, paddingXY Size.spacing_10 Size.spacing_10, spacing 20 ]
         [ Button.primary Util.shadow { onTap = Nothing, label = "Primary" }
         , Button.secondary [] { onTap = Nothing, label = "Secondary" }
         , Button.outline Util.shadow { onTap = Nothing, label = "Outline" }
