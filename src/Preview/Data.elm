@@ -1,8 +1,26 @@
-module Preview.Data exposing (accounts, emailManagement, emails, iconForAccount, labelledEmails, user)
+module Preview.Data exposing (accounts, emailManagement, emailOpsBtnSet0, emailOpsBtnSet1, emails, iconForAccount, labelledEmails, user)
 
 import Element exposing (Element)
-import Preview.Model exposing (Email, EmailAddress, EmailLabel(..), EmailTag(..))
+import Heroicons.Outline as Heroicons
+import Html exposing (Html)
+import Preview.Model exposing (Email, EmailAddress, EmailLabel(..), EmailTag(..), Label, TooltipId)
 import UI.Preset.Icon as Icon
+
+
+emailOpsBtnSet0 : List ( TooltipId, Label, Html msg )
+emailOpsBtnSet0 =
+    [ ( "archive", "Archive", Heroicons.archiveBoxArrowDown [] )
+    , ( "spam", "Spam", Heroicons.archiveBoxXMark [] )
+    , ( "trash", "Trash", Heroicons.trash [] )
+    ]
+
+
+emailOpsBtnSet1 : List ( TooltipId, Label, Html msg )
+emailOpsBtnSet1 =
+    [ ( "snooze", "Snooze", Heroicons.bellSnooze [] )
+    , ( "flag", "Flag", Heroicons.flag [] )
+    , ( "download", "Download", Heroicons.arrowDownOnSquare [] )
+    ]
 
 
 emailLabels : List EmailLabel

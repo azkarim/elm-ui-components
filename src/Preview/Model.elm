@@ -1,5 +1,6 @@
-module Preview.Model exposing (Email, EmailAddress, EmailId, EmailLabel(..), EmailTag(..), FilterEmail(..), Model, Unread, init)
+module Preview.Model exposing (Email, EmailAddress, EmailId, EmailLabel(..), EmailTag(..), FilterEmail(..), Label, Model, TooltipId, Unread)
 
+import Dict exposing (Dict)
 import UI.Select as Select
 import UI.Tab as Tab
 
@@ -9,12 +10,8 @@ type alias Model =
     , viewEmailLabel : EmailLabel
     , viewEmail : EmailId
     , filterEmails : Tab.State FilterEmail
+    , tooltips : Dict TooltipId Bool
     }
-
-
-init : Model
-init =
-    { account = Select.init (Just "alonzo@lambda.com"), viewEmailLabel = Inbox (Just 98), filterEmails = Tab.init AllMail, viewEmail = 0 }
 
 
 type FilterEmail
@@ -63,3 +60,11 @@ type EmailTag
 
 type alias EmailId =
     Int
+
+
+type alias TooltipId =
+    String
+
+
+type alias Label =
+    String

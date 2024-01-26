@@ -1,9 +1,11 @@
 module Preview.Update exposing (update)
 
-import Preview.Model as Preview
+import Dict exposing (Dict)
+import Preview.Model as Preview exposing (TooltipId)
 import Preview.Msg as Preview exposing (Msg(..))
 import UI.Select as Select
 import UI.Tab as Tab
+import UI.Tooltip as Tooltip
 
 
 update : Preview.Msg -> Preview.Model -> ( Preview.Model, Cmd Preview.Msg )
@@ -23,3 +25,26 @@ update msg model =
 
         OnTapBody ->
             ( { model | account = Select.hide model.account }, Cmd.none )
+
+        OnTooltipMsg tooltipMsg ->
+            ( updateTooltipState tooltipMsg model, Cmd.none )
+
+
+updateTooltipState : Tooltip.Msg TooltipId -> Preview.Model -> Preview.Model
+updateTooltipState msg model =
+    case msg of
+        Tooltip.OnMouseEnter id ->
+            { model | tooltips = showTooltip id model.tooltips }
+
+        Tooltip.OnMouseLeave id ->
+            { model | tooltips = hideTooltip id model.tooltips }
+
+
+showTooltip : TooltipId -> Dict TooltipId Bool -> Dict TooltipId Bool
+showTooltip id =
+    Dict.update id (Maybe.map (\_ -> True))
+
+
+hideTooltip : TooltipId -> Dict TooltipId Bool -> Dict TooltipId Bool
+hideTooltip id =
+    Dict.update id (Maybe.map (\_ -> False))

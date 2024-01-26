@@ -1,21 +1,24 @@
 module Preview.ViewEmail exposing (view)
 
+import Dict
 import Element exposing (Element, alignTop, column, el, fill, height, paddingXY, paragraph, px, row, text, width)
 import Element.Font as Font
-import Heroicons.Outline as Heroicons
 import Html exposing (Html)
 import List.Extra as List
 import Maybe.Extra as Maybe
 import Preview.Data as Data
-import Preview.Model as Preview exposing (Email)
+import Preview.Model as Preview exposing (Email, Label, TooltipId)
+import Preview.Msg exposing (Msg(..))
 import Preview.Util as Util
 import UI.Avatar as Avatar
 import UI.Button as Button
 import UI.Preset.Size as Size
+import UI.Tooltip as Tooltip
 import UI.Util as Util
+import Util
 
 
-view : Preview.Model -> Element msg
+view : Preview.Model -> Element Msg
 view model =
     let
         emailSelected : Maybe Email
@@ -26,7 +29,7 @@ view model =
         [ width fill
         , alignTop
         ]
-        [ header
+        [ header model
         , el (Element.moveDown Size.spacing_1 :: Util.divider) Element.none
         , Maybe.unwrap Element.none emailHeader emailSelected
         , el (Element.moveDown Size.spacing_1 :: Util.divider) Element.none
@@ -64,39 +67,38 @@ avatar email_ =
     Avatar.avatar [] (text <| initials)
 
 
-header : Element msg
-header =
+header : Preview.Model -> Element Msg
+header model =
     row
         [ width fill
         , height (px Size.spacing_13)
         , Util.padding
         ]
-        [ row [ Element.alignRight, Element.spacing Size.spacing_1 ] <| List.map menuBtn (emailOpsBtnSet0 ++ emailOpsBtnSet1)
+        [ row [ Element.alignRight, Element.spacing Size.spacing_1 ] <| List.map (menuBtn model) (Data.emailOpsBtnSet0 ++ Data.emailOpsBtnSet1)
         ]
 
 
-emailOpsBtnSet0 : List (Html msg)
-emailOpsBtnSet0 =
-    [ Heroicons.archiveBoxArrowDown []
-    , Heroicons.archiveBoxXMark []
-    , Heroicons.trash []
-    ]
-
-
-emailOpsBtnSet1 : List (Html msg)
-emailOpsBtnSet1 =
-    [ Heroicons.bellSnooze []
-    , Heroicons.flag []
-    , Heroicons.arrowDownOnSquare []
-    ]
-
-
-menuBtn : Html msg -> Element msg
-menuBtn icon_ =
+menuBtn : Preview.Model -> ( TooltipId, Label, Html Msg ) -> Element Msg
+menuBtn model ( tooltipId, tooltipLabel, icon_ ) =
     Button.new
         |> Button.icon (renderIcon <| icon_)
         |> Button.buttonType Button.Ghost
-        |> Button.button []
+        |> Button.button
+            [ Element.below <| renderTooltip ( tooltipId, tooltipLabel ) model
+            , Util.onMouseEnter (OnTooltipMsg (Tooltip.OnMouseEnter tooltipId))
+            , Util.onMouseLeave
+                (OnTooltipMsg (Tooltip.OnMouseLeave tooltipId))
+            ]
+
+
+renderTooltip : ( TooltipId, Label ) -> Preview.Model -> Element Msg
+renderTooltip ( id, label ) model =
+    Tooltip.tooltip []
+        { id = id
+        , elem = Element.el [] (Element.text label)
+        , embedMsg = OnTooltipMsg
+        , isTooltipOpen = Dict.get id model.tooltips |> Maybe.withDefault False
+        }
 
 
 renderIcon : Html msg -> Element msg
