@@ -1,4 +1,4 @@
-module Util exposing (animatedEl, fromAtrrs, ifElse, noAttr, onClick, style, userSelectNone)
+module Util exposing (animatedEl, fromAtrrs, ifElse, noAttr, onClick, onMouseEnter, onMouseLeave, style, userSelectNone)
 
 import Element
 import Html
@@ -18,9 +18,25 @@ animatedEl =
         }
 
 
+
+-- todo : move Events to a separate Event module
+
+
 onClick : msg -> Element.Attribute msg
 onClick msg =
     Html.Events.custom "click" (D.succeed { message = msg, stopPropagation = True, preventDefault = True })
+        |> Element.htmlAttribute
+
+
+onMouseEnter : msg -> Element.Attribute msg
+onMouseEnter msg =
+    Html.Events.custom "mouseenter" (D.succeed { message = msg, stopPropagation = False, preventDefault = False })
+        |> Element.htmlAttribute
+
+
+onMouseLeave : msg -> Element.Attribute msg
+onMouseLeave msg =
+    Html.Events.custom "mouseleave" (D.succeed { message = msg, stopPropagation = False, preventDefault = False })
         |> Element.htmlAttribute
 
 
