@@ -1,4 +1,4 @@
-module UI.Util exposing (addBorder, divider, lowercase, renderIcon, setAlpha, shadow, shadow_xl, transitions)
+module UI.Util exposing (addBorder, divider, lowercase, noOverflowX, renderIcon, setAlpha, shadow, shadow_xl, transitions)
 
 import Element exposing (Element)
 import Element.Border as Border
@@ -81,3 +81,8 @@ setAlpha alpha color =
 lowercase : Element.Attribute msg
 lowercase =
     Util.style "text-transform" "lowercase"
+
+
+noOverflowX : Element.Attribute msg
+noOverflowX =
+    Element.clipX

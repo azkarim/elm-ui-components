@@ -36,5 +36,5 @@ view model =
 document : Preview.Model -> Document Preview.Msg
 document model =
     { title = "Preview"
-    , body = [ view model |> Element.layout [ Element.width Element.fill, Element.height Element.fill ] ]
+    , body = [ view model |> Element.layout [ Element.width Element.fill, Element.height Element.fill, Util.noOverflowX ] ]
     }
