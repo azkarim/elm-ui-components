@@ -15,7 +15,6 @@ import UI.Button as Button
 import UI.Preset.Size as Size
 import UI.Tooltip as Tooltip
 import UI.Util as Util
-import Util
 
 
 view : Preview.Model -> Element Msg
@@ -84,11 +83,9 @@ menuBtn model ( tooltipId, tooltipLabel, icon_ ) =
         |> Button.icon (renderIcon <| icon_)
         |> Button.buttonType Button.Ghost
         |> Button.button
-            [ Element.below <| renderTooltip ( tooltipId, tooltipLabel ) model
-            , Util.onMouseEnter (OnTooltipMsg (Tooltip.OnMouseEnter tooltipId))
-            , Util.onMouseLeave
-                (OnTooltipMsg (Tooltip.OnMouseLeave tooltipId))
-            ]
+            ((Element.below <| renderTooltip ( tooltipId, tooltipLabel ) model)
+                :: Tooltip.events tooltipId OnTooltipMsg
+            )
 
 
 renderTooltip : ( TooltipId, Label ) -> Preview.Model -> Element Msg

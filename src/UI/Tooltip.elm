@@ -1,4 +1,4 @@
-module UI.Tooltip exposing (Config, Msg(..), tooltip)
+module UI.Tooltip exposing (Config, Msg(..), events, tooltip)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -32,16 +32,16 @@ tooltip attrs config =
         Element.none
 
     else
-        Util.animatedEl Element.el (popupAnim config.isTooltipOpen) [] <| renderTooltip { id = config.id, elem = config.elem, userAttrs = attrs, embedMsg = config.embedMsg }
+        Util.animatedEl Element.el (popupAnim config.isTooltipOpen) [] <| renderTooltip { elem = config.elem, userAttrs = attrs }
 
 
-renderTooltip : { id : id, elem : Element msg, userAttrs : List (Element.Attribute msg), embedMsg : Msg id -> msg } -> Element msg
-renderTooltip { id, elem, userAttrs, embedMsg } =
-    Element.el (userEvents id embedMsg ++ commonAttrs ++ userAttrs) elem
+renderTooltip : { elem : Element msg, userAttrs : List (Element.Attribute msg) } -> Element msg
+renderTooltip { elem, userAttrs } =
+    Element.el (commonAttrs ++ userAttrs) elem
 
 
-userEvents : id -> (Msg id -> msg) -> List (Element.Attribute msg)
-userEvents id embedMsg =
+events : id -> (Msg id -> msg) -> List (Element.Attribute msg)
+events id embedMsg =
     [ Util.onMouseEnter (OnMouseEnter id |> embedMsg)
     , Util.onMouseLeave (OnMouseLeave id |> embedMsg)
     ]
@@ -67,5 +67,5 @@ popupAnim isVisible =
         { duration = 200
         , options = Animation.cubic 0.32 0.72 0 1 :: ifElse [] [ Animation.reverse ] isVisible
         }
-        [ P.opacity 0, P.property "transform" "scaleY(0.8) translateZ(0)" ]
-        [ P.opacity 1, P.property "transform" "scaleY(1) translateZ(0)" ]
+        [ P.opacity 0 ]
+        [ P.opacity 1 ]
