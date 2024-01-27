@@ -4,11 +4,13 @@ import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Simple.Animation as Animation exposing (Animation)
+import Simple.Animation.Property as P
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size
 import UI.Theme exposing (theme)
 import UI.Util as Util
-import Util
+import Util exposing (ifElse)
 
 
 type alias Config id msg =
@@ -30,7 +32,7 @@ tooltip attrs config =
         Element.none
 
     else
-        renderTooltip { id = config.id, elem = config.elem, userAttrs = attrs, embedMsg = config.embedMsg }
+        Util.animatedEl Element.el (popupAnim config.isTooltipOpen) [] <| renderTooltip { id = config.id, elem = config.elem, userAttrs = attrs, embedMsg = config.embedMsg }
 
 
 renderTooltip : { id : id, elem : Element msg, userAttrs : List (Element.Attribute msg), embedMsg : Msg id -> msg } -> Element msg
@@ -57,3 +59,13 @@ commonAttrs =
     , Font.medium
     ]
         ++ Util.transitions
+
+
+popupAnim : Bool -> Animation
+popupAnim isVisible =
+    Animation.fromTo
+        { duration = 200
+        , options = Animation.cubic 0.32 0.72 0 1 :: ifElse [] [ Animation.reverse ] isVisible
+        }
+        [ P.opacity 0, P.property "transform" "scaleY(0.8) translateZ(0)" ]
+        [ P.opacity 1, P.property "transform" "scaleY(1) translateZ(0)" ]
