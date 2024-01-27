@@ -47,10 +47,10 @@ userEvents id embedMsg =
 
 commonAttrs : List (Element.Attribute msg)
 commonAttrs =
-    [ Element.paddingXY Size.padding_4 Size.padding_3
+    [ Element.paddingXY Size.padding_3 Size.padding_2
     , Border.rounded theme.size.rounded
     , Background.color theme.color.primary
-    , Font.size Size.text_sm
+    , Font.size Size.text_xs
     , Font.color Color.neutral
     , Font.letterSpacing 0.4
     , Font.family [ Font.sansSerif ]
