@@ -1,9 +1,9 @@
-module Preview.Subscriptions exposing (subscriptions)
+module Page.Preview.Subscriptions exposing (subscriptions)
 
 import Browser.Events as Events
 import Json.Decode as JD
-import Preview.Model as Preview
-import Preview.Msg as Preview
+import Page.Preview.Model as Preview
+import Page.Preview.Msg as Preview
 
 
 subscriptions : Preview.Model -> List (Sub Preview.Msg)

@@ -1,7 +1,7 @@
-module Components.Model exposing (Model, init)
+module Page.Components.Model exposing (Model, init)
 
-import Components.Data as Data
-import Components.Msg as Components
+import Page.Components.Data as Data
+import Page.Components.Msg as Components
 import UI.Drawer as Drawer
 import UI.Select as Select
 import UI.Tab as Tab

@@ -1,8 +1,8 @@
 module Update exposing (update)
 
-import Components.Update as Components
 import Msg exposing (Msg(..))
-import Preview.Update as Preview
+import Page.Components.Update as Components
+import Page.Preview.Update as Preview
 import State exposing (State)
 
 

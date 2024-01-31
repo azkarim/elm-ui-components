@@ -1,7 +1,7 @@
-module Components.Update exposing (update)
+module Page.Components.Update exposing (update)
 
-import Components.Model as Components
-import Components.Msg as Components exposing (Msg(..))
+import Page.Components.Model as Components
+import Page.Components.Msg as Components exposing (Msg(..))
 import UI.Drawer as Drawer
 import UI.Select as Select
 import UI.Tab as Tab

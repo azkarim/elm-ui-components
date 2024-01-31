@@ -1,9 +1,9 @@
-module Preview.Data exposing (accounts, emailManagement, emailOpsBtnSet0, emailOpsBtnSet1, emails, iconForAccount, labelledEmails, user)
+module Page.Preview.Data exposing (accounts, emailManagement, emailOpsBtnSet0, emailOpsBtnSet1, emails, iconForAccount, labelledEmails, user)
 
 import Element exposing (Element)
 import Heroicons.Outline as Heroicons
 import Html exposing (Html)
-import Preview.Model exposing (Email, EmailAddress, EmailLabel(..), EmailTag(..), Label, TooltipId)
+import Page.Preview.Model exposing (Email, EmailAddress, EmailLabel(..), EmailTag(..), Label, TooltipId)
 import UI.Preset.Icon as Icon
 
 

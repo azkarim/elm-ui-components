@@ -1,8 +1,8 @@
 module State exposing (State, init)
 
-import Components.Model as Components
-import Preview.Init as Preview
-import Preview.Model as Preview
+import Page.Components.Model as Components
+import Page.Preview.Init as Preview
+import Page.Preview.Model as Preview
 import Route exposing (Route)
 
 

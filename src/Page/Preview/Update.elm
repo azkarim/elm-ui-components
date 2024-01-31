@@ -1,8 +1,8 @@
-module Preview.Update exposing (update)
+module Page.Preview.Update exposing (update)
 
 import Dict exposing (Dict)
-import Preview.Model as Preview exposing (TooltipId)
-import Preview.Msg as Preview exposing (Msg(..))
+import Page.Preview.Model as Preview exposing (TooltipId)
+import Page.Preview.Msg as Preview exposing (Msg(..))
 import UI.Select as Select
 import UI.Tab as Tab
 import UI.Tooltip as Tooltip

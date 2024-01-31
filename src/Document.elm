@@ -1,11 +1,11 @@
 module Document exposing (document)
 
 import Browser exposing (Document)
-import Components.View as Components
 import Html
 import Msg exposing (Msg(..))
 import NotFound
-import Preview.View as Preview
+import Page.Components.View as Components
+import Page.Preview.View as Preview
 import Route
 import State exposing (State)
 

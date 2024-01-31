@@ -1,4 +1,4 @@
-module Preview.ViewEmail exposing (view)
+module Page.Preview.ViewEmail exposing (view)
 
 import Dict
 import Element exposing (Element, alignTop, column, el, fill, height, paddingXY, paragraph, px, row, text, width)
@@ -6,10 +6,10 @@ import Element.Font as Font
 import Html exposing (Html)
 import List.Extra as List
 import Maybe.Extra as Maybe
-import Preview.Data as Data
-import Preview.Model as Preview exposing (Email, Label, TooltipId)
-import Preview.Msg exposing (Msg(..))
-import Preview.Util as Util
+import Page.Preview.Data as Data
+import Page.Preview.Model as Preview exposing (Email, Label, TooltipId)
+import Page.Preview.Msg exposing (Msg(..))
+import Page.Preview.Util as Util
 import UI.Avatar as Avatar
 import UI.Button as Button
 import UI.Preset.Size as Size

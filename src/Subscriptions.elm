@@ -1,8 +1,8 @@
 module Subscriptions exposing (subscriptions)
 
-import Components.Subscriptions as Components
 import Msg exposing (Msg(..))
-import Preview.Subscriptions as Preview
+import Page.Components.Subscriptions as Components
+import Page.Preview.Subscriptions as Preview
 import State exposing (State)
 
 

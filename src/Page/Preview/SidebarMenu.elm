@@ -1,4 +1,4 @@
-module Preview.SidebarMenu exposing (view)
+module Page.Preview.SidebarMenu exposing (view)
 
 import Element exposing (Element, alignRight, centerY, column, el, fill, height, px, row, spaceEvenly, text, width)
 import Element.Border as Border
@@ -6,10 +6,10 @@ import Element.Font as Font
 import Heroicons.Outline as Heroicons
 import Html exposing (Html)
 import Maybe.Extra as Maybe
-import Preview.Data as Data
-import Preview.Model as Preview exposing (EmailAddress, EmailLabel(..), Unread)
-import Preview.Msg as Preview exposing (Msg(..))
-import Preview.Util as Util
+import Page.Preview.Data as Data
+import Page.Preview.Model as Preview exposing (EmailAddress, EmailLabel(..), Unread)
+import Page.Preview.Msg as Preview exposing (Msg(..))
+import Page.Preview.Util as Util
 import UI.Button as Button
 import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size

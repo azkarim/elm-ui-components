@@ -1,4 +1,4 @@
-module Preview.Emails exposing (view)
+module Page.Preview.Emails exposing (view)
 
 import Element exposing (Element, alignTop, centerY, column, el, fill, height, paddingXY, paragraph, px, row, scrollbarY, spaceEvenly, text, width)
 import Element.Background as Background
@@ -6,10 +6,10 @@ import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
 import List
-import Preview.Data as Data
-import Preview.Model as Preview exposing (Email, EmailId, EmailTag(..), FilterEmail(..))
-import Preview.Msg exposing (Msg(..))
-import Preview.Util as Util
+import Page.Preview.Data as Data
+import Page.Preview.Model as Preview exposing (Email, EmailId, EmailTag(..), FilterEmail(..))
+import Page.Preview.Msg exposing (Msg(..))
+import Page.Preview.Util as Util
 import UI.Badge as Badge
 import UI.Preset.Color as Color
 import UI.Preset.Size as Size

@@ -1,7 +1,7 @@
 module Msg exposing (Msg(..))
 
-import Components.Msg as Components
-import Preview.Msg as Preview
+import Page.Components.Msg as Components
+import Page.Preview.Msg as Preview
 
 
 type Msg

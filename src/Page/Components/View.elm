@@ -1,14 +1,14 @@
-module Components.View exposing (document)
+module Page.Components.View exposing (document)
 
 import Browser exposing (Document)
-import Components.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
-import Components.Model as Components
-import Components.Msg as Components exposing (Msg(..))
 import Element exposing (Element, alignTop, centerX, centerY, el, fill, height, paddingXY, px, row, spacing, text, width, wrappedRow)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
+import Page.Components.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
+import Page.Components.Model as Components
+import Page.Components.Msg as Components exposing (Msg(..))
 import UI.Avatar as Avatar
 import UI.Badge as Badge
 import UI.Button as Button

@@ -1,4 +1,4 @@
-module Preview.Model exposing (Email, EmailAddress, EmailId, EmailLabel(..), EmailTag(..), FilterEmail(..), Label, Model, TooltipId, Unread)
+module Page.Preview.Model exposing (Email, EmailAddress, EmailId, EmailLabel(..), EmailTag(..), FilterEmail(..), Label, Model, TooltipId, Unread)
 
 import Dict exposing (Dict)
 import UI.Select as Select

@@ -1,8 +1,8 @@
-module Preview.Init exposing (init)
+module Page.Preview.Init exposing (init)
 
 import Dict exposing (Dict)
-import Preview.Data as Data
-import Preview.Model as Preview exposing (EmailLabel(..), FilterEmail(..), TooltipId)
+import Page.Preview.Data as Data
+import Page.Preview.Model as Preview exposing (EmailLabel(..), FilterEmail(..), TooltipId)
 import UI.Select as Select
 import UI.Tab as Tab
 

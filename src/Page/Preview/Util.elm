@@ -1,4 +1,4 @@
-module Preview.Util exposing (glowBorder, padding, padding_md)
+module Page.Preview.Util exposing (glowBorder, padding, padding_md)
 
 import Element exposing (paddingXY)
 import Element.Border as Border
