@@ -24,6 +24,13 @@ type alias Config tab embedMsg =
     }
 
 
+type alias CustomConfig tab embedMsg =
+    { tabs : List tab
+    , toElem : tab -> Element embedMsg
+    , embedMsg : Msg tab -> embedMsg
+    }
+
+
 init : tab -> State tab
 init =
     State
@@ -42,17 +49,15 @@ update msg state =
 
 tab : List (Element.Attribute embedMsg) -> Config tab embedMsg -> State tab -> Element embedMsg
 tab attrs config state =
-    config.tabs
-        |> List.map
-            (\tab_ ->
-                renderTabEl
-                    { tab = tab_
-                    , toString = config.toString
-                    , status = ifElse Active InActive (state.activeTab == tab_)
-                    , embedMsg = config.embedMsg
-                    }
-            )
-        |> Element.row (commonAttrs0 ++ attrs)
+    let
+        elemConfig : CustomConfig tab embedMsg
+        elemConfig =
+            { tabs = config.tabs
+            , toElem = config.toString >> Element.text
+            , embedMsg = config.embedMsg
+            }
+    in
+    el attrs elemConfig state
 
 
 type ActiveStatus
@@ -60,10 +65,25 @@ type ActiveStatus
     | InActive
 
 
-renderTabEl : { tab : tab, toString : tab -> String, status : ActiveStatus, embedMsg : Msg tab -> embedMsg } -> Element embedMsg
+el : List (Element.Attribute embedMsg) -> CustomConfig tab embedMsg -> State tab -> Element embedMsg
+el attrs config state =
+    config.tabs
+        |> List.map
+            (\tab_ ->
+                renderTabEl
+                    { tab = tab_
+                    , toElem = config.toElem
+                    , status = ifElse Active InActive (state.activeTab == tab_)
+                    , embedMsg = config.embedMsg
+                    }
+            )
+        |> Element.row (commonAttrs0 ++ attrs)
+
+
+renderTabEl : { tab : tab, toElem : tab -> Element embedMsg, status : ActiveStatus, embedMsg : Msg tab -> embedMsg } -> Element embedMsg
 renderTabEl config =
     Element.el (commonAttrs1 ++ dynamicAttrs1 config.status (SelectTab config.tab |> config.embedMsg))
-        (Element.el [ Element.centerX ] (Element.text <| config.toString config.tab))
+        (Element.el [ Element.centerX ] (config.toElem config.tab))
 
 
 commonAttrs0 : List (Element.Attribute embedMsg)
