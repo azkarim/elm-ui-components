@@ -107,7 +107,7 @@ dynamicAttrs1 status inactiveOnClick =
     case status of
         Active ->
             [ Background.color Color.neutral
-            , Font.color Color.zinc_900
+            , Font.color theme.color.font
             ]
                 ++ Util.shadow
 
