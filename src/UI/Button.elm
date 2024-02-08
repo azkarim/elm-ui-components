@@ -82,7 +82,7 @@ type ButtonType
 
 type LoadingStatus
     = Loading String
-    | Loaded
+    | Idle
 
 
 {-| Button Builder
@@ -155,7 +155,7 @@ button attrs btn =
 
         btnLoaded : Bool
         btnLoaded =
-            (btn.loading == Just Loaded) || (btn.loading == Nothing)
+            (btn.loading == Just Idle) || (btn.loading == Nothing)
     in
     Input.button
         (if btnLoaded then
@@ -170,7 +170,7 @@ button attrs btn =
                 Just (Loading loadingLabel) ->
                     Element.row [ Element.spacing Size.spacing_3 ] [ Element.el [] spinner, Element.el [] (Element.text loadingLabel) ]
 
-                Just Loaded ->
+                Just Idle ->
                     renderElemLabel ( btn.icon, btn.label )
 
                 Nothing ->

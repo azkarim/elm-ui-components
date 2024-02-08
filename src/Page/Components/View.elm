@@ -84,7 +84,7 @@ emailBtn =
         , icon = Just <| Util.renderIcon (Util.renderIcon Icon.email)
         , onTap = Nothing
         , label = Just <| emailLabel 10
-        , loading = Just <| Button.Loaded
+        , loading = Just <| Button.Idle
         }
 
 
