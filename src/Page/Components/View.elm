@@ -1,11 +1,12 @@
 module Page.Components.View exposing (document)
 
 import Browser exposing (Document)
-import Element exposing (Element, alignTop, centerX, centerY, el, fill, height, paddingXY, px, row, spacing, text, width, wrappedRow)
+import Element exposing (Element, centerX, centerY, column, el, fill, height, paddingXY, px, row, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
+import List.Extra as List
 import Page.Components.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
 import Page.Components.Model as Components
 import Page.Components.Msg as Components exposing (Msg(..))
@@ -23,18 +24,16 @@ import UI.Util as Util
 
 view : Components.Model -> Element Components.Msg
 view model =
-    wrappedRow
+    el
         [ width fill
         , height fill
-        , spacing 10
-        , Background.color Color.neutral
+        , paddingXY Size.spacing_10 Size.spacing_10
+        , Background.color Color.slate_50
         ]
-    <|
-        [ uiSet model
-        ]
+        (components model |> gallery |> column [ spacing Size.spacing_10, centerX ])
 
 
-drawer : Element msg
+drawer : Element Components.Msg
 drawer =
     row
         [ width fill
@@ -45,25 +44,54 @@ drawer =
         [ el [ centerX, centerY, Font.medium ] (text "Drawer") ]
 
 
-uiSet : Components.Model -> Element Msg
-uiSet model =
-    wrappedRow [ width (fill |> Element.maximum 1280), centerX, alignTop, paddingXY Size.spacing_10 Size.spacing_10, spacing 20 ]
-        [ Button.primary Util.shadow { onTap = Nothing, label = "Primary" }
-        , Button.secondary [] { onTap = Nothing, label = "Secondary" }
-        , Button.outline Util.shadow { onTap = Nothing, label = "Outline" }
-        , Button.ghost [] { onTap = Nothing, label = "Ghost" }
-        , Button.iconBtn [] { onTap = Nothing, icon = Util.renderIcon Icon.rightArrow }
-        , exampleLoadingBtn
-        , emailBtn
-        , Select.select [] selectConfig model.selectFruitState
-        , Badge.primary "primary"
-        , Badge.secondary "secondary"
-        , Badge.outline "outline"
-        , Badge.badge [ Border.rounded 12, Events.onClick ToggleDrawer, Element.paddingXY Size.padding_3 Size.padding_2, Element.pointer ] "Metric" Badge.Secondary
-        , Tab.tab [ Element.width (Element.fill |> Element.minimum 200) ] tabConfig model.userSettingsTab
-        , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Drawer" }
-        , Avatar.avatar [] (Element.el [] (text "AK"))
-        ]
+gallery : List (Element Components.Msg) -> List (Element Components.Msg)
+gallery components_ =
+    List.map thumbail components_
+        |> List.greedyGroupsOf 4
+        |> List.map
+            (row
+                [ width fill
+                , height fill
+                , spacing Size.spacing_7
+                ]
+            )
+
+
+thumbail : Element Components.Msg -> Element Components.Msg
+thumbail component =
+    let
+        square : Int
+        square =
+            400
+    in
+    el
+        (width (px square)
+            :: height (px square)
+            :: Border.rounded Size.border_lg
+            :: Background.color Color.neutral
+            :: Util.addBorder
+        )
+        (el [ centerX, centerY ] component)
+
+
+components : Components.Model -> List (Element Msg)
+components model =
+    [ Button.primary Util.shadow { onTap = Nothing, label = "Primary" }
+    , Button.secondary [] { onTap = Nothing, label = "Secondary" }
+    , Button.outline Util.shadow { onTap = Nothing, label = "Outline" }
+    , Button.ghost [] { onTap = Nothing, label = "Ghost" }
+    , Button.iconBtn [] { onTap = Nothing, icon = Util.renderIcon Icon.rightArrow }
+    , exampleLoadingBtn
+    , emailBtn
+    , Select.select [] selectConfig model.selectFruitState
+    , Badge.primary "primary"
+    , Badge.secondary "secondary"
+    , Badge.outline "outline"
+    , Badge.badge [ Border.rounded 12, Events.onClick ToggleDrawer, Element.paddingXY Size.padding_3 Size.padding_2, Element.pointer ] "Metric" Badge.Secondary
+    , Tab.tab [ Element.width (Element.fill |> Element.minimum 200) ] tabConfig model.userSettingsTab
+    , Button.outline Util.shadow { onTap = Just ToggleDrawer, label = "Drawer" }
+    , Avatar.avatar [] (Element.el [] (text "AK"))
+    ]
 
 
 exampleLoadingBtn : Element Msg
