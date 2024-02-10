@@ -10,7 +10,6 @@ import Maybe.Extra as Maybe
 import Simple.Animation as Animation exposing (Animation)
 import Simple.Animation.Property as P
 import UI.Preset.Size as Size
-import UI.Util as Util
 import Util exposing (ifElse)
 
 
