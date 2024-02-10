@@ -97,9 +97,9 @@ type LoadingStatus
 new : Button msg
 new =
     { buttonType = Nothing
+    , label = Nothing
     , icon = Nothing
     , onTap = Nothing
-    , label = Nothing
     , loading = Nothing
     }
 
