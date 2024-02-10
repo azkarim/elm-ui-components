@@ -10,6 +10,7 @@ import Maybe.Extra as Maybe
 import Simple.Animation as Animation exposing (Animation)
 import Simple.Animation.Property as P
 import UI.Preset.Size as Size
+import UI.Util as Util
 import Util exposing (ifElse)
 
 
@@ -41,10 +42,7 @@ toggle config =
 layout : Config msg -> Element msg -> Element msg -> Html.Html msg
 layout { isDrawerVisible, onTap, drawerHeight } drawer content =
     Element.layout
-        [ Element.htmlAttribute <| Html.Attributes.style "width" "100vw"
-        , Element.height Element.fill
-        , Element.clipX
-        , Background.color (Element.rgb255 0 0 0)
+        [ Background.color (Element.rgb255 0 0 0)
         , Maybe.unwrap Util.noAttr (ifElse Element.clipY Element.scrollbarY) isDrawerVisible
         , Maybe.unwrap Util.noAttr (renderDrawer { drawer = drawer, height = drawerHeight }) isDrawerVisible
         ]
