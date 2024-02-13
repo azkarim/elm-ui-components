@@ -19,6 +19,7 @@ import UI.Preset.Icon as Icon
 import UI.Preset.Size as Size
 import UI.Select as Select
 import UI.Tab as Tab
+import UI.Theme exposing (theme)
 import UI.Util as Util
 
 
@@ -30,7 +31,7 @@ view model =
         , paddingXY Size.spacing_10 Size.spacing_10
         , Background.color Color.slate_50
         ]
-        (components model |> gallery |> column [ spacing Size.spacing_10, centerX ])
+        (components model |> gallery |> column [ paddingXY Size.spacing_20 Size.spacing_20, spacing Size.spacing_10, centerX, Background.color Color.neutral, Border.rounded theme.size.rounded ])
 
 
 drawer : Element Components.Msg
@@ -62,15 +63,12 @@ thumbail component =
     let
         square : Int
         square =
-            400
+            200
     in
     el
-        (width (fill |> Element.minimum square)
-            :: height (fill |> Element.minimum square)
-            :: Border.rounded Size.border_lg
-            :: Background.color Color.neutral
-            :: Util.addBorder
-        )
+        [ width (fill |> Element.minimum square)
+        , height (fill |> Element.minimum square)
+        ]
         (el [ centerX, centerY ] component)
 
 
