@@ -6,10 +6,10 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
-import List.Extra as List
 import Page.Components.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
 import Page.Components.Model as Components
 import Page.Components.Msg as Components exposing (Msg(..))
+import UI.Accordion as Accordion
 import UI.Avatar as Avatar
 import UI.Badge as Badge
 import UI.Button as Button
@@ -31,7 +31,7 @@ view model =
         , paddingXY Size.spacing_10 Size.spacing_10
         , Background.color Color.slate_50
         ]
-        (components model |> gallery |> column [ paddingXY Size.spacing_20 Size.spacing_20, spacing Size.spacing_10, centerX, Background.color Color.neutral, Border.rounded theme.size.rounded ])
+        (components model |> gallery)
 
 
 drawer : Element Components.Msg
@@ -45,36 +45,33 @@ drawer =
         [ el [ centerX, centerY, Font.medium ] (text "Drawer") ]
 
 
-gallery : List (Element Components.Msg) -> List (Element Components.Msg)
+gallery : List (Element Components.Msg) -> Element Components.Msg
 gallery components_ =
     List.map thumbail components_
-        |> List.greedyGroupsOf 4
-        |> List.map
-            (row
-                [ width fill
-                , height fill
-                , spacing Size.spacing_7
-                ]
-            )
+        |> column
+            [ height fill
+            , paddingXY Size.spacing_20 Size.spacing_20
+            , spacing Size.spacing_10
+            , centerX
+            , Background.color Color.neutral
+            , Border.rounded theme.size.rounded
+            ]
 
 
 thumbail : Element Components.Msg -> Element Components.Msg
 thumbail component =
-    let
-        square : Int
-        square =
-            200
-    in
-    el
-        [ width (fill |> Element.minimum square)
-        , height (fill |> Element.minimum square)
-        ]
-        (el [ centerX, centerY ] component)
+    component
+        |> el [ width fill, height fill ]
 
 
 components : Components.Model -> List (Element Msg)
 components model =
-    [ Button.primary Util.shadow { onTap = Nothing, label = "Primary" }
+    [ Accordion.accordion [ width (px 500) ]
+        { visible = model.accordion
+        , items = Data.accordionItems
+        , embedMsg = OnTapAccordion
+        }
+    , Button.primary Util.shadow { onTap = Nothing, label = "Primary" }
     , Button.secondary [] { onTap = Nothing, label = "Secondary" }
     , Button.outline Util.shadow { onTap = Nothing, label = "Outline" }
     , Button.ghost [] { onTap = Nothing, label = "Ghost" }

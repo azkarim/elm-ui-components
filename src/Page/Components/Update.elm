@@ -2,6 +2,7 @@ module Page.Components.Update exposing (update)
 
 import Page.Components.Model as Components
 import Page.Components.Msg as Components exposing (Msg(..))
+import UI.Accordion as Accordion
 import UI.Drawer as Drawer
 import UI.Select as Select
 import UI.Tab as Tab
@@ -18,6 +19,9 @@ update msg model =
 
         OnTapBody ->
             ( { model | selectFruitState = Select.hide model.selectFruitState }, Cmd.none )
+
+        OnTapAccordion accordionMsg ->
+            ( { model | accordion = Accordion.update accordionMsg model.accordion }, Cmd.none )
 
         UserSettingsTabSelected tabMsg ->
             ( { model | userSettingsTab = Tab.update tabMsg model.userSettingsTab }, Cmd.none )
