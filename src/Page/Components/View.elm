@@ -65,8 +65,8 @@ thumbail component =
             400
     in
     el
-        (width (px square)
-            :: height (px square)
+        (width (fill |> Element.minimum square)
+            :: height (fill |> Element.minimum square)
             :: Border.rounded Size.border_lg
             :: Background.color Color.neutral
             :: Util.addBorder
