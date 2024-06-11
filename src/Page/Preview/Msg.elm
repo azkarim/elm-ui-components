@@ -7,7 +7,7 @@ import UI.Tooltip as Tooltip
 
 
 type Msg
-    = SelectAccount (Select.Msg Model.EmailAddress)
+    = SelectAccount (Select.State Model.EmailAddress)
     | FilterTab (Tab.Msg FilterEmail)
     | OnTapViewEmail EmailId
     | OnTapEmailLabel EmailLabel

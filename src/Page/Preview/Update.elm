@@ -11,8 +11,8 @@ import UI.Tooltip as Tooltip
 update : Preview.Msg -> Preview.Model -> ( Preview.Model, Cmd Preview.Msg )
 update msg model =
     case msg of
-        SelectAccount selectMsg ->
-            ( { model | account = Select.update selectMsg model.account }, Cmd.none )
+        SelectAccount selecteModel ->
+            ( { model | account = selecteModel }, Cmd.none )
 
         FilterTab tabMsg ->
             ( { model | filterEmails = Tab.update tabMsg model.filterEmails }, Cmd.none )

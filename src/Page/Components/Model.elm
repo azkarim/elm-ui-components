@@ -10,7 +10,7 @@ import UI.Tab as Tab
 
 type alias Model =
     { drawer : Drawer.Config Components.Msg
-    , selectFruitState : Select.State Data.Option
+    , selectFruitState : Select.State Data.FruitOption
     , userSettingsTab : Tab.State Data.UserSettingsTab
     , accordion : Maybe Int
     }

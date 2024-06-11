@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
-import Page.Components.Data as Data exposing (Option(..), UserSettingsTab(..), optionStr)
+import Page.Components.Data as Data exposing (FruitOption(..), UserSettingsTab(..), optionStr)
 import Page.Components.Model as Components
 import Page.Components.Msg as Components exposing (Msg(..))
 import UI.Accordion as Accordion
@@ -131,7 +131,7 @@ tabConfig =
 -- Select
 
 
-selectConfig : Select.Config Option Components.Msg
+selectConfig : Select.Config FruitOption Components.Msg
 selectConfig =
     { label = "Select a fruit"
     , options = options
@@ -140,7 +140,7 @@ selectConfig =
     }
 
 
-options : List Option
+options : List FruitOption
 options =
     [ Apple, Banana, Blueberry, Grapes, Pineapple ]
 

@@ -1,4 +1,4 @@
-module Page.Components.Data exposing (Option(..), UserSettingsTab(..), accordionItems, optionStr, tabStr)
+module Page.Components.Data exposing (FruitOption(..), UserSettingsTab(..), accordionItems, optionStr, tabStr)
 
 import UI.Accordion exposing (Accordion)
 
@@ -35,7 +35,7 @@ tabStr tab =
             "Password"
 
 
-type Option
+type FruitOption
     = Apple
     | Banana
     | Blueberry
@@ -43,7 +43,7 @@ type Option
     | Pineapple
 
 
-optionStr : Option -> String
+optionStr : FruitOption -> String
 optionStr option =
     case option of
         Apple ->

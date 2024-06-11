@@ -1,4 +1,4 @@
-module UI.Select exposing (Config, CustomConfig, Msg, State, el, hide, init, select, selected, update)
+module UI.Select exposing (Config, CustomConfig, State, el, hide, init, select, selected)
 
 import Element exposing (Element)
 import Element.Background as Background
@@ -32,7 +32,7 @@ type alias Config option embedMsg =
     { label : String
     , options : List option
     , toString : option -> String
-    , embedMsg : Msg option -> embedMsg
+    , embedMsg : State option -> embedMsg
     }
 
 
@@ -42,33 +42,13 @@ type alias CustomConfig option embedMsg =
     , item : option -> Element embedMsg
     , itemAsSelected : option -> Element embedMsg
     , itemAsLabel : option -> Element embedMsg
-    , embedMsg : Msg option -> embedMsg
+    , embedMsg : State option -> embedMsg
     }
-
-
-type Msg option
-    = ToggleSelect
-    | Selected option
-      -- we remove the highlighted bg on selected item when mouse starts to move inside viewOptions panel; ready to select new option
-    | RemoveSelectedOptionHighlight
 
 
 init : Maybe option -> State option
 init option =
     { isVisible = False, selected = option, highlightSelected = False }
-
-
-update : Msg option -> State option -> State option
-update msg state =
-    case msg of
-        ToggleSelect ->
-            { state | isVisible = not state.isVisible, highlightSelected = ifElse True False (Maybe.isJust state.selected) }
-
-        Selected option ->
-            { state | selected = Just option, isVisible = False, highlightSelected = True }
-
-        RemoveSelectedOptionHighlight ->
-            { state | highlightSelected = False }
 
 
 hide : State option -> State option
@@ -111,6 +91,11 @@ select attrs config state =
 -}
 el : List (Element.Attribute embedMsg) -> CustomConfig option embedMsg -> State option -> Element embedMsg
 el attrs config state =
+    let
+        toggleSelect : State option
+        toggleSelect =
+            { state | isVisible = not state.isVisible, highlightSelected = ifElse True False (Maybe.isJust state.selected) }
+    in
     Element.el
         (Element.width (Element.fill |> Element.minimum size.minWidth)
             :: Element.height (Element.px size.height)
@@ -121,7 +106,7 @@ el attrs config state =
             :: Font.letterSpacing 0.4
             :: Font.family [ Font.sansSerif ]
             :: Font.medium
-            :: ifElse (Element.below <| viewOptions { options = config.options, item = config.item, itemAsSelected = config.itemAsSelected, embedMsg = config.embedMsg, highlightSelected = state.highlightSelected } state.selected) Util.noAttr state.isVisible
+            :: ifElse (Element.below <| viewOptions { options = config.options, item = config.item, itemAsSelected = config.itemAsSelected, embedMsg = config.embedMsg } state) Util.noAttr state.isVisible
             :: Util.userSelectNone
             ++ attrs
         )
@@ -130,7 +115,7 @@ el attrs config state =
             , Element.height Element.fill
             , Element.paddingXY Size.padding_3 Size.padding_2
             , Element.pointer
-            , Util.onClick (config.embedMsg ToggleSelect)
+            , Util.onClick (config.embedMsg toggleSelect)
             ]
             (renderLabel config state.selected)
         )
@@ -145,14 +130,19 @@ renderLabel config selectedOption =
     Maybe.unwrap config.label config.itemAsLabel selectedOption
 
 
-viewOptions : { options : List option, item : option -> Element embedMsg, itemAsSelected : option -> Element embedMsg, embedMsg : Msg option -> embedMsg, highlightSelected : Bool } -> Maybe option -> Element embedMsg
-viewOptions config selectedOption =
+viewOptions : { options : List option, item : option -> Element embedMsg, itemAsSelected : option -> Element embedMsg, embedMsg : State option -> embedMsg } -> State option -> Element embedMsg
+viewOptions config state =
+    let
+        removeSelectedOption : State option
+        removeSelectedOption =
+            { state | highlightSelected = False }
+    in
     Util.animatedEl Element.el
         slideInAnim
         [ Element.width Element.fill
         , Util.style "transform-origin" "top"
         , Util.style "will-change" "transform"
-        , ifElse (Events.onMouseMove (config.embedMsg RemoveSelectedOptionHighlight)) Util.noAttr config.highlightSelected
+        , ifElse (Events.onMouseMove (config.embedMsg removeSelectedOption)) Util.noAttr state.highlightSelected
         ]
     <|
         Element.column
@@ -166,22 +156,27 @@ viewOptions config selectedOption =
                 :: Util.shadow
             )
         <|
-            List.map (Lazy.lazy2 renderItem { item = config.item, itemAsSelected = config.itemAsSelected, embedMsg = config.embedMsg, highlightSelected = config.highlightSelected, selectedOption = selectedOption }) config.options
+            List.map (Lazy.lazy3 renderOption { item = config.item, itemAsSelected = config.itemAsSelected, embedMsg = config.embedMsg } state) config.options
 
 
-renderItem : { item : option -> Element embedMsg, itemAsSelected : option -> Element embedMsg, embedMsg : Msg option -> embedMsg, highlightSelected : Bool, selectedOption : Maybe option } -> option -> Element embedMsg
-renderItem config option =
+renderOption : { item : option -> Element embedMsg, itemAsSelected : option -> Element embedMsg, embedMsg : State option -> embedMsg } -> State option -> option -> Element embedMsg
+renderOption config state option =
+    let
+        newOptionSelected : State option
+        newOptionSelected =
+            { state | selected = Just option, isVisible = False, highlightSelected = True }
+    in
     Element.el
         [ Element.width Element.fill
         , Element.paddingXY Size.padding_2 Size.padding_3
         , Border.rounded theme.size.rounded
         , Element.pointer
-        , ifElse (Background.color theme.color.hover) Util.noAttr (Just option == config.selectedOption && config.highlightSelected)
+        , ifElse (Background.color theme.color.hover) Util.noAttr (Just option == state.selected && state.highlightSelected)
         , Element.mouseOver [ Background.color theme.color.hover ]
-        , Util.onClick (config.embedMsg <| Selected option)
+        , Util.onClick (config.embedMsg <| newOptionSelected)
         ]
     <|
-        ifElse (config.itemAsSelected option) (config.item option) (config.selectedOption == Just option)
+        ifElse (config.itemAsSelected option) (config.item option) (state.selected == Just option)
 
 
 slideInAnim : Animation

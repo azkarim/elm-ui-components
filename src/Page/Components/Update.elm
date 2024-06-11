@@ -14,8 +14,8 @@ update msg model =
         ToggleDrawer ->
             ( { model | drawer = Drawer.toggle model.drawer }, Cmd.none )
 
-        SelectFruit selectMsg ->
-            ( { model | selectFruitState = Select.update selectMsg model.selectFruitState }, Cmd.none )
+        SelectFruit selectModel ->
+            ( { model | selectFruitState = selectModel }, Cmd.none )
 
         OnTapBody ->
             ( { model | selectFruitState = Select.hide model.selectFruitState }, Cmd.none )
